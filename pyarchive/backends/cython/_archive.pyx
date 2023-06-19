@@ -3,10 +3,11 @@
 cimport cython
 from libc.stdint cimport uint8_t
 
-from cpython.object cimport PyObject
+from cpython.mem cimport PyMem_Malloc
 
 include "./consts.pxi"
 include "./config.pxi"
+include "./pystream.pxi"
 
 class ArchiveError(Exception):
 
@@ -17,7 +18,7 @@ class ArchiveError(Exception):
         self.archive_p = archive_p
 
     def __str__(self):
-        p = '%s (errno=%s, retcode=%s, archive_p=%s)'  # todo 这是C类型了
+        p = '%s (errno=%s, retcode=%s, archive_p=%s)'
         return p % (self.msg, self.errno, self.retcode, self.archive_p)
 
 
@@ -165,7 +166,7 @@ cdef class ArchiveRead(Archive):
     cpdef close(self):
         cdef int ret = la.archive_read_close(self._archive_p)
         if ret != la.ARCHIVE_OK:
-            raise ArchiveError()
+            raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
 
     cpdef inline int support_filter_all(self):
         return la.archive_read_support_filter_all(self._archive_p)
@@ -275,6 +276,83 @@ cdef class ArchiveRead(Archive):
             command_ = (<unicode> command).encode()
         return la.archive_read_append_filter_program_signature(self._archive_p, <const char *> command_, <const void*>&match[0], <size_t>match.shape[0])
 
+    cpdef inline int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
+        cdef PyStreamData * data = <PyStreamData *>PyMem_Malloc(sizeof(PyStreamData))
+        if not data:
+            raise MemoryError
+        data.file = <PyObject*>file
+        data.block_size = block_size
+        data.buffer = NULL
+        data.length = 0
+        data.close = close
+
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_open2(self._archive_p,
+                                          data,
+                                          pystream_open_callback,
+                                          pystream_read_callback,
+                                          pystream_skip_callback,
+                                          pystream_close_callback)
+        return ret
+
+    cpdef inline int open_memory(self, uint8_t[::1] data, size_t read_size) except? -30:
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_open_memory2(self._archive_p,
+                                                <const void *>&data[0],
+                                                <size_t >data.shape[0],
+                                               read_size)
+        return ret
+
+    cpdef inline int open_fd(self, int fd, size_t block_size) except? -30:
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_open_fd(self._archive_p, fd,  block_size)
+        return ret
+
+    def iter_entries(self):
+        cdef:
+            ArchiveEntry entry
+            int ret
+        while True:
+            entry = ArchiveEntry(self)
+            with nogil:
+                ret = la.archive_read_next_header2(self._archive_p, entry._entry_p)
+            if ret == la.ARCHIVE_EOF:
+                break
+            if ret != la.ARCHIVE_OK:
+                raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+            yield entry
+
+    @property
+    def header_position(self):
+        return la.archive_read_header_position(self._archive_p)
+
+    @property
+    def has_encrypted_entries(self):
+        return la.archive_read_has_encrypted_entries(self._archive_p)
+
+    @property
+    def format_capabilities(self):
+        return la.archive_read_format_capabilities(self._archive_p)
+
+    cpdef inline la.la_ssize_t readinto(self, uint8_t[::1] buf):
+        """
+        read data into buffer
+        :param buf: Writable buffer
+        :return: 
+        """
+        cdef la.la_ssize_t  ret
+        with nogil:
+            ret = la.archive_read_data(self._archive_p, &buf[0], <size_t>buf.shape[0] )
+        return ret
+
+    cpdef inline la.la_int64_t seek(self, la.la_int64_t offset, int whence):
+        cdef la.la_int64_t ret
+        with nogil:
+            ret = la.archive_seek_data(self._archive_p, offset, whence)
+        return ret
     # cpdef inline int set_open_callback(self, object func):
     #     self.callbacks.opener = <PyObject*>func
     #     self.callbackref["opener"] = func # 增加强引用
