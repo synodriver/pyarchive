@@ -1216,7 +1216,7 @@ struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveWriteDisk {
 };
 
 
-/* "pyarchive/backends/cython/_archive.pyx":886
+/* "pyarchive/backends/cython/_archive.pyx":891
  * 
  * @cython.final
  * cdef class ArchiveReadDisk(ArchiveRead):             # <<<<<<<<<<<<<<
@@ -1228,7 +1228,7 @@ struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk {
 };
 
 
-/* "pyarchive/backends/cython/_archive.pyx":983
+/* "pyarchive/backends/cython/_archive.pyx":1008
  * @cython.no_gc
  * @cython.final
  * cdef class ArchiveMatch(Archive):             # <<<<<<<<<<<<<<
@@ -1240,7 +1240,7 @@ struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch {
 };
 
 
-/* "pyarchive/backends/cython/_archive.pyx":1003
+/* "pyarchive/backends/cython/_archive.pyx":1028
  * 
  * @cython.freelist(8)
  * cdef class ArchiveEntry:             # <<<<<<<<<<<<<<
@@ -1254,7 +1254,7 @@ struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry {
 };
 
 
-/* "pyarchive/backends/cython/_archive.pyx":1031
+/* "pyarchive/backends/cython/_archive.pyx":1063
  * @cython.no_gc
  * @cython.final
  * cdef class ArchiveEntryLinkresolver:             # <<<<<<<<<<<<<<
@@ -1562,7 +1562,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_16ArchiveWriteD
 static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_16ArchiveWriteDisk_uid(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveWriteDisk *, PyObject *, la_int64_t, int __pyx_skip_dispatch);
 
 
-/* "pyarchive/backends/cython/_archive.pyx":886
+/* "pyarchive/backends/cython/_archive.pyx":891
  * 
  * @cython.final
  * cdef class ArchiveReadDisk(ArchiveRead):             # <<<<<<<<<<<<<<
@@ -1585,6 +1585,12 @@ struct __pyx_vtabstruct_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk {
   int (*open_w)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, PyObject *, int __pyx_skip_dispatch);
   int (*descend)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
   int (*can_descend)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+  int (*current_filesystem)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+  int (*current_filesystem_is_synthetic)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+  int (*current_filesystem_is_remote)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+  int (*set_atime_restored)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+  int (*set_behavior)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int, int __pyx_skip_dispatch);
+  int (*set_matching)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *, PyObject *, int __pyx_skip_dispatch);
 };
 static struct __pyx_vtabstruct_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk;
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_logical(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
@@ -1600,9 +1606,15 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_w(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, PyObject *, int __pyx_skip_dispatch);
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_descend(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_can_descend(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_synthetic(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_remote(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_atime_restored(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch);
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_behavior(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int, int __pyx_skip_dispatch);
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_matching(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *, PyObject *, int __pyx_skip_dispatch);
 
 
-/* "pyarchive/backends/cython/_archive.pyx":983
+/* "pyarchive/backends/cython/_archive.pyx":1008
  * @cython.no_gc
  * @cython.final
  * cdef class ArchiveMatch(Archive):             # <<<<<<<<<<<<<<
@@ -1618,7 +1630,7 @@ static struct __pyx_vtabstruct_9pyarchive_8backends_6cython_8_archive_ArchiveMat
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_match_path_unmatched_inclusions(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *, int __pyx_skip_dispatch);
 
 
-/* "pyarchive/backends/cython/_archive.pyx":1003
+/* "pyarchive/backends/cython/_archive.pyx":1028
  * 
  * @cython.freelist(8)
  * cdef class ArchiveEntry:             # <<<<<<<<<<<<<<
@@ -1633,7 +1645,7 @@ static struct __pyx_vtabstruct_9pyarchive_8backends_6cython_8_archive_ArchiveEnt
 static CYTHON_INLINE struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_from_ptr(struct archive_entry *);
 
 
-/* "pyarchive/backends/cython/_archive.pyx":1031
+/* "pyarchive/backends/cython/_archive.pyx":1063
  * @cython.no_gc
  * @cython.final
  * cdef class ArchiveEntryLinkresolver:             # <<<<<<<<<<<<<<
@@ -2742,6 +2754,12 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_w(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, PyObject *__pyx_v_name, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_descend(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_can_descend(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_synthetic(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_remote(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_atime_restored(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_behavior(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, int __pyx_v_flags, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_matching(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_ma, PyObject *__pyx_v_excluded_func, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
 static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_match_path_unmatched_inclusions(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
 static CYTHON_INLINE struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_from_ptr(struct archive_entry *__pyx_v_ptr); /* proto*/
 static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_set_strategy(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver *__pyx_v_self, int __pyx_v_format_code, CYTHON_UNUSED int __pyx_skip_dispatch); /* proto*/
@@ -2831,6 +2849,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pywrite_disk_lo
 static void __pyx_f_9pyarchive_8backends_6cython_8_archive_pywrite_disk_lookup_cleanup(void *); /*proto*/
 static char const *__pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cb(void *, la_int64_t); /*proto*/
 static void __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cleanup(void *); /*proto*/
+static void __pyx_f_9pyarchive_8backends_6cython_8_archive_pyexcluded_func(struct archive *, void *, struct archive_entry *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -2888,6 +2907,7 @@ static const char __pyx_k_p[] = "p";
 static const char __pyx_k_ad[] = "ad";
 static const char __pyx_k_fd[] = "fd";
 static const char __pyx_k_id[] = "id";
+static const char __pyx_k_ma[] = "ma";
 static const char __pyx_k_dev[] = "dev";
 static const char __pyx_k_doc[] = "__doc__";
 static const char __pyx_k_err[] = "_err";
@@ -2904,7 +2924,7 @@ static const char __pyx_k_data[] = "data";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_fail[] = "fail";
 static const char __pyx_k_file[] = "file";
-static const char __pyx_k_init[] = "__init__";
+static const char __pyx_k_init[] = "_init";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
@@ -2940,6 +2960,7 @@ static const char __pyx_k_write[] = "write";
 static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_format[] = "format";
 static const char __pyx_k_import[] = "__import__";
+static const char __pyx_k_init_2[] = "__init__";
 static const char __pyx_k_lookup[] = "lookup";
 static const char __pyx_k_module[] = "module";
 static const char __pyx_k_name_2[] = "__name__";
@@ -3039,6 +3060,7 @@ static const char __pyx_k_ARCHIVE_FATAL[] = "ARCHIVE_FATAL";
 static const char __pyx_k_ARCHIVE_RETRY[] = "ARCHIVE_RETRY";
 static const char __pyx_k_add_filter_xz[] = "add_filter_xz";
 static const char __pyx_k_append_filter[] = "append_filter";
+static const char __pyx_k_excluded_func[] = "excluded_func";
 static const char __pyx_k_pyx_getbuffer[] = "__pyx_getbuffer";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_ARCHIVE_FAILED[] = "ARCHIVE_FAILED";
@@ -3599,6 +3621,7 @@ static PyObject *__pyx_n_s_err;
 static PyObject *__pyx_n_s_errno;
 static PyObject *__pyx_n_s_error;
 static PyObject *__pyx_n_s_error_string;
+static PyObject *__pyx_n_s_excluded_func;
 static PyObject *__pyx_n_s_extract;
 static PyObject *__pyx_n_s_extract2;
 static PyObject *__pyx_n_s_extract_set_progress_callback;
@@ -3625,6 +3648,7 @@ static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
 static PyObject *__pyx_n_s_id;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_init;
+static PyObject *__pyx_n_s_init_2;
 static PyObject *__pyx_n_s_ino;
 static PyObject *__pyx_n_s_is_disk;
 static PyObject *__pyx_n_s_itemsize;
@@ -3636,6 +3660,7 @@ static PyObject *__pyx_kp_u_libarchive_is_not_build_with_lib_2;
 static PyObject *__pyx_kp_u_libarchive_is_not_build_with_lib_3;
 static PyObject *__pyx_kp_u_libarchive_is_not_build_with_zli;
 static PyObject *__pyx_n_s_lookup;
+static PyObject *__pyx_n_s_ma;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_match;
 static PyObject *__pyx_n_s_memview;
@@ -3990,14 +4015,20 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_22open_w(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, PyObject *__pyx_v_name); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_24descend(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_26can_descend(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28current_filesystem(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30current_filesystem_is_synthetic(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_32current_filesystem_is_remote(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_34set_atime_restored(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_36set_behavior(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, int __pyx_v_flags); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_38set_matching(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_ma, PyObject *__pyx_v_excluded_func); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_40__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_42__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch___cinit__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_self); /* proto */
 static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__dealloc__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_4match_path_unmatched_inclusions(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cinit__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *__pyx_v_archive); /* proto */
+static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cinit__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *__pyx_v_archive, int __pyx_v__init); /* proto */
 static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__dealloc__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_4__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_6__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
@@ -33130,7 +33161,7 @@ static void __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cl
  *     func()
  *     PyMem_Free(data)             # <<<<<<<<<<<<<<
  * 
- * 
+ * cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
  */
   PyMem_Free(__pyx_v_data);
 
@@ -33157,7 +33188,112 @@ static void __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cl
   #endif
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":887
+/* "pyarchive/backends/cython/_archive.pyx":884
+ *     PyMem_Free(data)
+ * 
+ * cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:             # <<<<<<<<<<<<<<
+ *     cdef object func = <object> ud
+ *     cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+ */
+
+static void __pyx_f_9pyarchive_8backends_6cython_8_archive_pyexcluded_func(CYTHON_UNUSED struct archive *__pyx_v_a, void *__pyx_v_ud, struct archive_entry *__pyx_v_entry_) {
+  PyObject *__pyx_v_func = 0;
+  struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_entry = 0;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  #ifdef WITH_THREAD
+  PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  #endif
+  __Pyx_RefNannySetupContext("pyexcluded_func", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":885
+ * 
+ * cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
+ *     cdef object func = <object> ud             # <<<<<<<<<<<<<<
+ *     cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+ *     func(entry)
+ */
+  __pyx_t_1 = ((PyObject *)__pyx_v_ud);
+  __Pyx_INCREF(__pyx_t_1);
+  __pyx_v_func = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":886
+ * cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
+ *     cdef object func = <object> ud
+ *     cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)             # <<<<<<<<<<<<<<
+ *     func(entry)
+ *     entry._entry_p = NULL # deref
+ */
+  __pyx_t_1 = ((PyObject *)__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_from_ptr(__pyx_v_entry_)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 886, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_entry = ((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":887
+ *     cdef object func = <object> ud
+ *     cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+ *     func(entry)             # <<<<<<<<<<<<<<
+ *     entry._entry_p = NULL # deref
+ * 
+ */
+  __Pyx_INCREF(__pyx_v_func);
+  __pyx_t_2 = __pyx_v_func; __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, ((PyObject *)__pyx_v_entry)) : __Pyx_PyObject_CallOneArg(__pyx_t_2, ((PyObject *)__pyx_v_entry));
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 887, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":888
+ *     cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+ *     func(entry)
+ *     entry._entry_p = NULL # deref             # <<<<<<<<<<<<<<
+ * 
+ * @cython.final
+ */
+  __pyx_v_entry->_entry_p = NULL;
+
+  /* "pyarchive/backends/cython/_archive.pyx":884
+ *     PyMem_Free(data)
+ * 
+ * cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:             # <<<<<<<<<<<<<<
+ *     cdef object func = <object> ud
+ *     cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+ */
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_WriteUnraisable("pyarchive.backends.cython._archive.pyexcluded_func", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_func);
+  __Pyx_XDECREF((PyObject *)__pyx_v_entry);
+  __Pyx_RefNannyFinishContext();
+  #ifdef WITH_THREAD
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  #endif
+}
+
+/* "pyarchive/backends/cython/_archive.pyx":892
  * @cython.final
  * cdef class ArchiveReadDisk(ArchiveRead):
  *     def __cinit__(self, bint is_disk = True):             # <<<<<<<<<<<<<<
@@ -33196,7 +33332,7 @@ static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_1__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(2, 887, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(2, 892, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -33207,14 +33343,14 @@ static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_1__
       }
     }
     if (values[0]) {
-      __pyx_v_is_disk = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_is_disk == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 887, __pyx_L3_error)
+      __pyx_v_is_disk = __Pyx_PyObject_IsTrue(values[0]); if (unlikely((__pyx_v_is_disk == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 892, __pyx_L3_error)
     } else {
       __pyx_v_is_disk = ((int)1);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 887, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 892, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -33235,7 +33371,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk___c
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":888
+  /* "pyarchive/backends/cython/_archive.pyx":893
  * cdef class ArchiveReadDisk(ArchiveRead):
  *     def __cinit__(self, bint is_disk = True):
  *         assert self._archive_p is not NULL             # <<<<<<<<<<<<<<
@@ -33246,12 +33382,12 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk___c
   if (unlikely(!Py_OptimizeFlag)) {
     if (unlikely(!((__pyx_v_self->__pyx_base.__pyx_base._archive_p != NULL) != 0))) {
       PyErr_SetNone(PyExc_AssertionError);
-      __PYX_ERR(2, 888, __pyx_L1_error)
+      __PYX_ERR(2, 893, __pyx_L1_error)
     }
   }
   #endif
 
-  /* "pyarchive/backends/cython/_archive.pyx":887
+  /* "pyarchive/backends/cython/_archive.pyx":892
  * @cython.final
  * cdef class ArchiveReadDisk(ArchiveRead):
  *     def __cinit__(self, bint is_disk = True):             # <<<<<<<<<<<<<<
@@ -33270,7 +33406,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk___c
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":890
+/* "pyarchive/backends/cython/_archive.pyx":895
  *         assert self._archive_p is not NULL
  * 
  *     cpdef inline int set_symlink_logical(self):             # <<<<<<<<<<<<<<
@@ -33284,7 +33420,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_symlink_logical", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":891
+  /* "pyarchive/backends/cython/_archive.pyx":896
  * 
  *     cpdef inline int set_symlink_logical(self):
  *         return la.archive_read_disk_set_symlink_logical(self._archive_p)             # <<<<<<<<<<<<<<
@@ -33294,7 +33430,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_set_symlink_logical(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":890
+  /* "pyarchive/backends/cython/_archive.pyx":895
  *         assert self._archive_p is not NULL
  * 
  *     cpdef inline int set_symlink_logical(self):             # <<<<<<<<<<<<<<
@@ -33331,7 +33467,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_symlink_logical", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_logical(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 890, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_logical(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 895, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -33348,7 +33484,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":893
+/* "pyarchive/backends/cython/_archive.pyx":898
  *         return la.archive_read_disk_set_symlink_logical(self._archive_p)
  * 
  *     cpdef inline int set_symlink_physical(self):             # <<<<<<<<<<<<<<
@@ -33362,7 +33498,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_symlink_physical", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":894
+  /* "pyarchive/backends/cython/_archive.pyx":899
  * 
  *     cpdef inline int set_symlink_physical(self):
  *         return la.archive_read_disk_set_symlink_physical(self._archive_p)             # <<<<<<<<<<<<<<
@@ -33372,7 +33508,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_set_symlink_physical(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":893
+  /* "pyarchive/backends/cython/_archive.pyx":898
  *         return la.archive_read_disk_set_symlink_logical(self._archive_p)
  * 
  *     cpdef inline int set_symlink_physical(self):             # <<<<<<<<<<<<<<
@@ -33409,7 +33545,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_symlink_physical", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_physical(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 893, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_physical(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 898, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -33426,7 +33562,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":896
+/* "pyarchive/backends/cython/_archive.pyx":901
  *         return la.archive_read_disk_set_symlink_physical(self._archive_p)
  * 
  *     cpdef inline int set_symlink_hybrid(self):             # <<<<<<<<<<<<<<
@@ -33440,7 +33576,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_symlink_hybrid", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":897
+  /* "pyarchive/backends/cython/_archive.pyx":902
  * 
  *     cpdef inline int set_symlink_hybrid(self):
  *         return la.archive_read_disk_set_symlink_hybrid(self._archive_p)             # <<<<<<<<<<<<<<
@@ -33450,7 +33586,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_set_symlink_hybrid(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":896
+  /* "pyarchive/backends/cython/_archive.pyx":901
  *         return la.archive_read_disk_set_symlink_physical(self._archive_p)
  * 
  *     cpdef inline int set_symlink_hybrid(self):             # <<<<<<<<<<<<<<
@@ -33487,7 +33623,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_symlink_hybrid", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_hybrid(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 896, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_symlink_hybrid(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 901, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -33504,7 +33640,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":899
+/* "pyarchive/backends/cython/_archive.pyx":904
  *         return la.archive_read_disk_set_symlink_hybrid(self._archive_p)
  * 
  *     cpdef inline int entry_from_file(self, ArchiveEntry entry, int fd, object stat):             # <<<<<<<<<<<<<<
@@ -33530,7 +33666,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("entry_from_file", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":901
+  /* "pyarchive/backends/cython/_archive.pyx":906
  *     cpdef inline int entry_from_file(self, ArchiveEntry entry, int fd, object stat):
  *         cdef la.stat st
  *         if stat is not None:             # <<<<<<<<<<<<<<
@@ -33541,150 +33677,150 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":902
+    /* "pyarchive/backends/cython/_archive.pyx":907
  *         cdef la.stat st
  *         if stat is not None:
  *             st.st_dev = stat.st_dev             # <<<<<<<<<<<<<<
  *             st.st_ino = stat.st_ino
  *             st.st_mode = stat.st_mode
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_dev); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 902, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_dev); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 907, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyInt_As_dev_t(__pyx_t_3); if (unlikely((__pyx_t_4 == ((dev_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 902, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_As_dev_t(__pyx_t_3); if (unlikely((__pyx_t_4 == ((dev_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 907, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_dev = __pyx_t_4;
 
-    /* "pyarchive/backends/cython/_archive.pyx":903
+    /* "pyarchive/backends/cython/_archive.pyx":908
  *         if stat is not None:
  *             st.st_dev = stat.st_dev
  *             st.st_ino = stat.st_ino             # <<<<<<<<<<<<<<
  *             st.st_mode = stat.st_mode
  *             st.st_nlink = stat.st_nlink
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_ino); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 903, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_ino); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 908, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyInt_As_unsigned_short(__pyx_t_3); if (unlikely((__pyx_t_5 == (unsigned short)-1) && PyErr_Occurred())) __PYX_ERR(2, 903, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_unsigned_short(__pyx_t_3); if (unlikely((__pyx_t_5 == (unsigned short)-1) && PyErr_Occurred())) __PYX_ERR(2, 908, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_ino = __pyx_t_5;
 
-    /* "pyarchive/backends/cython/_archive.pyx":904
+    /* "pyarchive/backends/cython/_archive.pyx":909
  *             st.st_dev = stat.st_dev
  *             st.st_ino = stat.st_ino
  *             st.st_mode = stat.st_mode             # <<<<<<<<<<<<<<
  *             st.st_nlink = stat.st_nlink
  *             st.st_uid = stat.st_uid
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_mode); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 904, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_mode); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 909, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyInt_As_unsigned_short(__pyx_t_3); if (unlikely((__pyx_t_5 == (unsigned short)-1) && PyErr_Occurred())) __PYX_ERR(2, 904, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_unsigned_short(__pyx_t_3); if (unlikely((__pyx_t_5 == (unsigned short)-1) && PyErr_Occurred())) __PYX_ERR(2, 909, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_mode = __pyx_t_5;
 
-    /* "pyarchive/backends/cython/_archive.pyx":905
+    /* "pyarchive/backends/cython/_archive.pyx":910
  *             st.st_ino = stat.st_ino
  *             st.st_mode = stat.st_mode
  *             st.st_nlink = stat.st_nlink             # <<<<<<<<<<<<<<
  *             st.st_uid = stat.st_uid
  *             st.st_gid = stat.st_gid
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_nlink); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 905, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_nlink); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 910, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = __Pyx_PyInt_As_short(__pyx_t_3); if (unlikely((__pyx_t_6 == (short)-1) && PyErr_Occurred())) __PYX_ERR(2, 905, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_short(__pyx_t_3); if (unlikely((__pyx_t_6 == (short)-1) && PyErr_Occurred())) __PYX_ERR(2, 910, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_nlink = __pyx_t_6;
 
-    /* "pyarchive/backends/cython/_archive.pyx":906
+    /* "pyarchive/backends/cython/_archive.pyx":911
  *             st.st_mode = stat.st_mode
  *             st.st_nlink = stat.st_nlink
  *             st.st_uid = stat.st_uid             # <<<<<<<<<<<<<<
  *             st.st_gid = stat.st_gid
  *             st.st_rdev = stat.st_rdev
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_uid); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 906, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_uid); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 911, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = __Pyx_PyInt_As_short(__pyx_t_3); if (unlikely((__pyx_t_6 == (short)-1) && PyErr_Occurred())) __PYX_ERR(2, 906, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_short(__pyx_t_3); if (unlikely((__pyx_t_6 == (short)-1) && PyErr_Occurred())) __PYX_ERR(2, 911, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_uid = __pyx_t_6;
 
-    /* "pyarchive/backends/cython/_archive.pyx":907
+    /* "pyarchive/backends/cython/_archive.pyx":912
  *             st.st_nlink = stat.st_nlink
  *             st.st_uid = stat.st_uid
  *             st.st_gid = stat.st_gid             # <<<<<<<<<<<<<<
  *             st.st_rdev = stat.st_rdev
  *             st.st_size = stat.st_size
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_gid); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 907, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_gid); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 912, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = __Pyx_PyInt_As_short(__pyx_t_3); if (unlikely((__pyx_t_6 == (short)-1) && PyErr_Occurred())) __PYX_ERR(2, 907, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_short(__pyx_t_3); if (unlikely((__pyx_t_6 == (short)-1) && PyErr_Occurred())) __PYX_ERR(2, 912, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_gid = __pyx_t_6;
 
-    /* "pyarchive/backends/cython/_archive.pyx":908
+    /* "pyarchive/backends/cython/_archive.pyx":913
  *             st.st_uid = stat.st_uid
  *             st.st_gid = stat.st_gid
  *             st.st_rdev = stat.st_rdev             # <<<<<<<<<<<<<<
  *             st.st_size = stat.st_size
  *             st.st_atime = stat.st_atime
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_rdev); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 908, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_rdev); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 913, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyInt_As_dev_t(__pyx_t_3); if (unlikely((__pyx_t_4 == ((dev_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 908, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_As_dev_t(__pyx_t_3); if (unlikely((__pyx_t_4 == ((dev_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 913, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_rdev = __pyx_t_4;
 
-    /* "pyarchive/backends/cython/_archive.pyx":909
+    /* "pyarchive/backends/cython/_archive.pyx":914
  *             st.st_gid = stat.st_gid
  *             st.st_rdev = stat.st_rdev
  *             st.st_size = stat.st_size             # <<<<<<<<<<<<<<
  *             st.st_atime = stat.st_atime
  *             st.st_mtime = stat.st_mtime
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_size); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 909, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_size); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 914, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(2, 909, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(2, 914, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_size = __pyx_t_7;
 
-    /* "pyarchive/backends/cython/_archive.pyx":910
+    /* "pyarchive/backends/cython/_archive.pyx":915
  *             st.st_rdev = stat.st_rdev
  *             st.st_size = stat.st_size
  *             st.st_atime = stat.st_atime             # <<<<<<<<<<<<<<
  *             st.st_mtime = stat.st_mtime
  *             st.st_ctime = stat.st_ctime
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_atime); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 910, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_atime); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 915, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = __Pyx_PyInt_As_time_t(__pyx_t_3); if (unlikely((__pyx_t_8 == ((time_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 910, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_time_t(__pyx_t_3); if (unlikely((__pyx_t_8 == ((time_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 915, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_atime = __pyx_t_8;
 
-    /* "pyarchive/backends/cython/_archive.pyx":911
+    /* "pyarchive/backends/cython/_archive.pyx":916
  *             st.st_size = stat.st_size
  *             st.st_atime = stat.st_atime
  *             st.st_mtime = stat.st_mtime             # <<<<<<<<<<<<<<
  *             st.st_ctime = stat.st_ctime
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_mtime); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 911, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_mtime); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 916, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = __Pyx_PyInt_As_time_t(__pyx_t_3); if (unlikely((__pyx_t_8 == ((time_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 911, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_time_t(__pyx_t_3); if (unlikely((__pyx_t_8 == ((time_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 916, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_mtime = __pyx_t_8;
 
-    /* "pyarchive/backends/cython/_archive.pyx":912
+    /* "pyarchive/backends/cython/_archive.pyx":917
  *             st.st_atime = stat.st_atime
  *             st.st_mtime = stat.st_mtime
  *             st.st_ctime = stat.st_ctime             # <<<<<<<<<<<<<<
  * 
  *             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, &st)
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_ctime); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 912, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_stat, __pyx_n_s_st_ctime); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 917, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = __Pyx_PyInt_As_time_t(__pyx_t_3); if (unlikely((__pyx_t_8 == ((time_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 912, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_As_time_t(__pyx_t_3); if (unlikely((__pyx_t_8 == ((time_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 917, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_st.st_ctime = __pyx_t_8;
 
-    /* "pyarchive/backends/cython/_archive.pyx":914
+    /* "pyarchive/backends/cython/_archive.pyx":919
  *             st.st_ctime = stat.st_ctime
  * 
  *             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, &st)             # <<<<<<<<<<<<<<
@@ -33694,7 +33830,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
     __pyx_r = archive_read_disk_entry_from_file(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_entry->_entry_p, __pyx_v_fd, (&__pyx_v_st));
     goto __pyx_L0;
 
-    /* "pyarchive/backends/cython/_archive.pyx":901
+    /* "pyarchive/backends/cython/_archive.pyx":906
  *     cpdef inline int entry_from_file(self, ArchiveEntry entry, int fd, object stat):
  *         cdef la.stat st
  *         if stat is not None:             # <<<<<<<<<<<<<<
@@ -33703,7 +33839,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":916
+  /* "pyarchive/backends/cython/_archive.pyx":921
  *             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, &st)
  *         else:
  *             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, NULL)             # <<<<<<<<<<<<<<
@@ -33715,7 +33851,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
     goto __pyx_L0;
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":899
+  /* "pyarchive/backends/cython/_archive.pyx":904
  *         return la.archive_read_disk_set_symlink_hybrid(self._archive_p)
  * 
  *     cpdef inline int entry_from_file(self, ArchiveEntry entry, int fd, object stat):             # <<<<<<<<<<<<<<
@@ -33771,17 +33907,17 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_fd)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("entry_from_file", 1, 3, 3, 1); __PYX_ERR(2, 899, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("entry_from_file", 1, 3, 3, 1); __PYX_ERR(2, 904, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_stat)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("entry_from_file", 1, 3, 3, 2); __PYX_ERR(2, 899, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("entry_from_file", 1, 3, 3, 2); __PYX_ERR(2, 904, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "entry_from_file") < 0)) __PYX_ERR(2, 899, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "entry_from_file") < 0)) __PYX_ERR(2, 904, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -33791,18 +33927,18 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
     __pyx_v_entry = ((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *)values[0]);
-    __pyx_v_fd = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_fd == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 899, __pyx_L3_error)
+    __pyx_v_fd = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_fd == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 904, __pyx_L3_error)
     __pyx_v_stat = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("entry_from_file", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 899, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("entry_from_file", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 904, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.entry_from_file", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_entry), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry, 1, "entry", 0))) __PYX_ERR(2, 899, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_entry), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry, 1, "entry", 0))) __PYX_ERR(2, 904, __pyx_L1_error)
   __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_8entry_from_file(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self), __pyx_v_entry, __pyx_v_fd, __pyx_v_stat);
 
   /* function exit code */
@@ -33823,7 +33959,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("entry_from_file", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_entry_from_file(__pyx_v_self, __pyx_v_entry, __pyx_v_fd, __pyx_v_stat, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 899, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_entry_from_file(__pyx_v_self, __pyx_v_entry, __pyx_v_fd, __pyx_v_stat, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 904, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -33840,7 +33976,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":918
+/* "pyarchive/backends/cython/_archive.pyx":923
  *             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, NULL)
  * 
  *     cpdef inline str gname(self, la.la_int64_t gid):             # <<<<<<<<<<<<<<
@@ -33860,7 +33996,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_15
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("gname", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":920
+  /* "pyarchive/backends/cython/_archive.pyx":925
  *     cpdef inline str gname(self, la.la_int64_t gid):
  *         cdef const char* v
  *         v = la.archive_read_disk_gname(self._archive_p, gid)             # <<<<<<<<<<<<<<
@@ -33869,7 +34005,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_15
  */
   __pyx_v_v = archive_read_disk_gname(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_gid);
 
-  /* "pyarchive/backends/cython/_archive.pyx":921
+  /* "pyarchive/backends/cython/_archive.pyx":926
  *         cdef const char* v
  *         v = la.archive_read_disk_gname(self._archive_p, gid)
  *         return (<bytes> v).decode()             # <<<<<<<<<<<<<<
@@ -33877,20 +34013,20 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_15
  *     cpdef inline str uname(self, la.la_int64_t uid):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_v); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 921, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_v); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 926, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__pyx_t_1 == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-    __PYX_ERR(2, 921, __pyx_L1_error)
+    __PYX_ERR(2, 926, __pyx_L1_error)
   }
-  __pyx_t_2 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 921, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 926, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":918
+  /* "pyarchive/backends/cython/_archive.pyx":923
  *             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, NULL)
  * 
  *     cpdef inline str gname(self, la.la_int64_t gid):             # <<<<<<<<<<<<<<
@@ -33922,7 +34058,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("gname (wrapper)", 0);
   assert(__pyx_arg_gid); {
-    __pyx_v_gid = __Pyx_PyInt_As_int64_t(__pyx_arg_gid); if (unlikely((__pyx_v_gid == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 918, __pyx_L3_error)
+    __pyx_v_gid = __Pyx_PyInt_As_int64_t(__pyx_arg_gid); if (unlikely((__pyx_v_gid == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 923, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -33946,7 +34082,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("gname", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_gname(__pyx_v_self, __pyx_v_gid, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 918, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_gname(__pyx_v_self, __pyx_v_gid, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 923, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -33963,7 +34099,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":923
+/* "pyarchive/backends/cython/_archive.pyx":928
  *         return (<bytes> v).decode()
  * 
  *     cpdef inline str uname(self, la.la_int64_t uid):             # <<<<<<<<<<<<<<
@@ -33983,7 +34119,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_15
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("uname", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":925
+  /* "pyarchive/backends/cython/_archive.pyx":930
  *     cpdef inline str uname(self, la.la_int64_t uid):
  *         cdef const char * v
  *         v = la.archive_read_disk_uname(self._archive_p, uid)             # <<<<<<<<<<<<<<
@@ -33992,7 +34128,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_15
  */
   __pyx_v_v = archive_read_disk_uname(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_uid);
 
-  /* "pyarchive/backends/cython/_archive.pyx":926
+  /* "pyarchive/backends/cython/_archive.pyx":931
  *         cdef const char * v
  *         v = la.archive_read_disk_uname(self._archive_p, uid)
  *         return (<bytes> v).decode()             # <<<<<<<<<<<<<<
@@ -34000,20 +34136,20 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_15
  *     cpdef inline int set_standard_lookup(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_v); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 926, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_v); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 931, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__pyx_t_1 == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "decode");
-    __PYX_ERR(2, 926, __pyx_L1_error)
+    __PYX_ERR(2, 931, __pyx_L1_error)
   }
-  __pyx_t_2 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 926, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_bytes(((PyObject*)__pyx_t_1), 0, PY_SSIZE_T_MAX, NULL, NULL, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 931, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":923
+  /* "pyarchive/backends/cython/_archive.pyx":928
  *         return (<bytes> v).decode()
  * 
  *     cpdef inline str uname(self, la.la_int64_t uid):             # <<<<<<<<<<<<<<
@@ -34045,7 +34181,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("uname (wrapper)", 0);
   assert(__pyx_arg_uid); {
-    __pyx_v_uid = __Pyx_PyInt_As_int64_t(__pyx_arg_uid); if (unlikely((__pyx_v_uid == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 923, __pyx_L3_error)
+    __pyx_v_uid = __Pyx_PyInt_As_int64_t(__pyx_arg_uid); if (unlikely((__pyx_v_uid == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(2, 928, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -34069,7 +34205,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("uname", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_uname(__pyx_v_self, __pyx_v_uid, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 923, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_uname(__pyx_v_self, __pyx_v_uid, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 928, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34086,7 +34222,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":928
+/* "pyarchive/backends/cython/_archive.pyx":933
  *         return (<bytes> v).decode()
  * 
  *     cpdef inline int set_standard_lookup(self):             # <<<<<<<<<<<<<<
@@ -34100,7 +34236,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_standard_lookup", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":929
+  /* "pyarchive/backends/cython/_archive.pyx":934
  * 
  *     cpdef inline int set_standard_lookup(self):
  *         return la.archive_read_disk_set_standard_lookup(self._archive_p)             # <<<<<<<<<<<<<<
@@ -34110,7 +34246,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_set_standard_lookup(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":928
+  /* "pyarchive/backends/cython/_archive.pyx":933
  *         return (<bytes> v).decode()
  * 
  *     cpdef inline int set_standard_lookup(self):             # <<<<<<<<<<<<<<
@@ -34147,7 +34283,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_standard_lookup", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_standard_lookup(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 928, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_standard_lookup(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 933, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34164,7 +34300,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":931
+/* "pyarchive/backends/cython/_archive.pyx":936
  *         return la.archive_read_disk_set_standard_lookup(self._archive_p)
  * 
  *     cpdef inline int set_gname_lookup(self, object lookup, object cleanup):             # <<<<<<<<<<<<<<
@@ -34183,7 +34319,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_gname_lookup", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":938
+  /* "pyarchive/backends/cython/_archive.pyx":943
  *         :return:
  *         """
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))             # <<<<<<<<<<<<<<
@@ -34192,7 +34328,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_LookupData *)PyMem_Malloc((sizeof(struct __pyx_t_9pyarchive_8backends_6cython_8_archive_LookupData))));
 
-  /* "pyarchive/backends/cython/_archive.pyx":939
+  /* "pyarchive/backends/cython/_archive.pyx":944
  *         """
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
  *         if not data:             # <<<<<<<<<<<<<<
@@ -34202,16 +34338,16 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_t_1 = ((!(__pyx_v_data != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":940
+    /* "pyarchive/backends/cython/_archive.pyx":945
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
  *         if not data:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         data.lookup = <PyObject *> lookup
  *         data.cleanup = <PyObject *> cleanup
  */
-    PyErr_NoMemory(); __PYX_ERR(2, 940, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(2, 945, __pyx_L1_error)
 
-    /* "pyarchive/backends/cython/_archive.pyx":939
+    /* "pyarchive/backends/cython/_archive.pyx":944
  *         """
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
  *         if not data:             # <<<<<<<<<<<<<<
@@ -34220,7 +34356,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":941
+  /* "pyarchive/backends/cython/_archive.pyx":946
  *         if not data:
  *             raise MemoryError
  *         data.lookup = <PyObject *> lookup             # <<<<<<<<<<<<<<
@@ -34229,7 +34365,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_data->lookup = ((PyObject *)__pyx_v_lookup);
 
-  /* "pyarchive/backends/cython/_archive.pyx":942
+  /* "pyarchive/backends/cython/_archive.pyx":947
  *             raise MemoryError
  *         data.lookup = <PyObject *> lookup
  *         data.cleanup = <PyObject *> cleanup             # <<<<<<<<<<<<<<
@@ -34238,7 +34374,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_data->cleanup = ((PyObject *)__pyx_v_cleanup);
 
-  /* "pyarchive/backends/cython/_archive.pyx":943
+  /* "pyarchive/backends/cython/_archive.pyx":948
  *         data.lookup = <PyObject *> lookup
  *         data.cleanup = <PyObject *> cleanup
  *         return la.archive_read_disk_set_gname_lookup(self._archive_p,             # <<<<<<<<<<<<<<
@@ -34248,7 +34384,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_set_gname_lookup(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_data, __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cb, __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cleanup);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":931
+  /* "pyarchive/backends/cython/_archive.pyx":936
  *         return la.archive_read_disk_set_standard_lookup(self._archive_p)
  * 
  *     cpdef inline int set_gname_lookup(self, object lookup, object cleanup):             # <<<<<<<<<<<<<<
@@ -34300,11 +34436,11 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_cleanup)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_gname_lookup", 1, 2, 2, 1); __PYX_ERR(2, 931, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("set_gname_lookup", 1, 2, 2, 1); __PYX_ERR(2, 936, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_gname_lookup") < 0)) __PYX_ERR(2, 931, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_gname_lookup") < 0)) __PYX_ERR(2, 936, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -34317,7 +34453,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("set_gname_lookup", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 931, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("set_gname_lookup", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 936, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_gname_lookup", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -34339,7 +34475,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_gname_lookup", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_gname_lookup(__pyx_v_self, __pyx_v_lookup, __pyx_v_cleanup, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 931, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_gname_lookup(__pyx_v_self, __pyx_v_lookup, __pyx_v_cleanup, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 936, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34356,7 +34492,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":948
+/* "pyarchive/backends/cython/_archive.pyx":953
  *                                                      pyread_disk_lookup_cleanup)
  * 
  *     cpdef inline int set_uname_lookup(self, object lookup, object cleanup):             # <<<<<<<<<<<<<<
@@ -34375,7 +34511,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_uname_lookup", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":955
+  /* "pyarchive/backends/cython/_archive.pyx":960
  *         :return:
  *         """
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))             # <<<<<<<<<<<<<<
@@ -34384,7 +34520,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_LookupData *)PyMem_Malloc((sizeof(struct __pyx_t_9pyarchive_8backends_6cython_8_archive_LookupData))));
 
-  /* "pyarchive/backends/cython/_archive.pyx":956
+  /* "pyarchive/backends/cython/_archive.pyx":961
  *         """
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
  *         if not data:             # <<<<<<<<<<<<<<
@@ -34394,16 +34530,16 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_t_1 = ((!(__pyx_v_data != 0)) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":957
+    /* "pyarchive/backends/cython/_archive.pyx":962
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
  *         if not data:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         data.lookup = <PyObject *> lookup
  *         data.cleanup = <PyObject *> cleanup
  */
-    PyErr_NoMemory(); __PYX_ERR(2, 957, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(2, 962, __pyx_L1_error)
 
-    /* "pyarchive/backends/cython/_archive.pyx":956
+    /* "pyarchive/backends/cython/_archive.pyx":961
  *         """
  *         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
  *         if not data:             # <<<<<<<<<<<<<<
@@ -34412,7 +34548,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":958
+  /* "pyarchive/backends/cython/_archive.pyx":963
  *         if not data:
  *             raise MemoryError
  *         data.lookup = <PyObject *> lookup             # <<<<<<<<<<<<<<
@@ -34421,7 +34557,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_data->lookup = ((PyObject *)__pyx_v_lookup);
 
-  /* "pyarchive/backends/cython/_archive.pyx":959
+  /* "pyarchive/backends/cython/_archive.pyx":964
  *             raise MemoryError
  *         data.lookup = <PyObject *> lookup
  *         data.cleanup = <PyObject *> cleanup             # <<<<<<<<<<<<<<
@@ -34430,7 +34566,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_data->cleanup = ((PyObject *)__pyx_v_cleanup);
 
-  /* "pyarchive/backends/cython/_archive.pyx":960
+  /* "pyarchive/backends/cython/_archive.pyx":965
  *         data.lookup = <PyObject *> lookup
  *         data.cleanup = <PyObject *> cleanup
  *         return la.archive_read_disk_set_uname_lookup(self._archive_p,             # <<<<<<<<<<<<<<
@@ -34440,7 +34576,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_set_uname_lookup(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_data, __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cb, __pyx_f_9pyarchive_8backends_6cython_8_archive_pyread_disk_lookup_cleanup);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":948
+  /* "pyarchive/backends/cython/_archive.pyx":953
  *                                                      pyread_disk_lookup_cleanup)
  * 
  *     cpdef inline int set_uname_lookup(self, object lookup, object cleanup):             # <<<<<<<<<<<<<<
@@ -34492,11 +34628,11 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_cleanup)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("set_uname_lookup", 1, 2, 2, 1); __PYX_ERR(2, 948, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("set_uname_lookup", 1, 2, 2, 1); __PYX_ERR(2, 953, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_uname_lookup") < 0)) __PYX_ERR(2, 948, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_uname_lookup") < 0)) __PYX_ERR(2, 953, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -34509,7 +34645,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("set_uname_lookup", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 948, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("set_uname_lookup", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 953, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_uname_lookup", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -34531,7 +34667,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_uname_lookup", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_uname_lookup(__pyx_v_self, __pyx_v_lookup, __pyx_v_cleanup, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 948, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_uname_lookup(__pyx_v_self, __pyx_v_lookup, __pyx_v_cleanup, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 953, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34548,7 +34684,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":965
+/* "pyarchive/backends/cython/_archive.pyx":970
  *                                                      pyread_disk_lookup_cleanup)
  * 
  *     cpdef inline int open_a(self, const uint8_t[::1] name):             # <<<<<<<<<<<<<<
@@ -34563,7 +34699,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   Py_ssize_t __pyx_t_1;
   __Pyx_RefNannySetupContext("open_a", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":966
+  /* "pyarchive/backends/cython/_archive.pyx":971
  * 
  *     cpdef inline int open_a(self, const uint8_t[::1] name):
  *         return la.archive_read_disk_open(self._archive_p, <const char *>&name[0])             # <<<<<<<<<<<<<<
@@ -34574,7 +34710,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_open(__pyx_v_self->__pyx_base.__pyx_base._archive_p, ((char const *)(&(*((uint8_t const  *) ( /* dim=0 */ ((char *) (((uint8_t const  *) __pyx_v_name.data) + __pyx_t_1)) ))))));
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":965
+  /* "pyarchive/backends/cython/_archive.pyx":970
  *                                                      pyread_disk_lookup_cleanup)
  * 
  *     cpdef inline int open_a(self, const uint8_t[::1] name):             # <<<<<<<<<<<<<<
@@ -34600,7 +34736,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("open_a (wrapper)", 0);
   assert(__pyx_arg_name); {
-    __pyx_v_name = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_name, 0); if (unlikely(!__pyx_v_name.memview)) __PYX_ERR(2, 965, __pyx_L3_error)
+    __pyx_v_name = __Pyx_PyObject_to_MemoryviewSlice_dc_nn_uint8_t__const__(__pyx_arg_name, 0); if (unlikely(!__pyx_v_name.memview)) __PYX_ERR(2, 970, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -34624,8 +34760,8 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("open_a", 0);
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_name.memview)) { __Pyx_RaiseUnboundLocalError("name"); __PYX_ERR(2, 965, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_a(__pyx_v_self, __pyx_v_name, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 965, __pyx_L1_error)
+  if (unlikely(!__pyx_v_name.memview)) { __Pyx_RaiseUnboundLocalError("name"); __PYX_ERR(2, 970, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_a(__pyx_v_self, __pyx_v_name, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 970, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34643,7 +34779,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":968
+/* "pyarchive/backends/cython/_archive.pyx":973
  *         return la.archive_read_disk_open(self._archive_p, <const char *>&name[0])
  * 
  *     cpdef inline int open_w(self, str name):             # <<<<<<<<<<<<<<
@@ -34659,7 +34795,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("open_w", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":969
+  /* "pyarchive/backends/cython/_archive.pyx":974
  * 
  *     cpdef inline int open_w(self, str name):
  *         cdef wchar_t * name_ = PyUnicode_AsWideCharString(name, NULL)             # <<<<<<<<<<<<<<
@@ -34668,7 +34804,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   __pyx_v_name_ = PyUnicode_AsWideCharString(__pyx_v_name, NULL);
 
-  /* "pyarchive/backends/cython/_archive.pyx":970
+  /* "pyarchive/backends/cython/_archive.pyx":975
  *     cpdef inline int open_w(self, str name):
  *         cdef wchar_t * name_ = PyUnicode_AsWideCharString(name, NULL)
  *         try:             # <<<<<<<<<<<<<<
@@ -34677,7 +34813,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
  */
   /*try:*/ {
 
-    /* "pyarchive/backends/cython/_archive.pyx":971
+    /* "pyarchive/backends/cython/_archive.pyx":976
  *         cdef wchar_t * name_ = PyUnicode_AsWideCharString(name, NULL)
  *         try:
  *             return la.archive_read_disk_open_w(self._archive_p, <const wchar_t *>name_)             # <<<<<<<<<<<<<<
@@ -34688,7 +34824,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
     goto __pyx_L3_return;
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":973
+  /* "pyarchive/backends/cython/_archive.pyx":978
  *             return la.archive_read_disk_open_w(self._archive_p, <const wchar_t *>name_)
  *         finally:
  *             PyMem_Free(name_)             # <<<<<<<<<<<<<<
@@ -34704,7 +34840,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
     }
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":968
+  /* "pyarchive/backends/cython/_archive.pyx":973
  *         return la.archive_read_disk_open(self._archive_p, <const char *>&name[0])
  * 
  *     cpdef inline int open_w(self, str name):             # <<<<<<<<<<<<<<
@@ -34728,7 +34864,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("open_w (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_name), (&PyUnicode_Type), 1, "name", 1))) __PYX_ERR(2, 968, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_name), (&PyUnicode_Type), 1, "name", 1))) __PYX_ERR(2, 973, __pyx_L1_error)
   __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_22open_w(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self), ((PyObject*)__pyx_v_name));
 
   /* function exit code */
@@ -34749,7 +34885,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("open_w", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_w(__pyx_v_self, __pyx_v_name, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 968, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_w(__pyx_v_self, __pyx_v_name, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 973, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34766,7 +34902,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":975
+/* "pyarchive/backends/cython/_archive.pyx":980
  *             PyMem_Free(name_)
  * 
  *     cpdef inline int descend(self):             # <<<<<<<<<<<<<<
@@ -34780,7 +34916,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("descend", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":976
+  /* "pyarchive/backends/cython/_archive.pyx":981
  * 
  *     cpdef inline int descend(self):
  *         return la.archive_read_disk_descend(self._archive_p)             # <<<<<<<<<<<<<<
@@ -34790,7 +34926,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __pyx_r = archive_read_disk_descend(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":975
+  /* "pyarchive/backends/cython/_archive.pyx":980
  *             PyMem_Free(name_)
  * 
  *     cpdef inline int descend(self):             # <<<<<<<<<<<<<<
@@ -34827,7 +34963,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("descend", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_descend(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 975, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_descend(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 980, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34844,7 +34980,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":978
+/* "pyarchive/backends/cython/_archive.pyx":983
  *         return la.archive_read_disk_descend(self._archive_p)
  * 
  *     cpdef inline int can_descend(self):             # <<<<<<<<<<<<<<
@@ -34858,17 +34994,17 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("can_descend", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":979
+  /* "pyarchive/backends/cython/_archive.pyx":984
  * 
  *     cpdef inline int can_descend(self):
  *         return la.archive_read_disk_can_descend(self._archive_p)             # <<<<<<<<<<<<<<
  * 
- * @cython.no_gc
+ *     cpdef inline int current_filesystem(self):
  */
   __pyx_r = archive_read_disk_can_descend(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":978
+  /* "pyarchive/backends/cython/_archive.pyx":983
  *         return la.archive_read_disk_descend(self._archive_p)
  * 
  *     cpdef inline int can_descend(self):             # <<<<<<<<<<<<<<
@@ -34905,7 +35041,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("can_descend", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_can_descend(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 978, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_can_descend(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 983, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -34922,6 +35058,553 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
+/* "pyarchive/backends/cython/_archive.pyx":986
+ *         return la.archive_read_disk_can_descend(self._archive_p)
+ * 
+ *     cpdef inline int current_filesystem(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_current_filesystem(self._archive_p)
+ * 
+ */
+
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29current_filesystem(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("current_filesystem", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":987
+ * 
+ *     cpdef inline int current_filesystem(self):
+ *         return la.archive_read_disk_current_filesystem(self._archive_p)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef inline int current_filesystem_is_synthetic(self):
+ */
+  __pyx_r = archive_read_disk_current_filesystem(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
+  goto __pyx_L0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":986
+ *         return la.archive_read_disk_can_descend(self._archive_p)
+ * 
+ *     cpdef inline int current_filesystem(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_current_filesystem(self._archive_p)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29current_filesystem(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28current_filesystem[] = "ArchiveReadDisk.current_filesystem(self) -> int";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29current_filesystem(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("current_filesystem (wrapper)", 0);
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28current_filesystem(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28current_filesystem(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("current_filesystem", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 986, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.current_filesystem", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyarchive/backends/cython/_archive.pyx":989
+ *         return la.archive_read_disk_current_filesystem(self._archive_p)
+ * 
+ *     cpdef inline int current_filesystem_is_synthetic(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_current_filesystem_is_synthetic(self._archive_p)
+ * 
+ */
+
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31current_filesystem_is_synthetic(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_synthetic(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("current_filesystem_is_synthetic", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":990
+ * 
+ *     cpdef inline int current_filesystem_is_synthetic(self):
+ *         return la.archive_read_disk_current_filesystem_is_synthetic(self._archive_p)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef inline int current_filesystem_is_remote(self):
+ */
+  __pyx_r = archive_read_disk_current_filesystem_is_synthetic(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
+  goto __pyx_L0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":989
+ *         return la.archive_read_disk_current_filesystem(self._archive_p)
+ * 
+ *     cpdef inline int current_filesystem_is_synthetic(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_current_filesystem_is_synthetic(self._archive_p)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31current_filesystem_is_synthetic(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30current_filesystem_is_synthetic[] = "ArchiveReadDisk.current_filesystem_is_synthetic(self) -> int";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31current_filesystem_is_synthetic(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("current_filesystem_is_synthetic (wrapper)", 0);
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30current_filesystem_is_synthetic(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30current_filesystem_is_synthetic(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("current_filesystem_is_synthetic", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_synthetic(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 989, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.current_filesystem_is_synthetic", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyarchive/backends/cython/_archive.pyx":992
+ *         return la.archive_read_disk_current_filesystem_is_synthetic(self._archive_p)
+ * 
+ *     cpdef inline int current_filesystem_is_remote(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_current_filesystem_is_remote(self._archive_p)
+ * 
+ */
+
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_33current_filesystem_is_remote(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_remote(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("current_filesystem_is_remote", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":993
+ * 
+ *     cpdef inline int current_filesystem_is_remote(self):
+ *         return la.archive_read_disk_current_filesystem_is_remote(self._archive_p)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef inline int set_atime_restored(self):
+ */
+  __pyx_r = archive_read_disk_current_filesystem_is_remote(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
+  goto __pyx_L0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":992
+ *         return la.archive_read_disk_current_filesystem_is_synthetic(self._archive_p)
+ * 
+ *     cpdef inline int current_filesystem_is_remote(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_current_filesystem_is_remote(self._archive_p)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_33current_filesystem_is_remote(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_32current_filesystem_is_remote[] = "ArchiveReadDisk.current_filesystem_is_remote(self) -> int";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_33current_filesystem_is_remote(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("current_filesystem_is_remote (wrapper)", 0);
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_32current_filesystem_is_remote(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_32current_filesystem_is_remote(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("current_filesystem_is_remote", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_remote(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 992, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.current_filesystem_is_remote", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyarchive/backends/cython/_archive.pyx":995
+ *         return la.archive_read_disk_current_filesystem_is_remote(self._archive_p)
+ * 
+ *     cpdef inline int set_atime_restored(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_set_atime_restored(self._archive_p)
+ * 
+ */
+
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_35set_atime_restored(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_atime_restored(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_atime_restored", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":996
+ * 
+ *     cpdef inline int set_atime_restored(self):
+ *         return la.archive_read_disk_set_atime_restored(self._archive_p)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef inline int set_behavior(self, int flags):
+ */
+  __pyx_r = archive_read_disk_set_atime_restored(__pyx_v_self->__pyx_base.__pyx_base._archive_p);
+  goto __pyx_L0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":995
+ *         return la.archive_read_disk_current_filesystem_is_remote(self._archive_p)
+ * 
+ *     cpdef inline int set_atime_restored(self):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_set_atime_restored(self._archive_p)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_35set_atime_restored(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_34set_atime_restored[] = "ArchiveReadDisk.set_atime_restored(self) -> int";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_35set_atime_restored(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_atime_restored (wrapper)", 0);
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_34set_atime_restored(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_34set_atime_restored(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("set_atime_restored", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_atime_restored(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 995, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_atime_restored", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyarchive/backends/cython/_archive.pyx":998
+ *         return la.archive_read_disk_set_atime_restored(self._archive_p)
+ * 
+ *     cpdef inline int set_behavior(self, int flags):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_set_behavior(self._archive_p, flags)
+ * 
+ */
+
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_37set_behavior(PyObject *__pyx_v_self, PyObject *__pyx_arg_flags); /*proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_behavior(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, int __pyx_v_flags, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_behavior", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":999
+ * 
+ *     cpdef inline int set_behavior(self, int flags):
+ *         return la.archive_read_disk_set_behavior(self._archive_p, flags)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef inline int set_matching(self, ArchiveMatch ma, object excluded_func):
+ */
+  __pyx_r = archive_read_disk_set_behavior(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_flags);
+  goto __pyx_L0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":998
+ *         return la.archive_read_disk_set_atime_restored(self._archive_p)
+ * 
+ *     cpdef inline int set_behavior(self, int flags):             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_set_behavior(self._archive_p, flags)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_37set_behavior(PyObject *__pyx_v_self, PyObject *__pyx_arg_flags); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_36set_behavior[] = "ArchiveReadDisk.set_behavior(self, int flags) -> int";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_37set_behavior(PyObject *__pyx_v_self, PyObject *__pyx_arg_flags) {
+  int __pyx_v_flags;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_behavior (wrapper)", 0);
+  assert(__pyx_arg_flags); {
+    __pyx_v_flags = __Pyx_PyInt_As_int(__pyx_arg_flags); if (unlikely((__pyx_v_flags == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 998, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_behavior", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_36set_behavior(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self), ((int)__pyx_v_flags));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_36set_behavior(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, int __pyx_v_flags) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("set_behavior", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_behavior(__pyx_v_self, __pyx_v_flags, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 998, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_behavior", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyarchive/backends/cython/_archive.pyx":1001
+ *         return la.archive_read_disk_set_behavior(self._archive_p, flags)
+ * 
+ *     cpdef inline int set_matching(self, ArchiveMatch ma, object excluded_func):             # <<<<<<<<<<<<<<
+ *         cdef void* ud = <void*> excluded_func
+ *         return la.archive_read_disk_set_matching(self._archive_p, ma._archive_p, pyexcluded_func, ud)
+ */
+
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_39set_matching(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_matching(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_ma, PyObject *__pyx_v_excluded_func, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  void *__pyx_v_ud;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_matching", 0);
+
+  /* "pyarchive/backends/cython/_archive.pyx":1002
+ * 
+ *     cpdef inline int set_matching(self, ArchiveMatch ma, object excluded_func):
+ *         cdef void* ud = <void*> excluded_func             # <<<<<<<<<<<<<<
+ *         return la.archive_read_disk_set_matching(self._archive_p, ma._archive_p, pyexcluded_func, ud)
+ * 
+ */
+  __pyx_v_ud = ((void *)__pyx_v_excluded_func);
+
+  /* "pyarchive/backends/cython/_archive.pyx":1003
+ *     cpdef inline int set_matching(self, ArchiveMatch ma, object excluded_func):
+ *         cdef void* ud = <void*> excluded_func
+ *         return la.archive_read_disk_set_matching(self._archive_p, ma._archive_p, pyexcluded_func, ud)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = archive_read_disk_set_matching(__pyx_v_self->__pyx_base.__pyx_base._archive_p, __pyx_v_ma->__pyx_base._archive_p, __pyx_f_9pyarchive_8backends_6cython_8_archive_pyexcluded_func, __pyx_v_ud);
+  goto __pyx_L0;
+
+  /* "pyarchive/backends/cython/_archive.pyx":1001
+ *         return la.archive_read_disk_set_behavior(self._archive_p, flags)
+ * 
+ *     cpdef inline int set_matching(self, ArchiveMatch ma, object excluded_func):             # <<<<<<<<<<<<<<
+ *         cdef void* ud = <void*> excluded_func
+ *         return la.archive_read_disk_set_matching(self._archive_p, ma._archive_p, pyexcluded_func, ud)
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_39set_matching(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_38set_matching[] = "ArchiveReadDisk.set_matching(self, ArchiveMatch ma, excluded_func) -> int";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_39set_matching(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_ma = 0;
+  PyObject *__pyx_v_excluded_func = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_matching (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_ma,&__pyx_n_s_excluded_func,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ma)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_excluded_func)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("set_matching", 1, 2, 2, 1); __PYX_ERR(2, 1001, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "set_matching") < 0)) __PYX_ERR(2, 1001, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_ma = ((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *)values[0]);
+    __pyx_v_excluded_func = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("set_matching", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 1001, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_matching", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_ma), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveMatch, 1, "ma", 0))) __PYX_ERR(2, 1001, __pyx_L1_error)
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_38set_matching(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self), __pyx_v_ma, __pyx_v_excluded_func);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_38set_matching(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *__pyx_v_ma, PyObject *__pyx_v_excluded_func) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("set_matching", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_matching(__pyx_v_self, __pyx_v_ma, __pyx_v_excluded_func, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1001, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveReadDisk.set_matching", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
@@ -34929,20 +35612,20 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28__reduce_cython__[] = "ArchiveReadDisk.__reduce_cython__(self)";
-static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_41__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_40__reduce_cython__[] = "ArchiveReadDisk.__reduce_cython__(self)";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_41__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28__reduce_cython__(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_40__reduce_cython__(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_40__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -34987,20 +35670,20 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30__setstate_cython__[] = "ArchiveReadDisk.__setstate_cython__(self, __pyx_state)";
-static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_43__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static char __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_42__setstate_cython__[] = "ArchiveReadDisk.__setstate_cython__(self, __pyx_state)";
+static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_43__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30__setstate_cython__(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_42__setstate_cython__(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_42__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -35037,7 +35720,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDi
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":985
+/* "pyarchive/backends/cython/_archive.pyx":1010
  * cdef class ArchiveMatch(Archive):
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -35070,7 +35753,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch___cini
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":986
+  /* "pyarchive/backends/cython/_archive.pyx":1011
  * 
  *     def __cinit__(self):
  *         self._archive_p = la.archive_match_new()             # <<<<<<<<<<<<<<
@@ -35079,7 +35762,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch___cini
  */
   __pyx_v_self->__pyx_base._archive_p = archive_match_new();
 
-  /* "pyarchive/backends/cython/_archive.pyx":987
+  /* "pyarchive/backends/cython/_archive.pyx":1012
  *     def __cinit__(self):
  *         self._archive_p = la.archive_match_new()
  *         if self._archive_p == NULL:             # <<<<<<<<<<<<<<
@@ -35089,16 +35772,16 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch___cini
   __pyx_t_1 = ((__pyx_v_self->__pyx_base._archive_p == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":988
+    /* "pyarchive/backends/cython/_archive.pyx":1013
  *         self._archive_p = la.archive_match_new()
  *         if self._archive_p == NULL:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-    PyErr_NoMemory(); __PYX_ERR(2, 988, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(2, 1013, __pyx_L1_error)
 
-    /* "pyarchive/backends/cython/_archive.pyx":987
+    /* "pyarchive/backends/cython/_archive.pyx":1012
  *     def __cinit__(self):
  *         self._archive_p = la.archive_match_new()
  *         if self._archive_p == NULL:             # <<<<<<<<<<<<<<
@@ -35107,7 +35790,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch___cini
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":985
+  /* "pyarchive/backends/cython/_archive.pyx":1010
  * cdef class ArchiveMatch(Archive):
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -35126,7 +35809,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch___cini
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":990
+/* "pyarchive/backends/cython/_archive.pyx":1015
  *             raise MemoryError
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -35150,7 +35833,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__de
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":991
+  /* "pyarchive/backends/cython/_archive.pyx":1016
  * 
  *     def __dealloc__(self):
  *         if self._archive_p:             # <<<<<<<<<<<<<<
@@ -35160,7 +35843,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__de
   __pyx_t_1 = (__pyx_v_self->__pyx_base._archive_p != 0);
   if (__pyx_t_1) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":992
+    /* "pyarchive/backends/cython/_archive.pyx":1017
  *     def __dealloc__(self):
  *         if self._archive_p:
  *             la.archive_match_free(self._archive_p)             # <<<<<<<<<<<<<<
@@ -35169,7 +35852,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__de
  */
     (void)(archive_match_free(__pyx_v_self->__pyx_base._archive_p));
 
-    /* "pyarchive/backends/cython/_archive.pyx":991
+    /* "pyarchive/backends/cython/_archive.pyx":1016
  * 
  *     def __dealloc__(self):
  *         if self._archive_p:             # <<<<<<<<<<<<<<
@@ -35178,7 +35861,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__de
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":993
+  /* "pyarchive/backends/cython/_archive.pyx":1018
  *         if self._archive_p:
  *             la.archive_match_free(self._archive_p)
  *         self._archive_p = NULL             # <<<<<<<<<<<<<<
@@ -35187,7 +35870,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__de
  */
   __pyx_v_self->__pyx_base._archive_p = NULL;
 
-  /* "pyarchive/backends/cython/_archive.pyx":990
+  /* "pyarchive/backends/cython/_archive.pyx":1015
  *             raise MemoryError
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -35199,7 +35882,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_2__de
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":995
+/* "pyarchive/backends/cython/_archive.pyx":1020
  *         self._archive_p = NULL
  * 
  *     cpdef inline int match_path_unmatched_inclusions(self):             # <<<<<<<<<<<<<<
@@ -35214,7 +35897,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12Archiv
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("match_path_unmatched_inclusions", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":997
+  /* "pyarchive/backends/cython/_archive.pyx":1022
  *     cpdef inline int match_path_unmatched_inclusions(self):
  *         cdef int ret
  *         with nogil:             # <<<<<<<<<<<<<<
@@ -35229,7 +35912,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12Archiv
       #endif
       /*try:*/ {
 
-        /* "pyarchive/backends/cython/_archive.pyx":998
+        /* "pyarchive/backends/cython/_archive.pyx":1023
  *         cdef int ret
  *         with nogil:
  *             ret = la.archive_match_path_unmatched_inclusions(self._archive_p)             # <<<<<<<<<<<<<<
@@ -35239,7 +35922,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12Archiv
         __pyx_v_ret = archive_match_path_unmatched_inclusions(__pyx_v_self->__pyx_base._archive_p);
       }
 
-      /* "pyarchive/backends/cython/_archive.pyx":997
+      /* "pyarchive/backends/cython/_archive.pyx":1022
  *     cpdef inline int match_path_unmatched_inclusions(self):
  *         cdef int ret
  *         with nogil:             # <<<<<<<<<<<<<<
@@ -35258,7 +35941,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12Archiv
       }
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":999
+  /* "pyarchive/backends/cython/_archive.pyx":1024
  *         with nogil:
  *             ret = la.archive_match_path_unmatched_inclusions(self._archive_p)
  *         return ret             # <<<<<<<<<<<<<<
@@ -35268,7 +35951,7 @@ static CYTHON_INLINE int __pyx_f_9pyarchive_8backends_6cython_8_archive_12Archiv
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":995
+  /* "pyarchive/backends/cython/_archive.pyx":1020
  *         self._archive_p = NULL
  * 
  *     cpdef inline int match_path_unmatched_inclusions(self):             # <<<<<<<<<<<<<<
@@ -35305,7 +35988,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("match_path_unmatched_inclusions", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_match_path_unmatched_inclusions(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 995, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_match_path_unmatched_inclusions(__pyx_v_self, 1)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1020, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -35437,18 +36120,19 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1007
+/* "pyarchive/backends/cython/_archive.pyx":1032
  *         la.archive_entry* _entry_p
  * 
- *     def __cinit__(self, Archive archive = None):             # <<<<<<<<<<<<<<
- *         if archive is None:
- *             self._entry_p = la.archive_entry_new2(NULL)
+ *     def __cinit__(self, Archive archive = None, bint _init = True):             # <<<<<<<<<<<<<<
+ *         if _init:
+ *             if archive is None:
  */
 
 /* Python wrapper */
 static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *__pyx_v_archive = 0;
+  int __pyx_v__init;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -35456,13 +36140,15 @@ static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_1__cin
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_archive,0};
-    PyObject* values[1] = {0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_archive,&__pyx_n_s_init,0};
+    PyObject* values[2] = {0,0};
     values[0] = (PyObject *)((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *)Py_None);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         CYTHON_FALLTHROUGH;
         case  0: break;
@@ -35475,12 +36161,20 @@ static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_1__cin
           PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_archive);
           if (value) { values[0] = value; kw_args--; }
         }
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_init);
+          if (value) { values[1] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(2, 1007, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(2, 1032, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         CYTHON_FALLTHROUGH;
         case  0: break;
@@ -35488,17 +36182,22 @@ static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_1__cin
       }
     }
     __pyx_v_archive = ((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *)values[0]);
+    if (values[1]) {
+      __pyx_v__init = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v__init == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 1032, __pyx_L3_error)
+    } else {
+      __pyx_v__init = ((int)1);
+    }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 1007, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 1032, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveEntry.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_archive), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_Archive, 1, "archive", 0))) __PYX_ERR(2, 1007, __pyx_L1_error)
-  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cinit__(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *)__pyx_v_self), __pyx_v_archive);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_archive), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_Archive, 1, "archive", 0))) __PYX_ERR(2, 1032, __pyx_L1_error)
+  __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cinit__(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *)__pyx_v_self), __pyx_v_archive, __pyx_v__init);
 
   /* function exit code */
   goto __pyx_L0;
@@ -35509,7 +36208,7 @@ static int __pyx_pw_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_1__cin
   return __pyx_r;
 }
 
-static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cinit__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *__pyx_v_archive) {
+static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cinit__(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_v_self, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Archive *__pyx_v_archive, int __pyx_v__init) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -35519,82 +36218,114 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cini
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1008
+  /* "pyarchive/backends/cython/_archive.pyx":1033
  * 
- *     def __cinit__(self, Archive archive = None):
- *         if archive is None:             # <<<<<<<<<<<<<<
- *             self._entry_p = la.archive_entry_new2(NULL)
+ *     def __cinit__(self, Archive archive = None, bint _init = True):
+ *         if _init:             # <<<<<<<<<<<<<<
+ *             if archive is None:
+ *                 self._entry_p = la.archive_entry_new2(NULL)
+ */
+  __pyx_t_1 = (__pyx_v__init != 0);
+  if (__pyx_t_1) {
+
+    /* "pyarchive/backends/cython/_archive.pyx":1034
+ *     def __cinit__(self, Archive archive = None, bint _init = True):
+ *         if _init:
+ *             if archive is None:             # <<<<<<<<<<<<<<
+ *                 self._entry_p = la.archive_entry_new2(NULL)
+ *             else:
+ */
+    __pyx_t_1 = (((PyObject *)__pyx_v_archive) == Py_None);
+    __pyx_t_2 = (__pyx_t_1 != 0);
+    if (__pyx_t_2) {
+
+      /* "pyarchive/backends/cython/_archive.pyx":1035
+ *         if _init:
+ *             if archive is None:
+ *                 self._entry_p = la.archive_entry_new2(NULL)             # <<<<<<<<<<<<<<
+ *             else:
+ *                 self._entry_p = la.archive_entry_new2(archive._archive_p)
+ */
+      __pyx_v_self->_entry_p = archive_entry_new2(NULL);
+
+      /* "pyarchive/backends/cython/_archive.pyx":1034
+ *     def __cinit__(self, Archive archive = None, bint _init = True):
+ *         if _init:
+ *             if archive is None:             # <<<<<<<<<<<<<<
+ *                 self._entry_p = la.archive_entry_new2(NULL)
+ *             else:
+ */
+      goto __pyx_L4;
+    }
+
+    /* "pyarchive/backends/cython/_archive.pyx":1037
+ *                 self._entry_p = la.archive_entry_new2(NULL)
+ *             else:
+ *                 self._entry_p = la.archive_entry_new2(archive._archive_p)             # <<<<<<<<<<<<<<
+ *             if self._entry_p == NULL:
+ *                 raise MemoryError
+ */
+    /*else*/ {
+      __pyx_v_self->_entry_p = archive_entry_new2(__pyx_v_archive->_archive_p);
+    }
+    __pyx_L4:;
+
+    /* "pyarchive/backends/cython/_archive.pyx":1038
+ *             else:
+ *                 self._entry_p = la.archive_entry_new2(archive._archive_p)
+ *             if self._entry_p == NULL:             # <<<<<<<<<<<<<<
+ *                 raise MemoryError
  *         else:
  */
-  __pyx_t_1 = (((PyObject *)__pyx_v_archive) == Py_None);
-  __pyx_t_2 = (__pyx_t_1 != 0);
-  if (__pyx_t_2) {
+    __pyx_t_2 = ((__pyx_v_self->_entry_p == NULL) != 0);
+    if (unlikely(__pyx_t_2)) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":1009
- *     def __cinit__(self, Archive archive = None):
- *         if archive is None:
- *             self._entry_p = la.archive_entry_new2(NULL)             # <<<<<<<<<<<<<<
+      /* "pyarchive/backends/cython/_archive.pyx":1039
+ *                 self._entry_p = la.archive_entry_new2(archive._archive_p)
+ *             if self._entry_p == NULL:
+ *                 raise MemoryError             # <<<<<<<<<<<<<<
  *         else:
- *             self._entry_p = la.archive_entry_new2(archive._archive_p)
+ *             self._entry_p = NULL
  */
-    __pyx_v_self->_entry_p = archive_entry_new2(NULL);
+      PyErr_NoMemory(); __PYX_ERR(2, 1039, __pyx_L1_error)
 
-    /* "pyarchive/backends/cython/_archive.pyx":1008
- * 
- *     def __cinit__(self, Archive archive = None):
- *         if archive is None:             # <<<<<<<<<<<<<<
- *             self._entry_p = la.archive_entry_new2(NULL)
+      /* "pyarchive/backends/cython/_archive.pyx":1038
+ *             else:
+ *                 self._entry_p = la.archive_entry_new2(archive._archive_p)
+ *             if self._entry_p == NULL:             # <<<<<<<<<<<<<<
+ *                 raise MemoryError
  *         else:
+ */
+    }
+
+    /* "pyarchive/backends/cython/_archive.pyx":1033
+ * 
+ *     def __cinit__(self, Archive archive = None, bint _init = True):
+ *         if _init:             # <<<<<<<<<<<<<<
+ *             if archive is None:
+ *                 self._entry_p = la.archive_entry_new2(NULL)
  */
     goto __pyx_L3;
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":1011
- *             self._entry_p = la.archive_entry_new2(NULL)
+  /* "pyarchive/backends/cython/_archive.pyx":1041
+ *                 raise MemoryError
  *         else:
- *             self._entry_p = la.archive_entry_new2(archive._archive_p)             # <<<<<<<<<<<<<<
- *         if self._entry_p == NULL:
- *             raise MemoryError
- */
-  /*else*/ {
-    __pyx_v_self->_entry_p = archive_entry_new2(__pyx_v_archive->_archive_p);
-  }
-  __pyx_L3:;
-
-  /* "pyarchive/backends/cython/_archive.pyx":1012
- *         else:
- *             self._entry_p = la.archive_entry_new2(archive._archive_p)
- *         if self._entry_p == NULL:             # <<<<<<<<<<<<<<
- *             raise MemoryError
- * 
- */
-  __pyx_t_2 = ((__pyx_v_self->_entry_p == NULL) != 0);
-  if (unlikely(__pyx_t_2)) {
-
-    /* "pyarchive/backends/cython/_archive.pyx":1013
- *             self._entry_p = la.archive_entry_new2(archive._archive_p)
- *         if self._entry_p == NULL:
- *             raise MemoryError             # <<<<<<<<<<<<<<
+ *             self._entry_p = NULL             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-    PyErr_NoMemory(); __PYX_ERR(2, 1013, __pyx_L1_error)
-
-    /* "pyarchive/backends/cython/_archive.pyx":1012
- *         else:
- *             self._entry_p = la.archive_entry_new2(archive._archive_p)
- *         if self._entry_p == NULL:             # <<<<<<<<<<<<<<
- *             raise MemoryError
- * 
- */
+  /*else*/ {
+    __pyx_v_self->_entry_p = NULL;
   }
+  __pyx_L3:;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1007
+  /* "pyarchive/backends/cython/_archive.pyx":1032
  *         la.archive_entry* _entry_p
  * 
- *     def __cinit__(self, Archive archive = None):             # <<<<<<<<<<<<<<
- *         if archive is None:
- *             self._entry_p = la.archive_entry_new2(NULL)
+ *     def __cinit__(self, Archive archive = None, bint _init = True):             # <<<<<<<<<<<<<<
+ *         if _init:
+ *             if archive is None:
  */
 
   /* function exit code */
@@ -35608,8 +36339,8 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry___cini
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1015
- *             raise MemoryError
+/* "pyarchive/backends/cython/_archive.pyx":1043
+ *             self._entry_p = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         if self._entry_p:
@@ -35632,7 +36363,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__de
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1016
+  /* "pyarchive/backends/cython/_archive.pyx":1044
  * 
  *     def __dealloc__(self):
  *         if self._entry_p:             # <<<<<<<<<<<<<<
@@ -35642,7 +36373,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__de
   __pyx_t_1 = (__pyx_v_self->_entry_p != 0);
   if (__pyx_t_1) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":1017
+    /* "pyarchive/backends/cython/_archive.pyx":1045
  *     def __dealloc__(self):
  *         if self._entry_p:
  *             la.archive_entry_free(self._entry_p)             # <<<<<<<<<<<<<<
@@ -35651,7 +36382,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__de
  */
     archive_entry_free(__pyx_v_self->_entry_p);
 
-    /* "pyarchive/backends/cython/_archive.pyx":1016
+    /* "pyarchive/backends/cython/_archive.pyx":1044
  * 
  *     def __dealloc__(self):
  *         if self._entry_p:             # <<<<<<<<<<<<<<
@@ -35660,7 +36391,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__de
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":1018
+  /* "pyarchive/backends/cython/_archive.pyx":1046
  *         if self._entry_p:
  *             la.archive_entry_free(self._entry_p)
  *         self._entry_p = NULL             # <<<<<<<<<<<<<<
@@ -35669,8 +36400,8 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__de
  */
   __pyx_v_self->_entry_p = NULL;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1015
- *             raise MemoryError
+  /* "pyarchive/backends/cython/_archive.pyx":1043
+ *             self._entry_p = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         if self._entry_p:
@@ -35681,11 +36412,11 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_2__de
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1021
+/* "pyarchive/backends/cython/_archive.pyx":1049
  * 
  *     @staticmethod
  *     cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr):             # <<<<<<<<<<<<<<
- *         cdef ArchiveEntry self = ArchiveEntry.__new__(ArchiveEntry)
+ *         cdef ArchiveEntry self = ArchiveEntry(_init=False)
  *         self._entry_p = ptr
  */
 
@@ -35694,55 +36425,61 @@ static CYTHON_INLINE struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_Arc
   struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("from_ptr", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1022
+  /* "pyarchive/backends/cython/_archive.pyx":1050
  *     @staticmethod
  *     cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr):
- *         cdef ArchiveEntry self = ArchiveEntry.__new__(ArchiveEntry)             # <<<<<<<<<<<<<<
+ *         cdef ArchiveEntry self = ArchiveEntry(_init=False)             # <<<<<<<<<<<<<<
  *         self._entry_p = ptr
  *         return self
  */
-  __pyx_t_1 = ((PyObject *)__pyx_tp_new_9pyarchive_8backends_6cython_8_archive_ArchiveEntry(((PyTypeObject *)__pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry), __pyx_empty_tuple, NULL)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1022, __pyx_L1_error)
-  __Pyx_GOTREF(((PyObject *)__pyx_t_1));
-  __pyx_v_self = ((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *)__pyx_t_1);
-  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1050, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_init, Py_False) < 0) __PYX_ERR(2, 1050, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1050, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_self = ((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *)__pyx_t_2);
+  __pyx_t_2 = 0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1023
+  /* "pyarchive/backends/cython/_archive.pyx":1051
  *     cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr):
- *         cdef ArchiveEntry self = ArchiveEntry.__new__(ArchiveEntry)
+ *         cdef ArchiveEntry self = ArchiveEntry(_init=False)
  *         self._entry_p = ptr             # <<<<<<<<<<<<<<
  *         return self
  * 
  */
   __pyx_v_self->_entry_p = __pyx_v_ptr;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1024
- *         cdef ArchiveEntry self = ArchiveEntry.__new__(ArchiveEntry)
+  /* "pyarchive/backends/cython/_archive.pyx":1052
+ *         cdef ArchiveEntry self = ArchiveEntry(_init=False)
  *         self._entry_p = ptr
  *         return self             # <<<<<<<<<<<<<<
  * 
- * 
+ *     # cpdef long long offset1(self):
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __pyx_r = __pyx_v_self;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1021
+  /* "pyarchive/backends/cython/_archive.pyx":1049
  * 
  *     @staticmethod
  *     cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr):             # <<<<<<<<<<<<<<
- *         cdef ArchiveEntry self = ArchiveEntry.__new__(ArchiveEntry)
+ *         cdef ArchiveEntry self = ArchiveEntry(_init=False)
  *         self._entry_p = ptr
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveEntry.from_ptr", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -35867,7 +36604,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1034
+/* "pyarchive/backends/cython/_archive.pyx":1066
  *     cdef la.archive_entry_linkresolver *_resolver
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -35900,7 +36637,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkres
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1035
+  /* "pyarchive/backends/cython/_archive.pyx":1067
  * 
  *     def __cinit__(self):
  *         self._resolver = la.archive_entry_linkresolver_new()             # <<<<<<<<<<<<<<
@@ -35909,7 +36646,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkres
  */
   __pyx_v_self->_resolver = archive_entry_linkresolver_new();
 
-  /* "pyarchive/backends/cython/_archive.pyx":1036
+  /* "pyarchive/backends/cython/_archive.pyx":1068
  *     def __cinit__(self):
  *         self._resolver = la.archive_entry_linkresolver_new()
  *         if self._resolver == NULL:             # <<<<<<<<<<<<<<
@@ -35919,16 +36656,16 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkres
   __pyx_t_1 = ((__pyx_v_self->_resolver == NULL) != 0);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":1037
+    /* "pyarchive/backends/cython/_archive.pyx":1069
  *         self._resolver = la.archive_entry_linkresolver_new()
  *         if self._resolver == NULL:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-    PyErr_NoMemory(); __PYX_ERR(2, 1037, __pyx_L1_error)
+    PyErr_NoMemory(); __PYX_ERR(2, 1069, __pyx_L1_error)
 
-    /* "pyarchive/backends/cython/_archive.pyx":1036
+    /* "pyarchive/backends/cython/_archive.pyx":1068
  *     def __cinit__(self):
  *         self._resolver = la.archive_entry_linkresolver_new()
  *         if self._resolver == NULL:             # <<<<<<<<<<<<<<
@@ -35937,7 +36674,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkres
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":1034
+  /* "pyarchive/backends/cython/_archive.pyx":1066
  *     cdef la.archive_entry_linkresolver *_resolver
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -35956,7 +36693,7 @@ static int __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkres
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1039
+/* "pyarchive/backends/cython/_archive.pyx":1071
  *             raise MemoryError
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -35980,7 +36717,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkre
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1040
+  /* "pyarchive/backends/cython/_archive.pyx":1072
  * 
  *     def __dealloc__(self):
  *         if self._resolver:             # <<<<<<<<<<<<<<
@@ -35990,7 +36727,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkre
   __pyx_t_1 = (__pyx_v_self->_resolver != 0);
   if (__pyx_t_1) {
 
-    /* "pyarchive/backends/cython/_archive.pyx":1041
+    /* "pyarchive/backends/cython/_archive.pyx":1073
  *     def __dealloc__(self):
  *         if self._resolver:
  *             la.archive_entry_linkresolver_free(self._resolver)             # <<<<<<<<<<<<<<
@@ -35999,7 +36736,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkre
  */
     archive_entry_linkresolver_free(__pyx_v_self->_resolver);
 
-    /* "pyarchive/backends/cython/_archive.pyx":1040
+    /* "pyarchive/backends/cython/_archive.pyx":1072
  * 
  *     def __dealloc__(self):
  *         if self._resolver:             # <<<<<<<<<<<<<<
@@ -36008,7 +36745,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkre
  */
   }
 
-  /* "pyarchive/backends/cython/_archive.pyx":1042
+  /* "pyarchive/backends/cython/_archive.pyx":1074
  *         if self._resolver:
  *             la.archive_entry_linkresolver_free(self._resolver)
  *         self._resolver = NULL             # <<<<<<<<<<<<<<
@@ -36017,7 +36754,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkre
  */
   __pyx_v_self->_resolver = NULL;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1039
+  /* "pyarchive/backends/cython/_archive.pyx":1071
  *             raise MemoryError
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -36029,7 +36766,7 @@ static void __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkre
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1044
+/* "pyarchive/backends/cython/_archive.pyx":1076
  *         self._resolver = NULL
  * 
  *     cpdef inline set_strategy(self, int format_code):             # <<<<<<<<<<<<<<
@@ -36043,7 +36780,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_strategy", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1045
+  /* "pyarchive/backends/cython/_archive.pyx":1077
  * 
  *     cpdef inline set_strategy(self, int format_code):
  *         la.archive_entry_linkresolver_set_strategy(self._resolver, format_code)             # <<<<<<<<<<<<<<
@@ -36052,7 +36789,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24
  */
   archive_entry_linkresolver_set_strategy(__pyx_v_self->_resolver, __pyx_v_format_code);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1044
+  /* "pyarchive/backends/cython/_archive.pyx":1076
  *         self._resolver = NULL
  * 
  *     cpdef inline set_strategy(self, int format_code):             # <<<<<<<<<<<<<<
@@ -36079,7 +36816,7 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_strategy (wrapper)", 0);
   assert(__pyx_arg_format_code); {
-    __pyx_v_format_code = __Pyx_PyInt_As_int(__pyx_arg_format_code); if (unlikely((__pyx_v_format_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 1044, __pyx_L3_error)
+    __pyx_v_format_code = __Pyx_PyInt_As_int(__pyx_arg_format_code); if (unlikely((__pyx_v_format_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(2, 1076, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -36103,7 +36840,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("set_strategy", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_set_strategy(__pyx_v_self, __pyx_v_format_code, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1044, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_set_strategy(__pyx_v_self, __pyx_v_format_code, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1076, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -36120,7 +36857,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1047
+/* "pyarchive/backends/cython/_archive.pyx":1079
  *         la.archive_entry_linkresolver_set_strategy(self._resolver, format_code)
  * 
  *     cpdef inline linkify(self, ArchiveEntry a, ArchiveEntry b):             # <<<<<<<<<<<<<<
@@ -36134,7 +36871,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("linkify", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1048
+  /* "pyarchive/backends/cython/_archive.pyx":1080
  * 
  *     cpdef inline linkify(self, ArchiveEntry a, ArchiveEntry b):
  *         la.archive_entry_linkify(self._resolver, &a._entry_p, &b._entry_p)             # <<<<<<<<<<<<<<
@@ -36143,7 +36880,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24
  */
   archive_entry_linkify(__pyx_v_self->_resolver, (&__pyx_v_a->_entry_p), (&__pyx_v_b->_entry_p));
 
-  /* "pyarchive/backends/cython/_archive.pyx":1047
+  /* "pyarchive/backends/cython/_archive.pyx":1079
  *         la.archive_entry_linkresolver_set_strategy(self._resolver, format_code)
  * 
  *     cpdef inline linkify(self, ArchiveEntry a, ArchiveEntry b):             # <<<<<<<<<<<<<<
@@ -36193,11 +36930,11 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_b)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("linkify", 1, 2, 2, 1); __PYX_ERR(2, 1047, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("linkify", 1, 2, 2, 1); __PYX_ERR(2, 1079, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "linkify") < 0)) __PYX_ERR(2, 1047, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "linkify") < 0)) __PYX_ERR(2, 1079, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -36210,14 +36947,14 @@ static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("linkify", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 1047, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("linkify", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(2, 1079, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyarchive.backends.cython._archive.ArchiveEntryLinkresolver.linkify", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_a), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry, 1, "a", 0))) __PYX_ERR(2, 1047, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_b), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry, 1, "b", 0))) __PYX_ERR(2, 1047, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_a), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry, 1, "a", 0))) __PYX_ERR(2, 1079, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_b), __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry, 1, "b", 0))) __PYX_ERR(2, 1079, __pyx_L1_error)
   __pyx_r = __pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_6linkify(((struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver *)__pyx_v_self), __pyx_v_a, __pyx_v_b);
 
   /* function exit code */
@@ -36238,7 +36975,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("linkify", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_linkify(__pyx_v_self, __pyx_v_a, __pyx_v_b, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1047, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_linkify(__pyx_v_self, __pyx_v_a, __pyx_v_b, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1079, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -36255,7 +36992,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/_archive.pyx":1050
+/* "pyarchive/backends/cython/_archive.pyx":1082
  *         la.archive_entry_linkify(self._resolver, &a._entry_p, &b._entry_p)
  * 
  *     cpdef inline tuple partial_links(self):             # <<<<<<<<<<<<<<
@@ -36277,25 +37014,25 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("partial_links", 0);
 
-  /* "pyarchive/backends/cython/_archive.pyx":1052
+  /* "pyarchive/backends/cython/_archive.pyx":1084
  *     cpdef inline tuple partial_links(self):
  *         cdef unsigned int links
  *         cdef la.archive_entry * ret = la.archive_entry_partial_links(self._resolver, &links)             # <<<<<<<<<<<<<<
- *         return  ArchiveEntry.from_ptr(ret) ,links
+ *         return  ArchiveEntry.from_ptr(ret), links
  */
   __pyx_v_ret = archive_entry_partial_links(__pyx_v_self->_resolver, (&__pyx_v_links));
 
-  /* "pyarchive/backends/cython/_archive.pyx":1053
+  /* "pyarchive/backends/cython/_archive.pyx":1085
  *         cdef unsigned int links
  *         cdef la.archive_entry * ret = la.archive_entry_partial_links(self._resolver, &links)
- *         return  ArchiveEntry.from_ptr(ret) ,links             # <<<<<<<<<<<<<<
+ *         return  ArchiveEntry.from_ptr(ret), links             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_from_ptr(__pyx_v_ret)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1053, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_from_ptr(__pyx_v_ret)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1085, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_links); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1053, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_unsigned_int(__pyx_v_links); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1085, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1053, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1085, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -36307,7 +37044,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_24
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/_archive.pyx":1050
+  /* "pyarchive/backends/cython/_archive.pyx":1082
  *         la.archive_entry_linkify(self._resolver, &a._entry_p, &b._entry_p)
  * 
  *     cpdef inline tuple partial_links(self):             # <<<<<<<<<<<<<<
@@ -36351,7 +37088,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryL
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("partial_links", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_partial_links(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1050, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_partial_links(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1082, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -50174,8 +50911,14 @@ static PyMethodDef __pyx_methods_9pyarchive_8backends_6cython_8_archive_ArchiveR
   {"open_w", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_23open_w, METH_O, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_22open_w},
   {"descend", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_25descend, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_24descend},
   {"can_descend", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_27can_descend, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_26can_descend},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29__reduce_cython__, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28__reduce_cython__},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31__setstate_cython__, METH_O, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30__setstate_cython__},
+  {"current_filesystem", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_29current_filesystem, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_28current_filesystem},
+  {"current_filesystem_is_synthetic", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_31current_filesystem_is_synthetic, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_30current_filesystem_is_synthetic},
+  {"current_filesystem_is_remote", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_33current_filesystem_is_remote, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_32current_filesystem_is_remote},
+  {"set_atime_restored", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_35set_atime_restored, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_34set_atime_restored},
+  {"set_behavior", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_37set_behavior, METH_O, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_36set_behavior},
+  {"set_matching", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_39set_matching, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_38set_matching},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_41__reduce_cython__, METH_NOARGS, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_40__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_43__setstate_cython__, METH_O, __pyx_doc_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_42__setstate_cython__},
   {0, 0, 0, 0}
 };
 
@@ -51757,6 +52500,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_errno, __pyx_k_errno, sizeof(__pyx_k_errno), 0, 0, 1, 1},
   {&__pyx_n_s_error, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 1},
   {&__pyx_n_s_error_string, __pyx_k_error_string, sizeof(__pyx_k_error_string), 0, 0, 1, 1},
+  {&__pyx_n_s_excluded_func, __pyx_k_excluded_func, sizeof(__pyx_k_excluded_func), 0, 0, 1, 1},
   {&__pyx_n_s_extract, __pyx_k_extract, sizeof(__pyx_k_extract), 0, 0, 1, 1},
   {&__pyx_n_s_extract2, __pyx_k_extract2, sizeof(__pyx_k_extract2), 0, 0, 1, 1},
   {&__pyx_n_s_extract_set_progress_callback, __pyx_k_extract_set_progress_callback, sizeof(__pyx_k_extract_set_progress_callback), 0, 0, 1, 1},
@@ -51783,6 +52527,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_id, __pyx_k_id, sizeof(__pyx_k_id), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_init, __pyx_k_init, sizeof(__pyx_k_init), 0, 0, 1, 1},
+  {&__pyx_n_s_init_2, __pyx_k_init_2, sizeof(__pyx_k_init_2), 0, 0, 1, 1},
   {&__pyx_n_s_ino, __pyx_k_ino, sizeof(__pyx_k_ino), 0, 0, 1, 1},
   {&__pyx_n_s_is_disk, __pyx_k_is_disk, sizeof(__pyx_k_is_disk), 0, 0, 1, 1},
   {&__pyx_n_s_itemsize, __pyx_k_itemsize, sizeof(__pyx_k_itemsize), 0, 0, 1, 1},
@@ -51794,6 +52539,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u_libarchive_is_not_build_with_lib_3, __pyx_k_libarchive_is_not_build_with_lib_3, sizeof(__pyx_k_libarchive_is_not_build_with_lib_3), 0, 1, 0, 0},
   {&__pyx_kp_u_libarchive_is_not_build_with_zli, __pyx_k_libarchive_is_not_build_with_zli, sizeof(__pyx_k_libarchive_is_not_build_with_zli), 0, 1, 0, 0},
   {&__pyx_n_s_lookup, __pyx_k_lookup, sizeof(__pyx_k_lookup), 0, 0, 1, 1},
+  {&__pyx_n_s_ma, __pyx_k_ma, sizeof(__pyx_k_ma), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_match, __pyx_k_match, sizeof(__pyx_k_match), 0, 0, 1, 1},
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
@@ -52337,7 +53083,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__36 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_msg, __pyx_n_s_errno, __pyx_n_s_retcode, __pyx_n_s_archive_p); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(2, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(5, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyarchive_backends_cython__archi_2, __pyx_n_s_init, 18, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(2, 18, __pyx_L1_error)
+  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(5, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyarchive_backends_cython__archi_2, __pyx_n_s_init_2, 18, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(2, 18, __pyx_L1_error)
 
   /* "pyarchive/backends/cython/_archive.pyx":24
  *         self.archive_p = archive_p
@@ -52689,60 +53435,66 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.open_w = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, PyObject *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_open_w;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.descend = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_descend;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.can_descend = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_can_descend;
+  __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.current_filesystem = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem;
+  __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.current_filesystem_is_synthetic = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_synthetic;
+  __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.current_filesystem_is_remote = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_current_filesystem_is_remote;
+  __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.set_atime_restored = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_atime_restored;
+  __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.set_behavior = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, int, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_behavior;
+  __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.set_matching = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk *, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *, PyObject *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_15ArchiveReadDisk_set_matching;
   __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_base = __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveRead;
-  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 886, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 891, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_dictoffset && __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 886, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveReadDisk, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 886, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 886, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 891, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveReadDisk, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 891, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk) < 0) __PYX_ERR(2, 891, __pyx_L1_error)
   __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk = &__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveReadDisk;
   __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveMatch = &__pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveMatch;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.__pyx_base = *__pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_Archive;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.match_path_unmatched_inclusions = (int (*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveMatch *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveMatch_match_path_unmatched_inclusions;
   __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_base = __pyx_ptype_9pyarchive_8backends_6cython_8_archive_Archive;
-  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 983, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 1008, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_dictoffset && __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 983, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveMatch, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 983, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 983, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 1008, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveMatch, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 1008, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch) < 0) __PYX_ERR(2, 1008, __pyx_L1_error)
   __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveMatch = &__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveMatch;
   __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveEntry = &__pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveEntry;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.from_ptr = (struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *(*)(struct archive_entry *))__pyx_f_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_from_ptr;
-  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1003, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1028, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.tp_dictoffset && __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1003, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveEntry, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1003, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1003, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1028, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveEntry, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1028, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry) < 0) __PYX_ERR(2, 1028, __pyx_L1_error)
   __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntry = &__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntry;
   __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver = &__pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.set_strategy = (PyObject *(*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver *, int, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_set_strategy;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.linkify = (PyObject *(*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver *, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *, struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntry *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_linkify;
   __pyx_vtable_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.partial_links = (PyObject *(*)(struct __pyx_obj_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver *, int __pyx_skip_dispatch))__pyx_f_9pyarchive_8backends_6cython_8_archive_24ArchiveEntryLinkresolver_partial_links;
-  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1031, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1063, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.tp_dictoffset && __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1031, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveEntryLinkresolver, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1031, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1031, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver.tp_dict, __pyx_vtabptr_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1063, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ArchiveEntryLinkresolver, (PyObject *)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1063, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver) < 0) __PYX_ERR(2, 1063, __pyx_L1_error)
   __pyx_ptype_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver = &__pyx_type_9pyarchive_8backends_6cython_8_archive_ArchiveEntryLinkresolver;
   if (PyType_Ready(&__pyx_type_9pyarchive_8backends_6cython_8_archive___pyx_scope_struct__iter_entries) < 0) __PYX_ERR(2, 332, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
@@ -55138,7 +55890,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_5, __pyx_t_6);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_init, __pyx_t_5) < 0) __PYX_ERR(2, 18, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_init_2, __pyx_t_5) < 0) __PYX_ERR(2, 18, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "pyarchive/backends/cython/_archive.pyx":24

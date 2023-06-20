@@ -881,6 +881,11 @@ cdef void pyread_disk_lookup_cleanup(void *ud) with gil:
     func()
     PyMem_Free(data)
 
+cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
+    cdef object func = <object> ud
+    cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+    func(entry)
+    entry._entry_p = NULL # deref
 
 @cython.final
 cdef class ArchiveReadDisk(ArchiveRead):
@@ -978,6 +983,26 @@ cdef class ArchiveReadDisk(ArchiveRead):
     cpdef inline int can_descend(self):
         return la.archive_read_disk_can_descend(self._archive_p)
 
+    cpdef inline int current_filesystem(self):
+        return la.archive_read_disk_current_filesystem(self._archive_p)
+
+    cpdef inline int current_filesystem_is_synthetic(self):
+        return la.archive_read_disk_current_filesystem_is_synthetic(self._archive_p)
+
+    cpdef inline int current_filesystem_is_remote(self):
+        return la.archive_read_disk_current_filesystem_is_remote(self._archive_p)
+
+    cpdef inline int set_atime_restored(self):
+        return la.archive_read_disk_set_atime_restored(self._archive_p)
+
+    cpdef inline int set_behavior(self, int flags):
+        return la.archive_read_disk_set_behavior(self._archive_p, flags)
+
+    cpdef inline int set_matching(self, ArchiveMatch ma, object excluded_func):
+        cdef void* ud = <void*> excluded_func
+        return la.archive_read_disk_set_matching(self._archive_p, ma._archive_p, pyexcluded_func, ud)
+
+
 @cython.no_gc
 @cython.final
 cdef class ArchiveMatch(Archive):
@@ -1004,13 +1029,16 @@ cdef class ArchiveEntry:
     cdef:
         la.archive_entry* _entry_p
 
-    def __cinit__(self, Archive archive = None):
-        if archive is None:
-            self._entry_p = la.archive_entry_new2(NULL)
+    def __cinit__(self, Archive archive = None, bint _init = True):
+        if _init:
+            if archive is None:
+                self._entry_p = la.archive_entry_new2(NULL)
+            else:
+                self._entry_p = la.archive_entry_new2(archive._archive_p)
+            if self._entry_p == NULL:
+                raise MemoryError
         else:
-            self._entry_p = la.archive_entry_new2(archive._archive_p)
-        if self._entry_p == NULL:
-            raise MemoryError
+            self._entry_p = NULL
 
     def __dealloc__(self):
         if self._entry_p:
@@ -1019,11 +1047,15 @@ cdef class ArchiveEntry:
 
     @staticmethod
     cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr):
-        cdef ArchiveEntry self = ArchiveEntry.__new__(ArchiveEntry)
+        cdef ArchiveEntry self = ArchiveEntry(_init=False)
         self._entry_p = ptr
         return self
 
-
+    # cpdef long long offset1(self):
+    #     return <long long><void*>self
+    #
+    # cpdef long long offset2(self):
+    #     return <long long> <void *> &self._entry_p
 
 @cython.freelist(8)
 @cython.no_gc
@@ -1050,4 +1082,4 @@ cdef class ArchiveEntryLinkresolver:
     cpdef inline tuple partial_links(self):
         cdef unsigned int links
         cdef la.archive_entry * ret = la.archive_entry_partial_links(self._resolver, &links)
-        return  ArchiveEntry.from_ptr(ret) ,links
+        return  ArchiveEntry.from_ptr(ret), links
