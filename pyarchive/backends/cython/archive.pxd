@@ -7,7 +7,7 @@ from libc.time cimport time_t
 from posix.types cimport dev_t
 
 cdef extern from * nogil:
-    ctypedef struct stat:
+    cdef struct stat:
         dev_t         st_dev
         unsigned short         st_ino
         unsigned short st_mode

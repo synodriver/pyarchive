@@ -2,13 +2,16 @@
 # cython: cdivision=True
 cimport cython
 from libc.stdint cimport uint8_t
-
+from libc.stddef cimport wchar_t
 from cpython.mem cimport PyMem_Malloc
 from cpython.bytes cimport PyBytes_FromStringAndSize
 
 include "./consts.pxi"
 include "./config.pxi"
 include "./pystream.pxi"
+
+cdef extern from "Python.h":
+    wchar_t * PyUnicode_AsWideCharString(object s, Py_ssize_t *size)
 
 class ArchiveError(Exception):
 
@@ -157,12 +160,15 @@ cdef void _pyprogress_func(void* ud) with gil:
     cdef object func = <object> ud
     func()
 
-@cython.final
+
 cdef class ArchiveRead(Archive):
     # cdef:
     #     dict callbackref # 使对callback的引用变成强引用
-    def __cinit__(self):
-        self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
+    def __cinit__(self, bint is_disk = False):
+        if is_disk:
+            self._archive_p = la.archive_read_disk_new()
+        else:
+            self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
         if self._archive_p == NULL:
             raise MemoryError
 
@@ -171,51 +177,51 @@ cdef class ArchiveRead(Archive):
             la.archive_read_free(self._archive_p)
         self._archive_p = NULL
 
-    cpdef inline int close(self):
+    cpdef int close(self):
         cdef int ret = la.archive_read_close(self._archive_p)
         if ret != la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline int support_filter_all(self):
+    cpdef int support_filter_all(self):
         return la.archive_read_support_filter_all(self._archive_p)
 
-    cpdef inline int support_filter_by_code(self, int code):
+    cpdef int support_filter_by_code(self, int code):
         return  la.archive_read_support_filter_by_code(self._archive_p, code)
 
-    cpdef inline int support_filter_bzip2(self):
+    cpdef int support_filter_bzip2(self):
         return  la.archive_read_support_filter_bzip2(self._archive_p)
 
-    cpdef inline int support_filter_gzip(self):
+    cpdef int support_filter_gzip(self):
         return  la.archive_read_support_filter_gzip(self._archive_p)
 
-    cpdef inline int support_filter_grzip(self):
+    cpdef int support_filter_grzip(self):
         return  la.archive_read_support_filter_grzip(self._archive_p)
 
-    cpdef inline int support_filter_lrzip(self):
+    cpdef int support_filter_lrzip(self):
         return  la.archive_read_support_filter_lrzip(self._archive_p)
 
-    cpdef inline int support_filter_lz4(self):
+    cpdef int support_filter_lz4(self):
         return  la.archive_read_support_filter_lz4(self._archive_p)
 
-    cpdef inline int support_filter_lzip(self):
+    cpdef int support_filter_lzip(self):
         return  la.archive_read_support_filter_lzip(self._archive_p)
 
-    cpdef inline int support_filter_lzma(self):
+    cpdef int support_filter_lzma(self):
         return  la.archive_read_support_filter_lzma(self._archive_p)
 
-    cpdef inline int support_filter_lzop(self):
+    cpdef int support_filter_lzop(self):
         return  la.archive_read_support_filter_lzop(self._archive_p)
 
-    cpdef inline int support_filter_none(self):
+    cpdef int support_filter_none(self):
         return  la.archive_read_support_filter_none(self._archive_p)
 
-    cpdef inline int support_filter_program(self, object command):
+    cpdef int support_filter_program(self, object command):
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
         return  la.archive_read_support_filter_program(self._archive_p, <const char *>command)
 
-    cpdef inline int support_filter_program_signature(self, object command, uint8_t[::1] signature):
+    cpdef int support_filter_program_signature(self, object command, uint8_t[::1] signature):
         # cdef object command_ = command
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
@@ -224,71 +230,71 @@ cdef class ArchiveRead(Archive):
                                                                  <const void*>&signature[0],
                                                                  <size_t>signature.shape[0])
 
-    cpdef inline int support_filter_rpm(self):
+    cpdef int support_filter_rpm(self):
         return  la.archive_read_support_filter_rpm(self._archive_p)
-    cpdef inline int support_filter_uu(self):
+    cpdef int support_filter_uu(self):
         return  la.archive_read_support_filter_uu(self._archive_p)
-    cpdef inline int support_filter_xz(self):
+    cpdef int support_filter_xz(self):
         return  la.archive_read_support_filter_xz(self._archive_p)
-    cpdef inline int support_filter_zstd(self):
+    cpdef int support_filter_zstd(self):
         return  la.archive_read_support_filter_zstd(self._archive_p)
 
-    cpdef inline int support_format_7zip(self):
+    cpdef int support_format_7zip(self):
         return la.archive_read_support_format_7zip(self._archive_p)
-    cpdef inline int support_format_all(self):
+    cpdef int support_format_all(self):
         return la.archive_read_support_format_all(self._archive_p)
-    cpdef inline int support_format_ar(self):
+    cpdef int support_format_ar(self):
         return la.archive_read_support_format_ar(self._archive_p)
-    cpdef inline int support_format_by_code(self, int code):
+    cpdef int support_format_by_code(self, int code):
         return la.archive_read_support_format_by_code(self._archive_p, code)
-    cpdef inline int support_format_cab(self):
+    cpdef int support_format_cab(self):
         return la.archive_read_support_format_cab(self._archive_p)
-    cpdef inline int support_format_cpio(self):
+    cpdef int support_format_cpio(self):
         return la.archive_read_support_format_cpio(self._archive_p)
-    cpdef inline int support_format_empty(self):
+    cpdef int support_format_empty(self):
         return la.archive_read_support_format_empty(self._archive_p)
-    cpdef inline int support_format_gnutar(self):
+    cpdef int support_format_gnutar(self):
         return la.archive_read_support_format_gnutar(self._archive_p)
-    cpdef inline int support_format_iso9660(self):
+    cpdef int support_format_iso9660(self):
         return la.archive_read_support_format_iso9660(self._archive_p)
-    cpdef inline int support_format_lha(self):
+    cpdef int support_format_lha(self):
         return la.archive_read_support_format_lha(self._archive_p)
-    cpdef inline int support_format_mtree(self):
+    cpdef int support_format_mtree(self):
         return la.archive_read_support_format_mtree(self._archive_p)
-    cpdef inline int support_format_rar(self):
+    cpdef int support_format_rar(self):
         return la.archive_read_support_format_rar(self._archive_p)
-    cpdef inline int support_format_rar5(self):
+    cpdef int support_format_rar5(self):
         return la.archive_read_support_format_rar5(self._archive_p)
-    cpdef inline int support_format_raw(self):
+    cpdef int support_format_raw(self):
         return la.archive_read_support_format_raw(self._archive_p)
-    cpdef inline int support_format_tar(self):
+    cpdef int support_format_tar(self):
         return la.archive_read_support_format_tar(self._archive_p)
-    cpdef inline int support_format_warc(self):
+    cpdef int support_format_warc(self):
         return la.archive_read_support_format_warc(self._archive_p)
-    cpdef inline int support_format_xar(self):
+    cpdef int support_format_xar(self):
         return la.archive_read_support_format_xar(self._archive_p)
-    cpdef inline int support_format_zip(self):
+    cpdef int support_format_zip(self):
         return la.archive_read_support_format_zip(self._archive_p)
-    cpdef inline int support_format_zip_streamable(self):
+    cpdef int support_format_zip_streamable(self):
         return la.archive_read_support_format_zip_streamable(self._archive_p)
-    cpdef inline int support_format_zip_seekable(self):
+    cpdef int support_format_zip_seekable(self):
         return la.archive_read_support_format_zip_seekable(self._archive_p)
-    cpdef inline int set_format(self, int code):
+    cpdef int set_format(self, int code):
         return la.archive_read_set_format(self._archive_p, code)
-    cpdef inline int append_filter(self, int code):
+    cpdef int append_filter(self, int code):
         return la.archive_read_append_filter(self._archive_p, code)
-    cpdef inline int append_filter_program(self, object command):
+    cpdef int append_filter_program(self, object command):
         # cdef object command_ = command
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
         return la.archive_read_append_filter_program(self._archive_p, <const char *>command)
-    cpdef inline int append_filter_program_signature(self, object command, uint8_t[::1] match):
+    cpdef int append_filter_program_signature(self, object command, uint8_t[::1] match):
         # cdef object command_ = command
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
         return la.archive_read_append_filter_program_signature(self._archive_p, <const char *> command, <const void*>&match[0], <size_t>match.shape[0])
 
-    cpdef inline int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
+    cpdef int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
         cdef PyStreamData * data = <PyStreamData *>PyMem_Malloc(sizeof(PyStreamData))
         if not data:
             raise MemoryError
@@ -308,7 +314,7 @@ cdef class ArchiveRead(Archive):
                                           pystream_close_callback)
         return ret
 
-    cpdef inline int open_memory(self, const uint8_t[::1] data, size_t read_size) except? -30:
+    cpdef int open_memory(self, const uint8_t[::1] data, size_t read_size) except? -30:
         cdef int ret
         with nogil:
             ret = la.archive_read_open_memory2(self._archive_p,
@@ -317,7 +323,7 @@ cdef class ArchiveRead(Archive):
                                                read_size)
         return ret
 
-    cpdef inline int open_fd(self, int fd, size_t block_size) except? -30:
+    cpdef int open_fd(self, int fd, size_t block_size) except? -30:
         cdef int ret
         with nogil:
             ret = la.archive_read_open_fd(self._archive_p, fd,  block_size)
@@ -349,7 +355,7 @@ cdef class ArchiveRead(Archive):
     def format_capabilities(self):
         return la.archive_read_format_capabilities(self._archive_p)
 
-    cpdef inline la.la_ssize_t readinto(self, uint8_t[::1] buf) except -1:
+    cpdef la.la_ssize_t readinto(self, uint8_t[::1] buf) except -1:
         """
         read data into buffer
         :param buf: Writable buffer
@@ -362,13 +368,13 @@ cdef class ArchiveRead(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline la.la_int64_t seek(self, la.la_int64_t offset, int whence):
+    cpdef la.la_int64_t seek(self, la.la_int64_t offset, int whence):
         cdef la.la_int64_t ret
         with nogil:
             ret = la.archive_seek_data(self._archive_p, offset, whence)
         return ret
 
-    cpdef inline tuple read_data_block(self):
+    cpdef tuple read_data_block(self):
         cdef:
             void* buf
             size_t size
@@ -382,10 +388,10 @@ cdef class ArchiveRead(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return PyBytes_FromStringAndSize(<char*>buf, <Py_ssize_t>size), offset
 
-    cdef inline int read_data_zerocopy(self, const void ** buf,  size_t *size, la.la_int64_t *offset) nogil:
+    cdef int read_data_zerocopy(self, const void ** buf,  size_t *size, la.la_int64_t *offset) nogil:
         return la.archive_read_data_block(self._archive_p, buf,  size, offset)
 
-    cpdef inline int skip(self):
+    cpdef int skip(self):
         """
         skips entire entry
         :return: 
@@ -395,13 +401,13 @@ cdef class ArchiveRead(Archive):
             ret = la.archive_read_data_skip(self._archive_p)
         return ret
 
-    cpdef inline int read_data_into_fd(self, int fd):
+    cpdef int read_data_into_fd(self, int fd):
         cdef int ret
         with nogil:
             ret = la.archive_read_data_into_fd(self._archive_p, fd)
         return ret
 
-    cpdef inline int set_format_option(self, object module, object option, object value):
+    cpdef int set_format_option(self, object module, object option, object value):
         # cdef:
         #     object module_ = module
         #     object option_ = option
@@ -418,7 +424,7 @@ cdef class ArchiveRead(Archive):
                                           <const char*> option,
                                           <const char*> value)
 
-    cpdef inline int set_filter_option(self, object module, object option, object value):
+    cpdef int set_filter_option(self, object module, object option, object value):
         # cdef:
         #     object module_ = module
         #     object option_ = option
@@ -435,7 +441,7 @@ cdef class ArchiveRead(Archive):
                                                  <const char *> option,
                                                  <const char *> value)
 
-    cpdef inline int set_option(self, object module, object option, object value):
+    cpdef int set_option(self, object module, object option, object value):
         # cdef:
         #     object module_ = module
         #     object option_ = option
@@ -452,14 +458,14 @@ cdef class ArchiveRead(Archive):
                                                  <const char *> option,
                                                  <const char *> value)
 
-    cpdef inline int set_options(self, object opts):
+    cpdef int set_options(self, object opts):
         return la.archive_read_set_options(self._archive_p,
                                           <const char *> opts)
 
-    cpdef inline int add_passphrase(self, object passphrase):
+    cpdef int add_passphrase(self, object passphrase):
         return la.archive_read_add_passphrase(self._archive_p,  <const char *>passphrase)
 
-    cpdef inline int set_passphrase_callback(self, object func):
+    cpdef int set_passphrase_callback(self, object func):
         """
         
         :param func: Callable[[], str|bytes]
@@ -468,13 +474,13 @@ cdef class ArchiveRead(Archive):
         cdef void* ud = <void*> func
         return la.archive_read_set_passphrase_callback(self._archive_p, ud, pyarchive_passphrase_callback)
 
-    cpdef inline int extract(self, ArchiveEntry entry, int flags):
+    cpdef int extract(self, ArchiveEntry entry, int flags):
         cdef int ret
         with nogil:
             ret = la.archive_read_extract(self._archive_p, entry._entry_p, flags)
         return ret
 
-    cpdef inline int extract2(self, ArchiveEntry entry, Archive ad):
+    cpdef int extract2(self, ArchiveEntry entry, Archive ad):
         """
         
         :param entry: 
@@ -486,14 +492,14 @@ cdef class ArchiveRead(Archive):
             ret = la.archive_read_extract2(self._archive_p, entry._entry_p, ad._archive_p)
         return ret
 
-    cpdef inline  extract_set_progress_callback(self, object func):
+    cpdef  extract_set_progress_callback(self, object func):
         cdef void * ud = <void *> func
         la.archive_read_extract_set_progress_callback(self._archive_p, _pyprogress_func, ud)
 
-    cpdef inline extract_set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
+    cpdef extract_set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
         la.archive_read_extract_set_skip_file(self._archive_p, dev, ino)
 
-    # cpdef inline int set_open_callback(self, object func):
+    # cpdef int set_open_callback(self, object func):
     #     self.callbacks.opener = <PyObject*>func
     #     self.callbackref["opener"] = func # 增加强引用
     #     if la.archive_read_set_callback_data(self._archive_p, &self.callbacks) == la.ARCHIVE_FATAL:
@@ -508,14 +514,13 @@ cdef class ArchiveRead(Archive):
     #     return la.archive_read_set_read_callback(self._archive_p, pyarchive_read_callback)
 
 @cython.no_gc
-@cython.final
 cdef class ArchiveWrite(Archive):
-    cdef readonly bint is_disk
+
     def __cinit__(self, bint is_disk = False):
         if is_disk:
             self._archive_p = la.archive_write_disk_new()
         else:
-            self._archive_p = la.archive_write_new() # todo 加上disk的逻辑
+            self._archive_p = la.archive_write_new()
         if self._archive_p == NULL:
             raise MemoryError
 
@@ -532,10 +537,10 @@ cdef class ArchiveWrite(Archive):
     def bytes_per_block(self, int value):
         la.archive_write_set_bytes_per_block(self._archive_p, value)
 
-    cpdef inline int set_bytes_per_block(self, int bytes_per_block):
+    cpdef int set_bytes_per_block(self, int bytes_per_block):
         return la.archive_write_set_bytes_per_block(self._archive_p, bytes_per_block)
 
-    cpdef inline int get_bytes_per_block(self):
+    cpdef int get_bytes_per_block(self):
         return la.archive_write_get_bytes_per_block(self._archive_p)
 
     @property
@@ -546,130 +551,130 @@ cdef class ArchiveWrite(Archive):
     def bytes_in_last_block(self, int value):
         la.archive_write_set_bytes_in_last_block(self._archive_p, value)
 
-    cpdef inline int set_bytes_in_last_block(self, int bytes_in_last_block):
+    cpdef int set_bytes_in_last_block(self, int bytes_in_last_block):
         return la.archive_write_set_bytes_in_last_block(self._archive_p, bytes_in_last_block)
 
-    cpdef inline int get_bytes_in_last_block(self):
+    cpdef int get_bytes_in_last_block(self):
         return la.archive_write_get_bytes_in_last_block(self._archive_p)
 
-    cpdef inline int set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
+    def set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
         return la.archive_write_set_skip_file(self._archive_p, dev, ino)
 
-    cpdef inline int add_filter(self, int filter_code):
+    cpdef int add_filter(self, int filter_code):
         return la.archive_write_add_filter(self._archive_p, filter_code)
 
-    cpdef inline int add_filter_by_name(self, object name):
+    cpdef int add_filter_by_name(self, object name):
         return la.archive_write_add_filter_by_name(self._archive_p, <const char *>name)
 
-    cpdef inline int add_filter_b64encode(self):
+    cpdef int add_filter_b64encode(self):
         return la.archive_write_add_filter_b64encode(self._archive_p)
 
-    cpdef inline int add_filter_bzip2(self):
+    cpdef int add_filter_bzip2(self):
         return la.archive_write_add_filter_bzip2(self._archive_p)
 
-    cpdef inline int add_filter_compress(self):
+    cpdef int add_filter_compress(self):
         return la.archive_write_add_filter_compress(self._archive_p)
 
-    cpdef inline int add_filter_grzip(self):
+    cpdef int add_filter_grzip(self):
         return la.archive_write_add_filter_grzip(self._archive_p)
 
-    cpdef inline int add_filter_gzip(self):
+    cpdef int add_filter_gzip(self):
         return la.archive_write_add_filter_gzip(self._archive_p)
 
-    cpdef inline int add_filter_lrzip(self):
+    cpdef int add_filter_lrzip(self):
         return la.archive_write_add_filter_lrzip(self._archive_p)
 
-    cpdef inline int add_filter_lz4(self):
+    cpdef int add_filter_lz4(self):
         return la.archive_write_add_filter_lz4(self._archive_p)
 
-    cpdef inline int add_filter_lzip(self):
+    cpdef int add_filter_lzip(self):
         return la.archive_write_add_filter_lzip(self._archive_p)
 
-    cpdef inline int add_filter_lzma(self):
+    cpdef int add_filter_lzma(self):
         return la.archive_write_add_filter_lzma(self._archive_p)
 
-    cpdef inline int add_filter_lzop(self):
+    cpdef int add_filter_lzop(self):
         return la.archive_write_add_filter_lzop(self._archive_p)
 
-    cpdef inline int add_filter_none(self):
+    cpdef int add_filter_none(self):
         return la.archive_write_add_filter_none(self._archive_p)
 
-    cpdef inline int add_filter_program(self, object cmd):
+    cpdef int add_filter_program(self, object cmd):
         return la.archive_write_add_filter_program(self._archive_p, <const char*> cmd)
 
-    cpdef inline int add_filter_uuencode(self):
+    cpdef int add_filter_uuencode(self):
         return la.archive_write_add_filter_uuencode(self._archive_p)
 
-    cpdef inline int add_filter_xz(self):
+    cpdef int add_filter_xz(self):
         return la.archive_write_add_filter_xz(self._archive_p)
 
-    cpdef inline int add_filter_zstd(self):
+    cpdef int add_filter_zstd(self):
         return la.archive_write_add_filter_zstd(self._archive_p)
 
-    cpdef inline int set_format(self, int format_code):
+    cpdef int set_format(self, int format_code):
         return la.archive_write_set_format(self._archive_p,  format_code)
 
-    cpdef inline int set_format_by_name(self, object name):
+    cpdef int set_format_by_name(self, object name):
         return la.archive_write_set_format_by_name(self._archive_p, <const char*> name)
 
-    cpdef inline int set_format_7zip(self):
+    cpdef int set_format_7zip(self):
         return la.archive_write_set_format_7zip(self._archive_p)
 
-    cpdef inline int set_format_ar_bsd(self):
+    cpdef int set_format_ar_bsd(self):
         return la.archive_write_set_format_ar_bsd(self._archive_p)
 
-    cpdef inline int set_format_ar_svr4(self):
+    cpdef int set_format_ar_svr4(self):
         return la.archive_write_set_format_ar_svr4(self._archive_p)
 
-    cpdef inline int set_format_cpio(self):
+    cpdef int set_format_cpio(self):
         return la.archive_write_set_format_cpio(self._archive_p)
-    cpdef inline int set_format_cpio_bin(self):
+    cpdef int set_format_cpio_bin(self):
         return la.archive_write_set_format_cpio_bin(self._archive_p)
-    cpdef inline int set_format_cpio_newc(self):
+    cpdef int set_format_cpio_newc(self):
         return la.archive_write_set_format_cpio_newc(self._archive_p)
-    cpdef inline int set_format_cpio_odc(self):
+    cpdef int set_format_cpio_odc(self):
         return la.archive_write_set_format_cpio_odc(self._archive_p)
-    cpdef inline int set_format_cpio_pwb(self):
+    cpdef int set_format_cpio_pwb(self):
         return la.archive_write_set_format_cpio_pwb(self._archive_p)
-    cpdef inline int set_format_gnutar(self):
+    cpdef int set_format_gnutar(self):
         return la.archive_write_set_format_gnutar(self._archive_p)
-    cpdef inline int set_format_iso9660(self):
+    cpdef int set_format_iso9660(self):
         return la.archive_write_set_format_iso9660(self._archive_p)
-    cpdef inline int set_format_mtree(self):
+    cpdef int set_format_mtree(self):
         return la.archive_write_set_format_mtree(self._archive_p)
-    cpdef inline int set_format_mtree_classic(self):
+    cpdef int set_format_mtree_classic(self):
         return la.archive_write_set_format_mtree_classic(self._archive_p)
-    cpdef inline int set_format_pax(self):
+    cpdef int set_format_pax(self):
         return la.archive_write_set_format_pax(self._archive_p)
-    cpdef inline int set_format_pax_restricted(self):
+    cpdef int set_format_pax_restricted(self):
         return la.archive_write_set_format_pax_restricted(self._archive_p)
-    cpdef inline int set_format_raw(self):
+    cpdef int set_format_raw(self):
         return la.archive_write_set_format_raw(self._archive_p)
-    cpdef inline int set_format_shar(self):
+    cpdef int set_format_shar(self):
         return la.archive_write_set_format_shar(self._archive_p)
-    cpdef inline int set_format_shar_dump(self):
+    cpdef int set_format_shar_dump(self):
         return la.archive_write_set_format_shar_dump(self._archive_p)
-    cpdef inline int set_format_ustar(self):
+    cpdef int set_format_ustar(self):
         return la.archive_write_set_format_ustar(self._archive_p)
-    cpdef inline int set_format_v7tar(self):
+    cpdef int set_format_v7tar(self):
         return la.archive_write_set_format_v7tar(self._archive_p)
-    cpdef inline int set_format_warc(self):
+    cpdef int set_format_warc(self):
         return la.archive_write_set_format_warc(self._archive_p)
-    cpdef inline int set_format_xar(self):
+    cpdef int set_format_xar(self):
         return la.archive_write_set_format_xar(self._archive_p)
-    cpdef inline int set_format_zip(self):
+    cpdef int set_format_zip(self):
         return la.archive_write_set_format_zip(self._archive_p)
 
-    cpdef inline int set_format_filter_by_ext(self, object filename):
+    cpdef int set_format_filter_by_ext(self, object filename):
         return la.archive_write_set_format_filter_by_ext(self._archive_p, <const char *>filename)
-    cpdef inline int set_format_filter_by_ext_def(self, object filename, object def_ext):
+    cpdef int set_format_filter_by_ext_def(self, object filename, object def_ext):
         return la.archive_write_set_format_filter_by_ext_def(self._archive_p, <const char *> filename,  <const char *> def_ext)
-    cpdef inline int zip_set_compression_deflate(self):
+    cpdef int zip_set_compression_deflate(self):
         return la.archive_write_zip_set_compression_deflate(self._archive_p)
-    cpdef inline int zip_set_compression_store(self):
+    cpdef int zip_set_compression_store(self):
         return la.archive_write_zip_set_compression_store(self._archive_p)
 
-    cpdef inline int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
+    cpdef int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
         cdef PyStreamData * data = <PyStreamData *> PyMem_Malloc(sizeof(PyStreamData))
         if not data:
             raise MemoryError
@@ -689,13 +694,13 @@ cdef class ArchiveWrite(Archive):
                                          NULL)
         return ret
 
-    cpdef inline int open_fd(self, int fd) except? -30:
+    cpdef int open_fd(self, int fd) except? -30:
         cdef int ret
         with nogil:
             ret = la.archive_write_open_fd(self._archive_p, fd)
         return ret
 
-    cpdef inline int open_memory(self, uint8_t[::1] data, size_t[::1] used) except? -30:
+    cpdef int open_memory(self, uint8_t[::1] data, size_t[::1] used) except? -30:
         """
         
         :param data: the buffer that will be written into
@@ -711,7 +716,7 @@ cdef class ArchiveWrite(Archive):
                                                &used[0])
         return ret
 
-    cpdef inline int write_header(self, ArchiveEntry entry):
+    cpdef int write_header(self, ArchiveEntry entry):
         cdef int ret
         with nogil:
             ret = la.archive_write_header(self._archive_p, entry._entry_p)
@@ -719,7 +724,7 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline la.la_ssize_t write(self, const uint8_t[::1] data):
+    cpdef la.la_ssize_t write(self, const uint8_t[::1] data):
         cdef la.la_ssize_t ret
         with nogil:
             ret = la.archive_write_data(self._archive_p, <const void *>&data[0], <size_t>data.shape[0])
@@ -727,7 +732,7 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline la.la_ssize_t write_data_block(self, const uint8_t[::1] data, la.la_int64_t offset):
+    cpdef la.la_ssize_t write_data_block(self, const uint8_t[::1] data, la.la_int64_t offset):
         cdef la.la_ssize_t ret
         with nogil:
             ret = la.archive_write_data_block(self._archive_p,  <const void *>&data[0], <size_t>data.shape[0], offset)
@@ -735,7 +740,7 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline int write_finish_entry(self):
+    cpdef int write_finish_entry(self):
         cdef int ret
         with nogil:
             ret = la.archive_write_finish_entry(self._archive_p)
@@ -743,17 +748,235 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline int close(self):
+    cpdef int close(self):
         cdef int ret = la.archive_write_close(self._archive_p)
         if ret < la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef inline int fail(self):
+    cpdef int fail(self):
         cdef int ret = la.archive_write_fail(self._archive_p)
         if ret < la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
+
+    cpdef int set_format_option(self, object module, object option, object value):
+        return la.archive_write_set_format_option(self._archive_p,
+                                           <const char*> module,
+                                          <const char*> option,
+                                          <const char*> value)
+
+    cpdef int set_filter_option(self, object module, object option, object value):
+        return la.archive_write_set_filter_option(self._archive_p,
+                                                  <const char *> module,
+                                                  <const char *> option,
+                                                    <const char *> value)
+
+    cpdef int set_option(self, object module, object option, object value):
+        return la.archive_write_set_option(self._archive_p,
+                                                  <const char *> module,
+                                                  <const char *> option,
+                                                  <const char *> value)
+
+    def set_options(self, object opts):
+        return la.archive_write_set_options(self._archive_p,
+                                           <const char *> opts)
+
+    cpdef int set_passphrase(self, object passphrase):
+        return la.archive_write_set_passphrase(self._archive_p, <const char *>passphrase)
+
+    cpdef int set_passphrase_callback(self, object func):
+        """
+
+        :param func: Callable[[], str|bytes]
+        :return: 
+        """
+        cdef void * ud = <void *> func
+        return la.archive_write_set_passphrase_callback(self._archive_p, ud, pyarchive_passphrase_callback)
+    # ARCHIVE_WRITE_DISK API
+
+cdef struct LookupData:
+    PyObject *lookup
+    PyObject *cleanup
+
+cdef la.la_int64_t pywrite_disk_lookup_cb(void *ud, const char *gname, la.la_int64_t gid) with gil:
+    cdef LookupData* data = <LookupData*>ud
+    cdef object func = <object>data.lookup
+    return func(gname, gid)
+
+cdef void pywrite_disk_lookup_cleanup(void *ud) with gil:
+    cdef LookupData * data = <LookupData *> ud
+    cdef object func = <object>data.cleanup
+    func()
+    PyMem_Free(data)
+
+@cython.final
+cdef class ArchiveWriteDisk(ArchiveWrite):
+    def __cinit__(self, bint is_disk = True):
+        assert self._archive_p is not NULL
+
+    def set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
+        return la.archive_write_disk_set_skip_file(self._archive_p, dev, ino)
+
+    def set_options(self, int flags):
+        """
+        Set flags to control how the next item gets created.
+        This accepts a bitmask of ARCHIVE_EXTRACT_XXX flags defined above.
+        :param flags: 
+        :return: 
+        """
+        return la.archive_write_disk_set_options(self._archive_p,  flags)
+
+    cpdef inline int set_standard_lookup(self):
+        return la.archive_write_disk_set_standard_lookup(self._archive_p )
+
+    cpdef inline int set_group_lookup(self, object lookup, object cleanup):
+        """
+        
+        :param lookup: Callable[[bytes, int], int] lookup_gid callback
+        :param cleanup: Callable[[], None] cleanup callback
+        :return: 
+        """
+        cdef LookupData * data = <LookupData *>PyMem_Malloc(sizeof(LookupData)) # todo 检查全部PyMem_Malloc
+        if not data:
+            raise MemoryError
+        data.lookup = <PyObject*>lookup
+        data.cleanup = <PyObject *> cleanup
+        return la.archive_write_disk_set_group_lookup(self._archive_p,
+                                                      data,
+                                                      pywrite_disk_lookup_cb,
+                                                      pywrite_disk_lookup_cleanup)
+
+    cpdef inline int set_user_lookup(self, object lookup, object cleanup):
+        """
+        
+        :param lookup: Callable[[bytes, int], int] lookup_gid callback
+        :param cleanup: Callable[[], None] cleanup callback
+        :return: 
+        """
+        cdef LookupData * data = <LookupData *>PyMem_Malloc(sizeof(LookupData))
+        if not data:
+            raise MemoryError
+        data.lookup = <PyObject*>lookup
+        data.cleanup = <PyObject *> cleanup
+        return la.archive_write_disk_set_user_lookup(self._archive_p,
+                                                      data,
+                                                      pywrite_disk_lookup_cb,
+                                                      pywrite_disk_lookup_cleanup)
+
+    cpdef la.la_int64_t gid(self, object name, la.la_int64_t gid):
+        return  la.archive_write_disk_gid(self._archive_p, <const char *>name, gid)
+
+    cpdef la.la_int64_t uid(self, object name, la.la_int64_t uid):
+        return la.archive_write_disk_uid(self._archive_p, <const char *> name, uid)
+
+cdef const char * pyread_disk_lookup_cb(void *ud, la.la_int64_t gid) with gil:
+    cdef LookupData * data = <LookupData *> ud
+    cdef object func = <object> data.lookup
+    return func(gid)
+
+cdef void pyread_disk_lookup_cleanup(void *ud) with gil:
+    cdef LookupData * data = <LookupData *> ud
+    cdef object func = <object> data.cleanup
+    func()
+    PyMem_Free(data)
+
+
+@cython.final
+cdef class ArchiveReadDisk(ArchiveRead):
+    def __cinit__(self, bint is_disk = True):
+        assert self._archive_p is not NULL
+
+    cpdef inline int set_symlink_logical(self):
+        return la.archive_read_disk_set_symlink_logical(self._archive_p)
+
+    cpdef inline int set_symlink_physical(self):
+        return la.archive_read_disk_set_symlink_physical(self._archive_p)
+
+    cpdef inline int set_symlink_hybrid(self):
+        return la.archive_read_disk_set_symlink_hybrid(self._archive_p)
+
+    cpdef inline int entry_from_file(self, ArchiveEntry entry, int fd, object stat):
+        cdef la.stat st
+        if stat is not None:
+            st.st_dev = stat.st_dev
+            st.st_ino = stat.st_ino
+            st.st_mode = stat.st_mode
+            st.st_nlink = stat.st_nlink
+            st.st_uid = stat.st_uid
+            st.st_gid = stat.st_gid
+            st.st_rdev = stat.st_rdev
+            st.st_size = stat.st_size
+            st.st_atime = stat.st_atime
+            st.st_mtime = stat.st_mtime
+            st.st_ctime = stat.st_ctime
+
+            return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, &st)
+        else:
+            return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, NULL)
+
+    cpdef inline str gname(self, la.la_int64_t gid):
+        cdef const char* v
+        v = la.archive_read_disk_gname(self._archive_p, gid)
+        return (<bytes> v).decode()
+
+    cpdef inline str uname(self, la.la_int64_t uid):
+        cdef const char * v
+        v = la.archive_read_disk_uname(self._archive_p, uid)
+        return (<bytes> v).decode()
+
+    cpdef inline int set_standard_lookup(self):
+        return la.archive_read_disk_set_standard_lookup(self._archive_p)
+
+    cpdef inline int set_gname_lookup(self, object lookup, object cleanup):
+        """
+
+        :param lookup: Callable[[bytes, int], int] lookup_gid callback
+        :param cleanup: Callable[[], None] cleanup callback
+        :return: 
+        """
+        cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
+        if not data:
+            raise MemoryError
+        data.lookup = <PyObject *> lookup
+        data.cleanup = <PyObject *> cleanup
+        return la.archive_read_disk_set_gname_lookup(self._archive_p,
+                                                     data,
+                                                     pyread_disk_lookup_cb,
+                                                     pyread_disk_lookup_cleanup)
+
+    cpdef inline int set_uname_lookup(self, object lookup, object cleanup):
+        """
+
+        :param lookup: Callable[[bytes, int], int] lookup_gid callback
+        :param cleanup: Callable[[], None] cleanup callback
+        :return: 
+        """
+        cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
+        if not data:
+            raise MemoryError
+        data.lookup = <PyObject *> lookup
+        data.cleanup = <PyObject *> cleanup
+        return la.archive_read_disk_set_uname_lookup(self._archive_p,
+                                                     data,
+                                                     pyread_disk_lookup_cb,
+                                                     pyread_disk_lookup_cleanup)
+
+    cpdef inline int open_a(self, const uint8_t[::1] name):
+        return la.archive_read_disk_open(self._archive_p, <const char *>&name[0])
+
+    cpdef inline int open_w(self, str name):
+        cdef wchar_t * name_ = PyUnicode_AsWideCharString(name, NULL)
+        try:
+            return la.archive_read_disk_open_w(self._archive_p, <const wchar_t *>name_)
+        finally:
+            PyMem_Free(name_)
+
+    cpdef inline int descend(self):
+        return la.archive_read_disk_descend(self._archive_p)
+
+    cpdef inline int can_descend(self):
+        return la.archive_read_disk_can_descend(self._archive_p)
 
 @cython.no_gc
 @cython.final
