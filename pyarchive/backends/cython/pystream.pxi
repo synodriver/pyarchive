@@ -1,5 +1,5 @@
 from cpython.object cimport PyObject
-from cpython.bytes cimport PyBytes_GET_SIZE, PyBytes_AS_STRING
+from cpython.bytes cimport PyBytes_GET_SIZE, PyBytes_AS_STRING, PyBytes_FromStringAndSize
 from cpython.mem cimport PyMem_Realloc, PyMem_Free
 
 from libc.string cimport memcpy
@@ -53,3 +53,9 @@ cdef int pystream_close_callback(la.archive *a, void *_client_data) with gil:
     if data.close:
         file.close()
     return la.ARCHIVE_OK
+
+cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) with gil:
+    cdef PyStreamData * data = <PyStreamData *> _client_data
+    cdef object file = <object> data.file
+    cdef bytes writedata = PyBytes_FromStringAndSize(<char *>_buffer, <Py_ssize_t>_length)
+    return file.write(writedata)
