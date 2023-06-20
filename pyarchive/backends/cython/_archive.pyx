@@ -4,6 +4,7 @@ cimport cython
 from libc.stdint cimport uint8_t
 
 from cpython.mem cimport PyMem_Malloc
+from cpython.bytes cimport PyBytes_FromStringAndSize
 
 include "./consts.pxi"
 include "./config.pxi"
@@ -107,8 +108,8 @@ cdef class Archive:
         la.archive_clear_error(self._archive_p)
 
     cpdef set_error(self, int _err, str msg):
-        cdef bytes msg_ = msg.encode()
-        la.archive_set_error(self._archive_p, _err, <const char *>msg_)
+        # cdef bytes msg_ = msg.encode()
+        la.archive_set_error(self._archive_p, _err, <const char *>msg)
 
     cpdef copy_error(self, Archive other):
         la.archive_copy_error(self._archive_p, other._archive_p)
@@ -148,6 +149,13 @@ cdef class Archive:
 #     cdef object archive = <object><void*>(<Py_ssize_t>a - ptroffset)
 #     return func(archive)
 
+cdef const char* pyarchive_passphrase_callback(la.archive * a, void *_client_data) with gil:
+    cdef object func = <object>_client_data
+    return func()
+
+cdef void _pyprogress_func(void* ud) with gil:
+    cdef object func = <object> ud
+    func()
 
 @cython.final
 cdef class ArchiveRead(Archive):
@@ -163,10 +171,11 @@ cdef class ArchiveRead(Archive):
             la.archive_read_free(self._archive_p)
         self._archive_p = NULL
 
-    cpdef close(self):
+    cpdef inline int close(self):
         cdef int ret = la.archive_read_close(self._archive_p)
         if ret != la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+        return ret
 
     cpdef inline int support_filter_all(self):
         return la.archive_read_support_filter_all(self._archive_p)
@@ -202,15 +211,16 @@ cdef class ArchiveRead(Archive):
         return  la.archive_read_support_filter_none(self._archive_p)
 
     cpdef inline int support_filter_program(self, object command):
-        if isinstance(command, unicode):
-            command_ = (<unicode> command).encode()
-        return  la.archive_read_support_filter_program(self._archive_p, <const char *>command_)
+        # if isinstance(command, unicode):
+        #     command_ = (<unicode> command).encode()
+        return  la.archive_read_support_filter_program(self._archive_p, <const char *>command)
 
     cpdef inline int support_filter_program_signature(self, object command, uint8_t[::1] signature):
-        if isinstance(command, unicode):
-            command_ = (<unicode> command).encode()
+        # cdef object command_ = command
+        # if isinstance(command, unicode):
+        #     command_ = (<unicode> command).encode()
         return  la.archive_read_support_filter_program_signature(self._archive_p,
-                                                                 <const char *>command_,
+                                                                 <const char *>command,
                                                                  <const void*>&signature[0],
                                                                  <size_t>signature.shape[0])
 
@@ -268,13 +278,15 @@ cdef class ArchiveRead(Archive):
     cpdef inline int append_filter(self, int code):
         return la.archive_read_append_filter(self._archive_p, code)
     cpdef inline int append_filter_program(self, object command):
-        if isinstance(command, unicode):
-            command_ = (<unicode> command).encode()
-        return la.archive_read_append_filter_program(self._archive_p, <const char *>command_)
+        # cdef object command_ = command
+        # if isinstance(command, unicode):
+        #     command_ = (<unicode> command).encode()
+        return la.archive_read_append_filter_program(self._archive_p, <const char *>command)
     cpdef inline int append_filter_program_signature(self, object command, uint8_t[::1] match):
-        if isinstance(command, unicode):
-            command_ = (<unicode> command).encode()
-        return la.archive_read_append_filter_program_signature(self._archive_p, <const char *> command_, <const void*>&match[0], <size_t>match.shape[0])
+        # cdef object command_ = command
+        # if isinstance(command, unicode):
+        #     command_ = (<unicode> command).encode()
+        return la.archive_read_append_filter_program_signature(self._archive_p, <const char *> command, <const void*>&match[0], <size_t>match.shape[0])
 
     cpdef inline int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
         cdef PyStreamData * data = <PyStreamData *>PyMem_Malloc(sizeof(PyStreamData))
@@ -353,6 +365,130 @@ cdef class ArchiveRead(Archive):
         with nogil:
             ret = la.archive_seek_data(self._archive_p, offset, whence)
         return ret
+
+    cpdef inline tuple read_data_block(self):
+        cdef:
+            void* buf
+            size_t size
+            la.la_int64_t  offset
+        with nogil:
+            la.archive_read_data_block(self._archive_p, &buf,  &size, &offset)
+        return PyBytes_FromStringAndSize(<char*>buf, <Py_ssize_t>size), offset
+
+    cdef inline int read_data_zerocopy(self, const void ** buf,  size_t *size, la.la_int64_t *offset):
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_data_block(self._archive_p, buf,  size, offset)
+        return ret
+
+    cpdef inline int skip(self):
+        """
+        skips entire entry
+        :return: 
+        """
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_data_skip(self._archive_p)
+        return ret
+
+    cpdef inline int read_data_into_fd(self, int fd):
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_data_into_fd(self._archive_p, fd)
+        return ret
+
+    cpdef inline int set_format_option(self, object module, object option, object value):
+        # cdef:
+        #     object module_ = module
+        #     object option_ = option
+        #     object value_ = value
+        # if isinstance( module, unicode):
+        #     module_ = (<unicode>  module).encode()
+        # if isinstance( option, unicode):
+        #     option_ = (<unicode>  option).encode()
+        # if isinstance( value, unicode):
+        #     value_ = (<unicode>  value).encode()
+
+        return la.archive_read_set_format_option(self._archive_p,
+                                          <const char*> module,
+                                          <const char*> option,
+                                          <const char*> value)
+
+    cpdef inline int set_filter_option(self, object module, object option, object value):
+        # cdef:
+        #     object module_ = module
+        #     object option_ = option
+        #     object value_ = value
+        # if isinstance(module, unicode):
+        #     module_ = (<unicode> module).encode()
+        # if isinstance(option, unicode):
+        #     option_ = (<unicode> option).encode()
+        # if isinstance(value, unicode):
+        #     value_ = (<unicode> value).encode()
+
+        return la.archive_read_set_filter_option(self._archive_p,
+                                                 <const char *> module,
+                                                 <const char *> option,
+                                                 <const char *> value)
+
+    cpdef inline int set_option(self, object module, object option, object value):
+        # cdef:
+        #     object module_ = module
+        #     object option_ = option
+        #     object value_ = value
+        # if isinstance(module, unicode):
+        #     module_ = (<unicode> module).encode()
+        # if isinstance(option, unicode):
+        #     option_ = (<unicode> option).encode()
+        # if isinstance(value, unicode):
+        #     value_ = (<unicode> value).encode()
+
+        return la.archive_read_set_option(self._archive_p,
+                                                 <const char *> module,
+                                                 <const char *> option,
+                                                 <const char *> value)
+
+    cpdef inline int set_options(self, object opts):
+        return la.archive_read_set_options(self._archive_p,
+                                          <const char *> opts)
+
+    cpdef inline int add_passphrase(self, object passphrase):
+        return la.archive_read_add_passphrase(self._archive_p,  <const char *>passphrase)
+
+    cpdef inline int set_passphrase_callback(self, object func):
+        """
+        
+        :param func: Callable[[], str|bytes]
+        :return: 
+        """
+        cdef void* ud = <void*> func
+        return la.archive_read_set_passphrase_callback(self._archive_p, ud, pyarchive_passphrase_callback)
+
+    cpdef inline int extract(self, ArchiveEntry entry, int flags):
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_extract(self._archive_p, entry._entry_p, flags)
+        return ret
+
+    cpdef inline int extract2(self, ArchiveEntry entry, Archive ad):
+        """
+        
+        :param entry: 
+        :param ad: dest, should be a writable archive
+        :return: 
+        """
+        cdef int ret
+        with nogil:
+            ret = la.archive_read_extract2(self._archive_p, entry._entry_p, ad._archive_p)
+        return ret
+
+    cpdef inline  extract_set_progress_callback(self, object func):
+        cdef void * ud = <void *> func
+        la.archive_read_extract_set_progress_callback(self._archive_p, _pyprogress_func, ud)
+
+    cpdef inline extract_set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
+        la.archive_read_extract_set_skip_file(self._archive_p, dev, ino)
+
     # cpdef inline int set_open_callback(self, object func):
     #     self.callbacks.opener = <PyObject*>func
     #     self.callbackref["opener"] = func # 增加强引用
