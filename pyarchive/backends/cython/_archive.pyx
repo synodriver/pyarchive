@@ -306,12 +306,23 @@ cdef class ArchiveRead(Archive):
 
         cdef int ret
         with nogil:
-            ret = la.archive_read_open2(self._archive_p,
-                                          data,
-                                          pystream_open_callback,
-                                          pystream_read_callback,
-                                          pystream_skip_callback,
-                                          pystream_close_callback)
+            ret = la.archive_read_append_callback_data(self._archive_p, data)
+            if ret != la.ARCHIVE_OK:
+                with gil:
+                    raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+            la.archive_read_set_seek_callback(self._archive_p, pystream_seek_callback)
+            la.archive_read_set_switch_callback(self._archive_p, pystream_switch_callback)
+            la.archive_read_set_open_callback(self._archive_p, pystream_open_callback)
+            la.archive_read_set_read_callback(self._archive_p, pystream_read_callback)
+            la.archive_read_set_skip_callback(self._archive_p,  pystream_skip_callback)
+            la.archive_read_set_close_callback(self._archive_p, pystream_close_callback)
+            ret = la.archive_read_open1(self._archive_p)
+            # ret = la.archive_read_open2(self._archive_p,
+            #                               data,
+            #                               pystream_open_callback,
+            #                               pystream_read_callback,
+            #                               pystream_skip_callback,
+            #                               pystream_close_callback)
         return ret
 
     cpdef int open_memory(self, const uint8_t[::1] data, size_t read_size) except? -30:
@@ -883,9 +894,14 @@ cdef void pyread_disk_lookup_cleanup(void *ud) with gil:
 
 cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
     cdef object func = <object> ud
-    cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_)
+    cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_, 0)
     func(entry)
-    entry._entry_p = NULL # deref
+    # entry._entry_p = NULL deref
+cdef int pymetadata_filter_func(la.archive *a, void* ud, la.archive_entry *entry_) with gil:
+    cdef object func = <object> ud
+    cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_, 0)
+    return func(entry)
+
 
 @cython.final
 cdef class ArchiveReadDisk(ArchiveRead):
@@ -1002,6 +1018,9 @@ cdef class ArchiveReadDisk(ArchiveRead):
         cdef void* ud = <void*> excluded_func
         return la.archive_read_disk_set_matching(self._archive_p, ma._archive_p, pyexcluded_func, ud)
 
+    cpdef inline int set_metadata_filter_callback(self, object filter_func):
+        cdef void * ud = <void *> filter_func
+        return la.archive_read_disk_set_metadata_filter_callback(self._archive_p, pymetadata_filter_func, ud)
 
 @cython.no_gc
 @cython.final
@@ -1017,19 +1036,38 @@ cdef class ArchiveMatch(Archive):
             la.archive_match_free(self._archive_p)
         self._archive_p = NULL
 
-    cpdef inline int match_path_unmatched_inclusions(self):
+    cpdef inline int excluded(self, ArchiveEntry entry):
+        cdef int ret
+        with nogil:
+            ret = la.archive_match_excluded(self._archive_p, entry._entry_p)
+        return ret
+
+    cpdef inline int path_unmatched_inclusions(self):
         cdef int ret
         with nogil:
             ret = la.archive_match_path_unmatched_inclusions(self._archive_p)
         return ret
 
+    cpdef inline int set_inclusion_recursion(self, bint enabled):
+        return la.archive_match_set_inclusion_recursion(self._archive_p, enabled)
+
+    cpdef inline int exclude_pattern(self, object pattern):
+        return la.archive_match_exclude_pattern(self._archive_p, <const char*>pattern)
+
+    cpdef inline int exclude_pattern_w(self, object pattern):
+        cdef wchar_t * pattern_ = PyUnicode_AsWideCharString(pattern, NULL)
+        try:
+            return la.archive_match_exclude_pattern_w(self._archive_p, <const wchar_t *> pattern_)
+        finally:
+            PyMem_Free(pattern_)
 
 @cython.freelist(8)
 cdef class ArchiveEntry:
     cdef:
         la.archive_entry* _entry_p
+        readonly bint own  # 谁是主人
 
-    def __cinit__(self, Archive archive = None, bint _init = True):
+    def __cinit__(self, Archive archive = None, bint _init = True, bint _own = True):
         if _init:
             if archive is None:
                 self._entry_p = la.archive_entry_new2(NULL)
@@ -1039,15 +1077,17 @@ cdef class ArchiveEntry:
                 raise MemoryError
         else:
             self._entry_p = NULL
+        self.own = _own
 
     def __dealloc__(self):
-        if self._entry_p:
-            la.archive_entry_free(self._entry_p)
-        self._entry_p = NULL
+        if self.own:
+            if self._entry_p:
+                la.archive_entry_free(self._entry_p)
+            self._entry_p = NULL
 
     @staticmethod
-    cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr):
-        cdef ArchiveEntry self = ArchiveEntry(_init=False)
+    cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr, bint _own):
+        cdef ArchiveEntry self = ArchiveEntry(_init=False, _own=_own)
         self._entry_p = ptr
         return self
 
@@ -1082,4 +1122,4 @@ cdef class ArchiveEntryLinkresolver:
     cpdef inline tuple partial_links(self):
         cdef unsigned int links
         cdef la.archive_entry * ret = la.archive_entry_partial_links(self._resolver, &links)
-        return  ArchiveEntry.from_ptr(ret), links
+        return  ArchiveEntry.from_ptr(ret, 0), links

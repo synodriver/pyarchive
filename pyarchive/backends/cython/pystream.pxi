@@ -36,7 +36,7 @@ cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, co
     return outlen
 
 
-cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request)with gil:
+cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request) with gil:
     cdef PyStreamData* data = <PyStreamData*> _client_data
     cdef object file = <object>data.file
     if not file.seekable():
@@ -44,6 +44,19 @@ cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la
     cdef la.la_int64_t  oldpos = <la.la_int64_t >file.tell()
     cdef la.la_int64_t  newpos = <la.la_int64_t >file.seek(request, 1)
     return newpos - oldpos
+
+cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la.la_int64_t offset, int whence) with gil:
+    cdef PyStreamData* data = <PyStreamData*> _client_data
+    cdef object file = <object>data.file
+    if not file.seekable():
+        return la.ARCHIVE_FATAL
+    cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
+    return newpos
+
+cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) with gil:
+    pystream_close_callback(a, _client_data1)
+    return pystream_open_callback(a, _client_data2)
+
 
 cdef int pystream_close_callback(la.archive *a, void *_client_data) with gil:
     cdef PyStreamData * data = <PyStreamData *> _client_data
