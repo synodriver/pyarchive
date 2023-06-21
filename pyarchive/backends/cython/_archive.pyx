@@ -33,10 +33,13 @@ cpdef inline int version_number():
 
 cpdef inline str version_string():
     cdef const char * v = la.archive_version_string()
-    return (<bytes>v).decode()
+    if v != NULL:
+        return (<bytes>v).decode()
 
 cpdef inline str version_details():
-    return (<bytes>la.archive_version_details()).decode()
+    cdef const char * v = la.archive_version_details()
+    if v != NULL:
+        return (<bytes>v).decode()
 
 cpdef inline str zlib_version():
     cdef const char * v = la.archive_zlib_version()
@@ -88,23 +91,23 @@ cdef class Archive:
     cpdef int filter_code(self, int n):
         return la.archive_filter_code(self._archive_p, n)
 
-    cdef str filter_name(self, int n):
+    cdef bytes filter_name(self, int n):
         cdef const char * v = la.archive_filter_name(self._archive_p, n)
         if v != NULL:
-            return (<bytes> v).decode()
+            return <bytes>v
 
     cpdef int get_errno(self):
         return la.archive_errno(self._archive_p)
 
-    cpdef str error_string(self):
+    cpdef bytes error_string(self):
         cdef const char* v = la.archive_error_string(self._archive_p)
         if v != NULL:
-            return (<bytes>v).decode()
+            return <bytes>v
 
-    cpdef str format_name(self):
+    cpdef bytes format_name(self):
         cdef const char* v = la.archive_format_name(self._archive_p)
         if v != NULL:
-            return (<bytes>v).decode()
+            return <bytes>v
 
     cpdef int format(self):
         return la.archive_format(self._archive_p)
@@ -867,7 +870,7 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
         :param cleanup: Callable[[], None] cleanup callback
         :return: 
         """
-        cdef LookupData * data = <LookupData *>PyMem_Malloc(sizeof(LookupData)) # todo 检查全部PyMem_Malloc
+        cdef LookupData * data = <LookupData *>PyMem_Malloc(sizeof(LookupData))
         if not data:
             raise MemoryError
         data.lookup = <PyObject*>lookup
@@ -955,15 +958,17 @@ cdef class ArchiveReadDisk(ArchiveRead):
         else:
             return la.archive_read_disk_entry_from_file(self._archive_p, entry._entry_p, fd, NULL)
 
-    cpdef inline str gname(self, la.la_int64_t gid):
+    cpdef inline bytes gname(self, la.la_int64_t gid):
         cdef const char* v
         v = la.archive_read_disk_gname(self._archive_p, gid)
-        return (<bytes> v).decode()
+        if v != NULL:
+            return <bytes>v
 
-    cpdef inline str uname(self, la.la_int64_t uid):
+    cpdef inline bytes uname(self, la.la_int64_t uid):
         cdef const char * v
         v = la.archive_read_disk_uname(self._archive_p, uid)
-        return (<bytes> v).decode()
+        if v != NULL:
+            return <bytes>v
 
     cpdef inline int set_standard_lookup(self):
         return la.archive_read_disk_set_standard_lookup(self._archive_p)
@@ -1082,7 +1087,7 @@ cdef class ArchiveMatch(Archive):
         cdef int nullSeparator_ = <int>null_separator[0]
         cdef wchar_t * pathname_ = PyUnicode_AsWideCharString(pathname, NULL)
         try:
-            return la.archive_match_exclude_pattern_from_file_w(self._archive_p, <const wchar_t *>pathname_, nullSeparator_) # todo str?
+            return la.archive_match_exclude_pattern_from_file_w(self._archive_p, <const wchar_t *>pathname_, nullSeparator_)
         finally:
             PyMem_Free(pathname_)
 
@@ -1104,7 +1109,7 @@ cdef class ArchiveMatch(Archive):
         cdef int nullSeparator_ = <int>null_separator[0]
         cdef wchar_t * pathname_ = PyUnicode_AsWideCharString(pathname, NULL)
         try:
-            return la.archive_match_include_pattern_from_file_w(self._archive_p, <const wchar_t *>pathname_, nullSeparator_) # todo str?
+            return la.archive_match_include_pattern_from_file_w(self._archive_p, <const wchar_t *>pathname_, nullSeparator_)
         finally:
             PyMem_Free(pathname_)
 
@@ -1189,15 +1194,18 @@ cdef class ArchiveMatch(Archive):
         finally:
             PyMem_Free(gname_)
 
-# todo wrap archive_utility_string_sort?
+# todo should we wrap archive_utility_string_sort?
+
+
 
 @cython.freelist(8)
+@cython.final
 cdef class ArchiveEntry:
     cdef:
         la.archive_entry* _entry_p
         readonly bint own  # 谁是主人
 
-    def __cinit__(self, Archive archive = None, bint _init = True, bint _own = True):
+    def __cinit__(self, Archive archive = None, bint _init = True, bint _own = True): # todo should we keep a ref to Archive?
         if _init:
             if archive is None:
                 self._entry_p = la.archive_entry_new2(NULL)
@@ -1215,11 +1223,106 @@ cdef class ArchiveEntry:
                 la.archive_entry_free(self._entry_p)
             self._entry_p = NULL
 
+    cpdef clear(self):
+        la.archive_entry_clear(self._entry_p)
+
+    cpdef inline ArchiveEntry clone(self):
+        cdef la.archive_entry *ret = la.archive_entry_clone(self._entry_p)
+        if ret == NULL:
+            raise MemoryError
+        return ArchiveEntry.from_ptr(ret, 1)
+
     @staticmethod
     cdef inline ArchiveEntry from_ptr(la.archive_entry* ptr, bint _own):
         cdef ArchiveEntry self = ArchiveEntry(_init=False, _own=_own)
         self._entry_p = ptr
         return self
+
+    @property
+    def atime(self):
+        if la.archive_entry_atime_is_set(self._entry_p):
+            return la.archive_entry_atime(self._entry_p)
+
+    @property
+    def atime_nsec(self):
+        if la.archive_entry_atime_is_set(self._entry_p):
+            return la.archive_entry_atime_nsec(self._entry_p)
+
+    @property
+    def atime_is_set(self):
+        return <bint>la.archive_entry_atime_is_set(self._entry_p)
+
+    @property
+    def birthtime(self):
+        if la.archive_entry_birthtime_is_set(self._entry_p):
+            return la.archive_entry_birthtime(self._entry_p)
+
+    @property
+    def birthtime_nsec(self):
+        if la.archive_entry_birthtime_is_set(self._entry_p):
+            return la.archive_entry_birthtime_nsec(self._entry_p)
+
+    @property
+    def birthtime_is_set(self):
+        return <bint> la.archive_entry_birthtime_is_set(self._entry_p)
+
+    @property
+    def ctime(self):
+        if la.archive_entry_ctime_is_set(self._entry_p):
+            return la.archive_entry_ctime(self._entry_p)
+
+    @property
+    def ctime_nsec(self):
+        if la.archive_entry_ctime_is_set(self._entry_p):
+            return la.archive_entry_ctime_nsec(self._entry_p)
+
+    @property
+    def ctime_is_set(self):
+        return <bint> la.archive_entry_ctime_is_set(self._entry_p)
+
+
+    @property
+    def dev(self):
+        if la.archive_entry_dev_is_set(self._entry_p):
+            return la.archive_entry_dev(self._entry_p)
+
+    @property
+    def dev_is_set(self):
+        return <bint> la.archive_entry_dev_is_set(self._entry_p)
+
+    @property
+    def devmajor(self):
+        return la.archive_entry_devmajor(self._entry_p)
+
+    @property
+    def devminor(self):
+        return la.archive_entry_devminor(self._entry_p)
+
+    @property
+    def filetype(self):
+        return la.archive_entry_filetype(self._entry_p)
+
+    @property
+    def fflags(self):
+        cdef unsigned long set_, clear_
+        la.archive_entry_fflags(self._entry_p, &set_, &clear_)
+        return set_, clear_
+
+    @property
+    def fflags_text(self):
+        cdef const char* ret = la.archive_entry_fflags_text(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def gid(self):
+        return la.archive_entry_gid(self._entry_p)
+
+    @property
+    def gname(self):
+        cdef const char* ret = la.archive_entry_gname(self._entry_p)
+        if ret != NULL:
+            return ret
 
     # cpdef long long offset1(self):
     #     return <long long><void*>self
