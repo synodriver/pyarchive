@@ -40,8 +40,8 @@ extensions = [
     Extension(
         "pyarchive.backends.cython._archive",
         c_sources,
-        include_dirs=["./dep/libarchive"],
-        extra_objects=["archive.lib"],
+        include_dirs=["D:\conda\envs\py310\Library\include"],  # ["./dep/libarchive"],
+        extra_objects=[r"D:\conda\envs\py310\Library\lib\archive.lib"],
     ),
 ]
 cffi_modules = ["pyarchive/backends/cffi/build.py:ffibuilder"]

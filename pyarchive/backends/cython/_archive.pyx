@@ -6,6 +6,7 @@ from libc.stddef cimport wchar_t
 from libc.time cimport time_t
 from cpython.mem cimport PyMem_Malloc
 from cpython.bytes cimport PyBytes_FromStringAndSize, PyBytes_FromString
+from posix.types cimport dev_t
 
 include "./consts.pxi"
 include "./config.pxi"
@@ -14,10 +15,13 @@ include "./pystream.pxi"
 cdef extern from "Python.h":
     wchar_t * PyUnicode_AsWideCharString(object s, Py_ssize_t *size)
     str PyUnicode_FromWideChar(wchar_t *w, Py_ssize_t size)
+    str PyUnicode_FromString(const char* u)
 
 class ArchiveError(Exception):
 
-    def __init__(self, str msg, int errno=-1, int retcode=0, object archive_p=None):
+    def __init__(self, object msg, int errno=-1, int retcode=0, object archive_p=None):
+        if isinstance(msg, bytes):
+            msg = msg.decode()
         self.msg = msg
         self.errno = errno
         self.retcode = retcode
@@ -321,9 +325,7 @@ cdef class ArchiveRead(Archive):
         cdef int ret
         with nogil:
             ret = la.archive_read_append_callback_data(self._archive_p, data)
-            if ret != la.ARCHIVE_OK:
-                with gil:
-                    raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+
             if self.openstate == Empty:
                 la.archive_read_set_seek_callback(self._archive_p, pystream_seek_callback)
                 la.archive_read_set_switch_callback(self._archive_p, pystream_switch_callback)
@@ -339,6 +341,8 @@ cdef class ArchiveRead(Archive):
             #                               pystream_read_callback,
             #                               pystream_skip_callback,
             #                               pystream_close_callback)
+        if ret != la.ARCHIVE_OK:
+            raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
     cpdef int open_memory(self, const uint8_t[::1] data, size_t read_size) except? -30:
@@ -1324,6 +1328,249 @@ cdef class ArchiveEntry:
         if ret != NULL:
             return ret
 
+    @property
+    def gname_utf8(self):
+        cdef const char* ret = la.archive_entry_gname_utf8(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromString(ret)
+
+    @property
+    def gname_w(self):
+        cdef const wchar_t *ret = la.archive_entry_gname_w(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, -1)
+
+    @property
+    def hardlink(self):
+        cdef const char * ret = la.archive_entry_hardlink(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def hardlink_utf8(self):
+        cdef const char * ret = la.archive_entry_hardlink_utf8(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromString(ret)
+
+    @property
+    def hardlink_w(self):
+        cdef const wchar_t *ret = la.archive_entry_hardlink_w(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, -1)
+
+    @property
+    def ino(self):
+        if la.archive_entry_ino_is_set(self._entry_p):
+            return la.archive_entry_ino(self._entry_p)
+
+    @property
+    def ino64(self):
+        if la.archive_entry_ino_is_set(self._entry_p):
+            return la.archive_entry_ino64(self._entry_p)
+
+    @property
+    def ino_is_set(self):
+        return <bint>la.archive_entry_ino_is_set(self._entry_p)
+
+    @property
+    def mode(self):
+        return la.archive_entry_mode(self._entry_p)
+
+    @property
+    def mtime(self):
+        if la.archive_entry_mtime_is_set(self._entry_p):
+            return la.archive_entry_mtime(self._entry_p)
+
+    @property
+    def mtime_nsec(self):
+        if la.archive_entry_mtime_is_set(self._entry_p):
+            return la.archive_entry_mtime_nsec(self._entry_p)
+
+    @property
+    def mtime_is_set(self):
+        return <bint> la.archive_entry_mtime_is_set(self._entry_p)
+
+    @property
+    def nlink(self):
+        return la.archive_entry_nlink(self._entry_p)
+
+    @property
+    def pathname(self):
+        cdef const char * ret = la.archive_entry_pathname(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def pathname_utf8(self):
+        cdef const char * ret = la.archive_entry_pathname_utf8(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromString(ret)
+
+    @property
+    def pathname_w(self):
+        cdef const wchar_t *ret = la.archive_entry_pathname_w(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, -1)
+
+    @property
+    def perm(self):
+        return la.archive_entry_perm(self._entry_p)
+
+    @property
+    def rdev(self):
+        return la.archive_entry_rdev(self._entry_p)
+
+    @property
+    def rdevmajor(self):
+        return la.archive_entry_rdevmajor(self._entry_p)
+
+    @property
+    def rdevminor(self):
+        return la.archive_entry_rdevminor(self._entry_p)
+
+    @property
+    def sourcepath(self):
+        cdef const char * ret = la.archive_entry_sourcepath(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def sourcepath_w(self):
+        cdef const wchar_t * ret = la.archive_entry_sourcepath_w(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, -1)
+
+    @property
+    def size(self):
+        if la.archive_entry_size_is_set(self._entry_p):
+            return la.archive_entry_size(self._entry_p)
+
+    @property
+    def size_is_set(self):
+        return <bint>la.archive_entry_size_is_set(self._entry_p)
+
+    @property
+    def strmode(self):
+        cdef const char * ret = la.archive_entry_strmode(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def symlink(self):
+        cdef const char * ret = la.archive_entry_symlink(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def symlink_utf8(self):
+        cdef const char * ret = la.archive_entry_symlink_utf8(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromString(ret)
+
+    @property
+    def symlink_type(self):
+        return la.archive_entry_symlink_type(self._entry_p)
+
+    @property
+    def symlink_w(self):
+        cdef const wchar_t* ret = la.archive_entry_symlink_w(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, -1)
+
+    @property
+    def uid(self):
+        return la.archive_entry_uid(self._entry_p)
+
+    @property
+    def uname(self):
+        cdef const char * ret = la.archive_entry_uname(self._entry_p)
+        if ret != NULL:
+            return ret
+
+    @property
+    def uname_utf8(self):
+        cdef const char * ret = la.archive_entry_uname_utf8(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromString(ret)
+
+    @property
+    def uname_w(self):
+        cdef const wchar_t *ret = la.archive_entry_uname_w(self._entry_p)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, -1)
+
+    @property
+    def is_data_encrypted(self):
+        return la.archive_entry_is_data_encrypted(self._entry_p)
+
+    @property
+    def is_metadata_encrypted(self):
+        return la.archive_entry_is_metadata_encrypted(self._entry_p)
+
+    @property
+    def is_encrypted(self):
+        return la.archive_entry_is_encrypted(self._entry_p)
+
+    # Set fields in an archive_entry.
+    cpdef set_atime(self, time_t t, long ns):
+        la.archive_entry_set_atime(self._entry_p, t, ns)
+
+    cpdef unset_atime(self, time_t t, long ns):
+        la.archive_entry_unset_atime(self._entry_p)
+
+    cpdef set_birthtime(self, time_t t, long ns):
+        la.archive_entry_set_birthtime(self._entry_p, t, ns)
+
+    cpdef unset_birthtime(self, time_t t, long ns):
+        la.archive_entry_unset_birthtime(self._entry_p)
+
+    cpdef set_ctime(self, time_t t, long ns):
+        la.archive_entry_set_ctime(self._entry_p, t, ns)
+
+    cpdef unset_ctime(self, time_t t, long ns):
+        la.archive_entry_unset_ctime(self._entry_p)
+
+    @dev.setter
+    def dev(self, dev_t d):
+        la.archive_entry_set_dev(self._entry_p, d)
+
+    @devmajor.setter
+    def devmajor(self, dev_t d):
+        la.archive_entry_set_devmajor(self._entry_p, d)
+
+    @devminor.setter
+    def devminor(self, dev_t d):
+        la.archive_entry_set_devminor(self._entry_p, d)
+
+    @filetype.setter
+    def filetype(self, unsigned int type_):
+        la.archive_entry_set_filetype(self._entry_p, type_)
+
+    @fflags.setter
+    def fflags(self, tuple v):
+        cdef unsigned long set_, clear_
+        set_ = v[0]
+        clear_ = v[1]
+        la.archive_entry_set_fflags(self._entry_p, set_, clear_)
+
+    cpdef inline bytes copy_fflags_text(self, object flags):
+        cdef const char * ret = la.archive_entry_copy_fflags_text(self._entry_p, <const char *>flags)
+        if ret != NULL:
+            return ret
+
+    cpdef inline str copy_fflags_text_w(self, str flags):
+        cdef wchar_t * flags_ = PyUnicode_AsWideCharString(flags, NULL)
+        cdef const wchar_t * ret
+        try:
+            ret = la.archive_entry_copy_fflags_text_w(self._entry_p, <const wchar_t *> flags_)
+            if ret != NULL:
+                return PyUnicode_FromWideChar(ret, -1)
+        finally:
+            PyMem_Free(flags_)
+
+    @gid.setter
+    def gid(self, la.la_int64_t gid):
+        la.archive_entry_set_gid(self._entry_p, gid)
     # cpdef long long offset1(self):
     #     return <long long><void*>self
     #

@@ -50,19 +50,19 @@ cdef extern from "archive.h" nogil:
     # But if write_header is "fatal," then this archive is dead and useless. */
     int ARCHIVE_FATAL  # No more operations are possible. */
 
-    ctypedef la_ssize_t    archive_read_callback(archive *, void *_client_data, const void ** _buffer)
+    ctypedef la_ssize_t    archive_read_callback(archive *, void *_client_data, const void ** _buffer)  except -30
 
-    ctypedef la_int64_t    archive_skip_callback(archive *, void *_client_data, la_int64_t request)
+    ctypedef la_int64_t    archive_skip_callback(archive *, void *_client_data, la_int64_t request)  except -30
 
-    ctypedef la_int64_t    archive_seek_callback(archive *, void *_client_data, la_int64_t offset, int whence)
+    ctypedef la_int64_t    archive_seek_callback(archive *, void *_client_data, la_int64_t offset, int whence)  except -30
 
-    ctypedef la_ssize_t    archive_write_callback(archive *, void *_client_data, const void *_buffer, size_t _length)
-    ctypedef int    archive_open_callback(archive *, void *_client_data)
+    ctypedef la_ssize_t    archive_write_callback(archive *, void *_client_data, const void *_buffer, size_t _length)  except -30
+    ctypedef int    archive_open_callback(archive *, void *_client_data)  except -30
 
-    ctypedef int    archive_close_callback(archive *, void *_client_data)
+    ctypedef int    archive_close_callback(archive *, void *_client_data) except -30
 
-    ctypedef int    archive_free_callback(archive *, void *_client_data)
-    ctypedef int archive_switch_callback(archive *, void *_client_data1, void *_client_data2)
+    ctypedef int    archive_free_callback(archive *, void *_client_data)  except -30
+    ctypedef int archive_switch_callback(archive *, void *_client_data1, void *_client_data2)  except -30
     ctypedef const char *archive_passphrase_callback(archive *, void *_client_data)
     int ARCHIVE_FILTER_NONE
     int ARCHIVE_FILTER_GZIP
