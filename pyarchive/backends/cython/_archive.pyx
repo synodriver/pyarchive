@@ -160,8 +160,14 @@ cdef void _pyprogress_func(void* ud) with gil:
     cdef object func = <object> ud
     func()
 
+cdef enum ArchiveReadOpenState:
+    Empty
+    PyFileOpened
+    MemoryOpened
+    FdOpened
 
 cdef class ArchiveRead(Archive):
+    cdef ArchiveReadOpenState openstate
     # cdef:
     #     dict callbackref # 使对callback的引用变成强引用
     def __cinit__(self, bint is_disk = False):
@@ -171,6 +177,7 @@ cdef class ArchiveRead(Archive):
             self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
         if self._archive_p == NULL:
             raise MemoryError
+        self.openstate = Empty
 
     def __dealloc__(self):
         if self._archive_p:
@@ -295,6 +302,8 @@ cdef class ArchiveRead(Archive):
         return la.archive_read_append_filter_program_signature(self._archive_p, <const char *> command, <const void*>&match[0], <size_t>match.shape[0])
 
     cpdef int open(self, object file, la.la_ssize_t block_size, bint close = False) except? -30:
+        if self.openstate != Empty and self.openstate != PyFileOpened:
+            raise ArchiveError("other objects are already opened", -1, 0, self)
         cdef PyStreamData * data = <PyStreamData *>PyMem_Malloc(sizeof(PyStreamData))
         if not data:
             raise MemoryError
@@ -310,13 +319,15 @@ cdef class ArchiveRead(Archive):
             if ret != la.ARCHIVE_OK:
                 with gil:
                     raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
-            la.archive_read_set_seek_callback(self._archive_p, pystream_seek_callback)
-            la.archive_read_set_switch_callback(self._archive_p, pystream_switch_callback)
-            la.archive_read_set_open_callback(self._archive_p, pystream_open_callback)
-            la.archive_read_set_read_callback(self._archive_p, pystream_read_callback)
-            la.archive_read_set_skip_callback(self._archive_p,  pystream_skip_callback)
-            la.archive_read_set_close_callback(self._archive_p, pystream_close_callback)
-            ret = la.archive_read_open1(self._archive_p)
+            if self.openstate == Empty:
+                la.archive_read_set_seek_callback(self._archive_p, pystream_seek_callback)
+                la.archive_read_set_switch_callback(self._archive_p, pystream_switch_callback)
+                la.archive_read_set_open_callback(self._archive_p, pystream_open_callback)
+                la.archive_read_set_read_callback(self._archive_p, pystream_read_callback)
+                la.archive_read_set_skip_callback(self._archive_p,  pystream_skip_callback)
+                la.archive_read_set_close_callback(self._archive_p, pystream_close_callback)
+                ret = la.archive_read_open1(self._archive_p)
+                self.openstate = PyFileOpened
             # ret = la.archive_read_open2(self._archive_p,
             #                               data,
             #                               pystream_open_callback,
@@ -326,18 +337,24 @@ cdef class ArchiveRead(Archive):
         return ret
 
     cpdef int open_memory(self, const uint8_t[::1] data, size_t read_size) except? -30:
+        if self.openstate != Empty:
+            raise ArchiveError("other objects are already opened", -1, 0, self)
         cdef int ret
         with nogil:
             ret = la.archive_read_open_memory2(self._archive_p,
                                                 <const void *>&data[0],
                                                 <size_t >data.shape[0],
                                                read_size)
+        self.openstate = MemoryOpened
         return ret
 
     cpdef int open_fd(self, int fd, size_t block_size) except? -30:
+        if self.openstate != Empty:
+            raise ArchiveError("other objects are already opened", -1, 0, self)
         cdef int ret
         with nogil:
             ret = la.archive_read_open_fd(self._archive_p, fd,  block_size)
+        self.openstate = FdOpened
         return ret
 
     def iter_entries(self):
