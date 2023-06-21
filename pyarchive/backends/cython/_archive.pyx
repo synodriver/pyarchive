@@ -3,8 +3,9 @@
 cimport cython
 from libc.stdint cimport uint8_t
 from libc.stddef cimport wchar_t
+from libc.time cimport time_t
 from cpython.mem cimport PyMem_Malloc
-from cpython.bytes cimport PyBytes_FromStringAndSize
+from cpython.bytes cimport PyBytes_FromStringAndSize, PyBytes_FromString
 
 include "./consts.pxi"
 include "./config.pxi"
@@ -12,6 +13,7 @@ include "./pystream.pxi"
 
 cdef extern from "Python.h":
     wchar_t * PyUnicode_AsWideCharString(object s, Py_ssize_t *size)
+    str PyUnicode_FromWideChar(wchar_t *w, Py_ssize_t size)
 
 class ArchiveError(Exception):
 
@@ -1059,12 +1061,6 @@ cdef class ArchiveMatch(Archive):
             ret = la.archive_match_excluded(self._archive_p, entry._entry_p)
         return ret
 
-    cpdef inline int path_unmatched_inclusions(self):
-        cdef int ret
-        with nogil:
-            ret = la.archive_match_path_unmatched_inclusions(self._archive_p)
-        return ret
-
     cpdef inline int set_inclusion_recursion(self, bint enabled):
         return la.archive_match_set_inclusion_recursion(self._archive_p, enabled)
 
@@ -1077,6 +1073,123 @@ cdef class ArchiveMatch(Archive):
             return la.archive_match_exclude_pattern_w(self._archive_p, <const wchar_t *> pattern_)
         finally:
             PyMem_Free(pattern_)
+
+    cpdef inline int exclude_pattern_from_file(self, object pathname, const uint8_t[::1] null_separator):
+        cdef int nullSeparator_ = <int>null_separator[0]
+        return la.archive_match_exclude_pattern_from_file(self._archive_p, <const char*>pathname, nullSeparator_)
+
+    cpdef inline int exclude_pattern_from_file_w(self, str pathname, const uint8_t[::1] null_separator):
+        cdef int nullSeparator_ = <int>null_separator[0]
+        cdef wchar_t * pathname_ = PyUnicode_AsWideCharString(pathname, NULL)
+        try:
+            return la.archive_match_exclude_pattern_from_file_w(self._archive_p, <const wchar_t *>pathname_, nullSeparator_) # todo str?
+        finally:
+            PyMem_Free(pathname_)
+
+    cpdef inline int include_pattern(self, object pattern):
+        return la.archive_match_include_pattern(self._archive_p,  <const char*>pattern)
+
+    cpdef inline int include_pattern_w(self, str pattern):
+        cdef wchar_t * pattern_ = PyUnicode_AsWideCharString(pattern, NULL)
+        try:
+            return la.archive_match_include_pattern_w(self._archive_p, <const wchar_t *> pattern_)
+        finally:
+            PyMem_Free(pattern_)
+
+    cpdef inline int include_pattern_from_file(self, object pathname, const uint8_t[::1] null_separator):
+        cdef int nullSeparator_ = <int> null_separator[0]
+        return la.archive_match_include_pattern_from_file(self._archive_p, <const char *> pathname, nullSeparator_)
+
+    cpdef inline int include_pattern_from_file_w(self, str pathname, const uint8_t[::1] null_separator):
+        cdef int nullSeparator_ = <int>null_separator[0]
+        cdef wchar_t * pathname_ = PyUnicode_AsWideCharString(pathname, NULL)
+        try:
+            return la.archive_match_include_pattern_from_file_w(self._archive_p, <const wchar_t *>pathname_, nullSeparator_) # todo str?
+        finally:
+            PyMem_Free(pathname_)
+
+    cpdef inline int path_unmatched_inclusions(self):
+        cdef int ret
+        with nogil:
+            ret = la.archive_match_path_unmatched_inclusions(self._archive_p)
+        return ret
+
+    cpdef inline tuple path_unmatched_inclusions_next(self):
+        cdef const char *p
+        cdef int ret = la.archive_match_path_unmatched_inclusions_next(self._archive_p, &p)
+        if ret == la.ARCHIVE_OK:
+            return ret, PyBytes_FromString(p)
+        else:  # EOF
+            return ret, None
+
+    cpdef inline tuple path_unmatched_inclusions_next_w(self):
+        cdef const wchar_t *p
+        cdef int ret = la.archive_match_path_unmatched_inclusions_next_w(self._archive_p, &p)
+        if ret == la.ARCHIVE_OK:
+            return ret, PyUnicode_FromWideChar(p, -1)
+        else:  # EOF
+            return ret, None
+
+    cpdef inline int time_excluded(self, ArchiveEntry entry):
+        return la.archive_match_time_excluded(self._archive_p, entry._entry_p)
+
+    cpdef inline int include_time(self, int flag, time_t sec, long nsec):
+        return la.archive_match_include_time(self._archive_p, flag, sec, nsec)
+
+    cpdef inline int include_date(self, int flag, object datestr):
+        return la.archive_match_include_date(self._archive_p, flag, <const char*>datestr)
+
+    cpdef inline int include_date_w(self, int flag, str datestr):
+        cdef wchar_t * datestr_ = PyUnicode_AsWideCharString(datestr, NULL)
+        try:
+            return la.archive_match_include_date_w(self._archive_p, flag, <const wchar_t *> datestr_)
+        finally:
+            PyMem_Free(datestr_)
+
+
+    cpdef inline int include_file_time(self, int flag, object pathname):
+        return la.archive_match_include_file_time(self._archive_p, flag, <const char*>pathname)
+
+    cpdef inline int include_file_time_w(self, int flag, str pathname):
+        cdef wchar_t * pathname_ = PyUnicode_AsWideCharString(pathname, NULL)
+        try:
+            return la.archive_match_include_file_time_w(self._archive_p, flag, <const wchar_t *> pathname_)
+        finally:
+            PyMem_Free(pathname_)
+
+    cpdef inline int exclude_entry(self, int flag, ArchiveEntry entry):
+        return la.archive_match_exclude_entry(self._archive_p, flag, entry._entry_p)
+    # ---
+    cpdef inline int owner_excluded(self, ArchiveEntry entry):
+        return la.archive_match_owner_excluded(self._archive_p, entry._entry_p)
+
+    cpdef inline int include_uid(self, la.la_int64_t uid):
+        return la.archive_match_include_uid(self._archive_p, uid)
+
+    cpdef inline int include_gid(self, la.la_int64_t gid):
+        return la.archive_match_include_gid(self._archive_p, gid)
+
+    cpdef inline int include_uname(self, object uname):
+        return la.archive_match_include_uname(self._archive_p, <const char*>uname)
+
+    cpdef inline int include_uname_w(self, str uname):
+        cdef wchar_t * uname_ = PyUnicode_AsWideCharString(uname, NULL)
+        try:
+            return la.archive_match_include_uname_w(self._archive_p, <const wchar_t *> uname_)
+        finally:
+            PyMem_Free(uname_)
+
+    cpdef inline int include_gname(self, object gname):
+        return la.archive_match_include_gname(self._archive_p, <const char *> gname)
+
+    cpdef inline int include_gname_w(self, str gname):
+        cdef wchar_t * gname_ = PyUnicode_AsWideCharString(gname, NULL)
+        try:
+            return la.archive_match_include_gname_w(self._archive_p, <const wchar_t *> gname_)
+        finally:
+            PyMem_Free(gname_)
+
+# todo wrap archive_utility_string_sort?
 
 @cython.freelist(8)
 cdef class ArchiveEntry:
