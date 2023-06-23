@@ -241,7 +241,7 @@ cdef class ArchiveRead(Archive):
         #     command_ = (<unicode> command).encode()
         return  la.archive_read_support_filter_program(self._archive_p, <const char *>command)
 
-    cpdef int support_filter_program_signature(self, object command, uint8_t[::1] signature):
+    cpdef int support_filter_program_signature(self, object command, const uint8_t[::1] signature):
         # cdef object command_ = command
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
@@ -308,7 +308,7 @@ cdef class ArchiveRead(Archive):
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
         return la.archive_read_append_filter_program(self._archive_p, <const char *>command)
-    cpdef int append_filter_program_signature(self, object command, uint8_t[::1] match):
+    cpdef int append_filter_program_signature(self, object command, const uint8_t[::1] match):
         # cdef object command_ = command
         # if isinstance(command, unicode):
         #     command_ = (<unicode> command).encode()
@@ -1772,7 +1772,7 @@ cdef class ArchiveEntry:
 
     @property
     def stat(self):
-        cdef la.stat * ret = la.archive_entry_stat(self._entry_p)
+        cdef const la.stat * ret = la.archive_entry_stat(self._entry_p)
         return os.stat_result((ret.st_mode,
                                 ret.st_ino,
                                 ret.st_dev,
@@ -1827,6 +1827,104 @@ cdef class ArchiveEntry:
     cpdef acl_clear(self):
         la.archive_entry_acl_clear(self._entry_p)
 
+    cpdef inline int acl_add_entry(self, int type_, int permset, int tag, int id_, object name):
+        return la.archive_entry_acl_add_entry(self._entry_p, type_, permset,  tag, id_, <const char*>name)
+
+    cpdef inline int acl_add_entry_w(self, int type_, int permset, int tag, int id_, str name):
+        cdef wchar_t *name_ = PyUnicode_AsWideCharString(name, NULL)
+        try:
+            return la.archive_entry_acl_add_entry_w(self._entry_p, type_, permset, tag, id_, <const wchar_t *> name_)
+        finally:
+            PyMem_Free(name_)
+
+    cpdef inline int acl_reset(self, int want_type):
+        return la.archive_entry_acl_reset(self._entry_p, want_type)
+
+    cpdef inline tuple acl_next(self, int want_type):
+        cdef:
+            int type_
+            int permset
+            int tag
+            int qual
+            const char *name
+            int ret
+        ret = la.archive_entry_acl_next(self._entry_p, want_type, &type_, &permset, &tag, &qual, &name)
+        if ret != la.ARCHIVE_OK:
+            raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+        return ret, type_, permset, tag, qual, PyBytes_FromString(name)
+
+    cpdef inline str acl_to_text_w(self, int flags):
+        cdef la.la_ssize_t length
+        cdef wchar_t * ret = la.archive_entry_acl_to_text_w(self._entry_p, &length, flags)
+        if ret != NULL:
+            return PyUnicode_FromWideChar(ret, <Py_ssize_t>length)
+
+    cpdef inline bytes acl_to_text(self, int flags):
+        cdef la.la_ssize_t length
+        cdef char* ret = la.archive_entry_acl_to_text(self._entry_p, &length, flags)
+        if ret != NULL:
+            return PyBytes_FromStringAndSize(ret, <Py_ssize_t>length)
+
+    cpdef inline int acl_from_text_w(self, str text, int type_):
+        cdef wchar_t *text_ = PyUnicode_AsWideCharString(text, NULL)
+        try:
+            return la.archive_entry_acl_from_text_w(self._entry_p, text_, type_)
+        finally:
+            PyMem_Free(text_)
+
+    cpdef inline int acl_from_text(self, object text, int type_):
+        return la.archive_entry_acl_from_text(self._entry_p, <const char*>text, type_)
+
+
+    cpdef inline int acl_types(self):
+        return la.archive_entry_acl_types(self._entry_p)
+
+    cpdef inline int acl_count(self, int want_type):
+        return la.archive_entry_acl_count(self._entry_p, want_type)
+
+    cpdef xattr_clear(self):
+        la.archive_entry_xattr_clear(self._entry_p)
+
+    cpdef xattr_add_entry(self, object name, const uint8_t[::1] value):
+        la.archive_entry_xattr_add_entry(self._entry_p, <const char*>name, <const void*>&value[0], <size_t>value.shape[0])
+
+    cpdef inline int xattr_count(self):
+        return la.archive_entry_xattr_count(self._entry_p)
+
+    cpdef inline int xattr_reset(self):
+        return la.archive_entry_xattr_reset(self._entry_p)
+
+    cpdef inline tuple xattr_next(self):
+        cdef:
+            const char* name
+            const void *value
+            size_t size
+            int ret
+        ret = la.archive_entry_xattr_next(self._entry_p, &name, &value, &size)
+        if ret != la.ARCHIVE_OK:
+            raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+        return ret, PyBytes_FromString(name), PyBytes_FromStringAndSize(<char*>value, <Py_ssize_t>size)
+
+    cpdef sparse_clear(self):
+        la.archive_entry_sparse_clear(self._entry_p)
+
+    cpdef sparse_add_entry(self, la.la_int64_t offset, la.la_int64_t length):
+        la.archive_entry_sparse_add_entry(self._entry_p, offset, length)
+
+    cpdef inline int sparse_count(self):
+        return la.archive_entry_sparse_count(self._entry_p)
+
+    cpdef inline int sparse_reset(self):
+        return la.archive_entry_sparse_reset(self._entry_p)
+
+    cpdef inline tuple sparse_next(self):
+        cdef la.la_int64_t offset, length
+        cdef int ret = la.archive_entry_sparse_next(self._entry_p, &offset, &length)
+        if ret != la.ARCHIVE_OK:
+            raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
+        return ret, offset, length
+
+
 
 @cython.freelist(8)
 @cython.no_gc
@@ -1848,9 +1946,13 @@ cdef class ArchiveEntryLinkresolver:
         la.archive_entry_linkresolver_set_strategy(self._resolver, format_code)
 
     cpdef inline linkify(self, ArchiveEntry a, ArchiveEntry b):
-        la.archive_entry_linkify(self._resolver, &a._entry_p, &b._entry_p)
+        with nogil:
+            la.archive_entry_linkify(self._resolver, &a._entry_p, &b._entry_p)
 
     cpdef inline tuple partial_links(self):
-        cdef unsigned int links
-        cdef la.archive_entry * ret = la.archive_entry_partial_links(self._resolver, &links)
+        cdef:
+            unsigned int links
+            la.archive_entry * ret
+        with nogil:
+            ret = la.archive_entry_partial_links(self._resolver, &links)
         return  ArchiveEntry.from_ptr(ret, 0), links
