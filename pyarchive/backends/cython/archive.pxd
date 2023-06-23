@@ -588,7 +588,7 @@ cdef extern from "archive_entry.h" nogil:
     int AE_SYMLINK_TYPE_UNDEFINED
     int AE_SYMLINK_TYPE_FILE
     int AE_SYMLINK_TYPE_DIRECTORY
-
+    ctypedef 	unsigned short __LA_MODE_T
     archive_entry	*archive_entry_clear(archive_entry *)
 # The 'clone' function does a deep copy all of the strings are copied too. */
     archive_entry	*archive_entry_clone(archive_entry *)

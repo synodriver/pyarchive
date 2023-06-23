@@ -8,6 +8,9 @@ from cpython.mem cimport PyMem_Malloc
 from cpython.bytes cimport PyBytes_FromStringAndSize, PyBytes_FromString
 from posix.types cimport dev_t
 
+cdef object os
+import os
+
 include "./consts.pxi"
 include "./config.pxi"
 include "./pystream.pxi"
@@ -16,6 +19,7 @@ cdef extern from "Python.h":
     wchar_t * PyUnicode_AsWideCharString(object s, Py_ssize_t *size)
     str PyUnicode_FromWideChar(wchar_t *w, Py_ssize_t size)
     str PyUnicode_FromString(const char* u)
+    const char * PyUnicode_AsUTF8(str u)
 
 class ArchiveError(Exception):
 
@@ -952,7 +956,7 @@ cdef class ArchiveReadDisk(ArchiveRead):
             st.st_nlink = stat.st_nlink
             st.st_uid = stat.st_uid
             st.st_gid = stat.st_gid
-            st.st_rdev = stat.st_rdev
+            # st.st_rdev = stat.st_rdev todo In python, os.stat_result has no st_rdev
             st.st_size = stat.st_size
             st.st_atime = stat.st_atime
             st.st_mtime = stat.st_mtime
@@ -1501,15 +1505,15 @@ cdef class ArchiveEntry:
 
     @property
     def is_data_encrypted(self):
-        return la.archive_entry_is_data_encrypted(self._entry_p)
+        return <bint>la.archive_entry_is_data_encrypted(self._entry_p)
 
     @property
     def is_metadata_encrypted(self):
-        return la.archive_entry_is_metadata_encrypted(self._entry_p)
+        return <bint>la.archive_entry_is_metadata_encrypted(self._entry_p)
 
     @property
     def is_encrypted(self):
-        return la.archive_entry_is_encrypted(self._entry_p)
+        return <bint>la.archive_entry_is_encrypted(self._entry_p)
 
     # Set fields in an archive_entry.
     cpdef set_atime(self, time_t t, long ns):
@@ -1571,11 +1575,258 @@ cdef class ArchiveEntry:
     @gid.setter
     def gid(self, la.la_int64_t gid):
         la.archive_entry_set_gid(self._entry_p, gid)
+
+    @gname.setter
+    def gname(self, object gname):
+        la.archive_entry_set_gname(self._entry_p, <const char *>gname)
+
+    @gname_utf8.setter
+    def gname_utf8(self, str gname):
+        la.archive_entry_set_gname_utf8(self._entry_p, PyUnicode_AsUTF8(gname))
+
+    @gname_w.setter
+    def gname_w(self, str gname):
+        cdef wchar_t *gname_ = PyUnicode_AsWideCharString(gname, NULL)
+        try:
+            la.archive_entry_copy_gname_w(self._entry_p, gname_)
+        finally:
+            PyMem_Free(gname_)
+
+    cpdef inline int update_gname_utf8(self, str gname):
+        return la.archive_entry_update_gname_utf8(self._entry_p, PyUnicode_AsUTF8(gname))
+
+    @hardlink.setter
+    def hardlink(self, object target):
+        la.archive_entry_set_hardlink(self._entry_p, <const char*>target)
+
+    @hardlink_utf8.setter
+    def hardlink_utf8(self, str target):
+        la.archive_entry_set_hardlink_utf8(self._entry_p, PyUnicode_AsUTF8(target))
+
+    @hardlink_w.setter
+    def hardlink_w(self, str target):
+        cdef wchar_t *target_ = PyUnicode_AsWideCharString(target, NULL)
+        try:
+            la.archive_entry_copy_hardlink_w(self._entry_p, <const wchar_t *>target_)
+        finally:
+            PyMem_Free(target_)
+
+    cpdef inline int update_hardlink_utf8(self, str target):
+        return la.archive_entry_update_hardlink_utf8(self._entry_p, PyUnicode_AsUTF8(target))
+
+    @ino.setter
+    def ino(self, la.la_int64_t ino):
+        la.archive_entry_set_ino(self._entry_p, ino)
+
+    @ino64.setter
+    def ino64(self, la.la_int64_t ino):
+        la.archive_entry_set_ino64(self._entry_p, ino)
+
+    cpdef set_link(self, object target):
+        la.archive_entry_set_link(self._entry_p, <const char *>target)
+
+    cpdef set_link_utf8(self, object target):
+        la.archive_entry_set_link_utf8(self._entry_p, PyUnicode_AsUTF8(target))
+
+    cpdef set_link_w(self, str target):
+        cdef wchar_t *target_ = PyUnicode_AsWideCharString(target, NULL)
+        try:
+            la.archive_entry_copy_link_w(self._entry_p, <const wchar_t *>target_)
+        finally:
+            PyMem_Free(target_)
+
+    cpdef inline int update_link_utf8(self, str target):
+        return la.archive_entry_update_link_utf8(self._entry_p, PyUnicode_AsUTF8(target))
+
+    @mode.setter
+    def mode(self, la.__LA_MODE_T m):
+        la.archive_entry_set_mode(self._entry_p, m)
+
+
+    @mtime.setter
+    def mtime(self, tuple v):
+        cdef:
+            time_t t = v[0]
+            long ns = v[1]
+        la.archive_entry_set_mtime(self._entry_p, t, ns)
+
+    @mtime.deleter
+    def mtime(self):
+        la.archive_entry_unset_mtime(self._entry_p)
+
+    @nlink.setter
+    def nlink(self, unsigned int nlink):
+        la.archive_entry_set_nlink(self._entry_p, nlink)
+
+    @pathname.setter
+    def pathname(self, object name):
+        la.archive_entry_set_pathname(self._entry_p, <const char *>name)
+
+
+    @pathname_utf8.setter
+    def pathname_utf8(self, str name):
+        la.archive_entry_set_pathname_utf8(self._entry_p,  PyUnicode_AsUTF8(name))
+
+    @pathname_w.setter
+    def pathname_w(self, str name):
+        cdef wchar_t *name_ = PyUnicode_AsWideCharString(name, NULL)
+        try:
+            la.archive_entry_copy_pathname_w(self._entry_p, <const wchar_t *>name_)
+        finally:
+            PyMem_Free(name_)
+
+    cpdef inline int update_pathname_utf8(self, str name):
+        return la.archive_entry_update_pathname_utf8(self._entry_p, PyUnicode_AsUTF8(name))
+
+    @perm.setter
+    def perm(self, la.__LA_MODE_T p):
+        la.archive_entry_set_perm(self._entry_p, p)
+
+    @rdev.setter
+    def rdev(self, dev_t m):
+        la.archive_entry_set_rdev(self._entry_p, m)
+
+
+    @rdevmajor.setter
+    def rdevmajor(self, dev_t m):
+        la.archive_entry_set_rdevmajor(self._entry_p, m)
+
+    @rdevminor.setter
+    def rdevminor(self, dev_t m):
+        la.archive_entry_set_rdevminor(self._entry_p, m)
+
+    @size.setter
+    def size(self, la.la_int64_t size):
+        la.archive_entry_set_size(self._entry_p, size)
+
+    @size.deleter
+    def size(self):
+        la.archive_entry_unset_size(self._entry_p)
+
+    @sourcepath.setter
+    def sourcepath(self, object path):
+        la.archive_entry_copy_sourcepath(self._entry_p, <const char *>path)
+
+    @sourcepath_w.setter
+    def sourcepath_w(self, str path):
+        cdef wchar_t *path_ = PyUnicode_AsWideCharString(path, NULL)
+        try:
+            la.archive_entry_copy_sourcepath_w(self._entry_p, <const wchar_t *>path_)
+        finally:
+            PyMem_Free(path_)
+
+    @symlink.setter
+    def symlink(self, object linkname):
+        la.archive_entry_set_symlink(self._entry_p, <const char *>linkname)
+
+    @symlink_type.setter
+    def symlink_type(self, int type_):
+        la.archive_entry_set_symlink_type(self._entry_p, type_)
+
+    @symlink_utf8.setter
+    def symlink_utf8(self, str linkname):
+        la.archive_entry_set_symlink_utf8(self._entry_p, PyUnicode_AsUTF8(linkname))
+
+    @symlink_w.setter
+    def symlink_w(self, str linkname):
+        cdef wchar_t *linkname_ = PyUnicode_AsWideCharString(linkname, NULL)
+        try:
+            la.archive_entry_copy_symlink_w(self._entry_p, <const wchar_t*>linkname_)
+        finally:
+            PyMem_Free(linkname_)
+
+    cpdef inline int update_symlink_utf8(self, object linkname):
+        la.archive_entry_update_symlink_utf8(self._entry_p, <const char *>linkname)
+
+    @uid.setter
+    def uid(self, la.la_int64_t uid):
+        la.archive_entry_set_uid(self._entry_p, uid)
+
+    @uname.setter
+    def uname(self, object name):
+        la.archive_entry_set_uname(self._entry_p, <const char *>name)
+
+    @uname_utf8.setter
+    def uname_utf8(self, str name):
+        la.archive_entry_set_uname_utf8(self._entry_p, PyUnicode_AsUTF8(name))
+
+    @uname_w.setter
+    def uname_w(self, str name):
+        cdef wchar_t *name_ = PyUnicode_AsWideCharString(name, NULL)
+        try:
+            la.archive_entry_copy_uname_w(self._entry_p, <const wchar_t *>name_)
+        finally:
+            PyMem_Free(name_)
+
+    cpdef inline int update_uname_utf8(self, str name):
+        return la.archive_entry_update_uname_utf8(self._entry_p, PyUnicode_AsUTF8(name))
+
+
+    @is_data_encrypted.setter
+    def is_data_encrypted(self, bint is_encrypted):
+        la.archive_entry_set_is_data_encrypted(self._entry_p, <char>is_encrypted)
+
+    @is_metadata_encrypted.setter
+    def is_metadata_encrypted(self, bint is_encrypted):
+        la.archive_entry_set_is_metadata_encrypted(self._entry_p, <char>is_encrypted)
+
+    @property
+    def stat(self):
+        cdef la.stat * ret = la.archive_entry_stat(self._entry_p)
+        return os.stat_result((ret.st_mode,
+                                ret.st_ino,
+                                ret.st_dev,
+                                ret.st_nlink,
+                                ret.st_uid,
+                                ret.st_gid,
+                                ret.st_size,
+                                ret.st_atime,
+                                ret.st_mtime,
+                                ret.st_ctime))
+
+    @stat.setter
+    def stat(self, object stat):
+        cdef la.stat st
+        st.st_dev = stat.st_dev
+        st.st_ino = stat.st_ino
+        st.st_mode = stat.st_mode
+        st.st_nlink = stat.st_nlink
+        st.st_uid = stat.st_uid
+        st.st_gid = stat.st_gid
+        # st.st_rdev = stat.st_rdev
+        st.st_size = stat.st_size
+        st.st_atime = stat.st_atime
+        st.st_mtime = stat.st_mtime
+        st.st_ctime = stat.st_ctime
+        la.archive_entry_copy_stat(self._entry_p, &st)
     # cpdef long long offset1(self):
     #     return <long long><void*>self
     #
     # cpdef long long offset2(self):
     #     return <long long> <void *> &self._entry_p
+    @property
+    def mac_metadata(self):
+        cdef size_t s
+        cdef const char * ret = <const char *>la.archive_entry_mac_metadata(self._entry_p, &s)
+        return PyBytes_FromStringAndSize(ret, <Py_ssize_t>s)
+
+    @mac_metadata.setter
+    def mac_metadata(self, bytes metadata not None):
+        la.archive_entry_copy_mac_metadata(self._entry_p, <const void *>PyBytes_AS_STRING(metadata), <size_t>PyBytes_GET_SIZE(metadata))
+
+    @mac_metadata.deleter
+    def mac_metadata(self):
+        la.archive_entry_copy_mac_metadata(self._entry_p, NULL, 0)
+
+    cpdef bytes digest(self, int type_):
+        cdef const unsigned char * ret = la.archive_entry_digest(self._entry_p, type_)
+        if ret != NULL:
+            return <bytes>ret
+
+    # todo: check if there exist more deleter
+    cpdef acl_clear(self):
+        la.archive_entry_acl_clear(self._entry_p)
+
 
 @cython.freelist(8)
 @cython.no_gc
