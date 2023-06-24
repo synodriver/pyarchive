@@ -197,7 +197,7 @@ cdef class ArchiveRead(Archive):
             la.archive_read_free(self._archive_p)
         self._archive_p = NULL
 
-    cpdef int close(self):
+    cpdef int close(self) except? -30:
         cdef int ret = la.archive_read_close(self._archive_p)
         if ret != la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
@@ -396,7 +396,7 @@ cdef class ArchiveRead(Archive):
     def format_capabilities(self):
         return la.archive_read_format_capabilities(self._archive_p)
 
-    cpdef la.la_ssize_t readinto(self, uint8_t[::1] buf) except -1:
+    cpdef la.la_ssize_t readinto(self, uint8_t[::1] buf) except? -30:
         """
         read data into buffer
         :param buf: Writable buffer
@@ -409,7 +409,7 @@ cdef class ArchiveRead(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef la.la_int64_t seek(self, la.la_int64_t offset, int whence):
+    cpdef la.la_int64_t seek(self, la.la_int64_t offset, int whence) except? -30:
         cdef la.la_int64_t ret
         with nogil:
             ret = la.archive_seek_data(self._archive_p, offset, whence)
@@ -559,8 +559,10 @@ cdef class ArchiveWrite(Archive):
 
     def __cinit__(self, bint is_disk = False):
         if is_disk:
+            # print("archive_write_disk_new()")
             self._archive_p = la.archive_write_disk_new()
         else:
+            # print("aarchive_write_new()")
             self._archive_p = la.archive_write_new()
         if self._archive_p == NULL:
             raise MemoryError
@@ -757,7 +759,7 @@ cdef class ArchiveWrite(Archive):
                                                &used[0])
         return ret
 
-    cpdef int write_header(self, ArchiveEntry entry):
+    cpdef int write_header(self, ArchiveEntry entry) except? -30:
         cdef int ret
         with nogil:
             ret = la.archive_write_header(self._archive_p, entry._entry_p)
@@ -765,7 +767,7 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef la.la_ssize_t write(self, const uint8_t[::1] data):
+    cpdef la.la_ssize_t write(self, const uint8_t[::1] data) except? -30:
         cdef la.la_ssize_t ret
         with nogil:
             ret = la.archive_write_data(self._archive_p, <const void *>&data[0], <size_t>data.shape[0])
@@ -773,7 +775,7 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef la.la_ssize_t write_data_block(self, const uint8_t[::1] data, la.la_int64_t offset):
+    cpdef la.la_ssize_t write_data_block(self, const uint8_t[::1] data, la.la_int64_t offset) except? -30:
         cdef la.la_ssize_t ret
         with nogil:
             ret = la.archive_write_data_block(self._archive_p,  <const void *>&data[0], <size_t>data.shape[0], offset)
@@ -781,7 +783,7 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef int write_finish_entry(self):
+    cpdef int finish_entry(self) except? -30:
         cdef int ret
         with nogil:
             ret = la.archive_write_finish_entry(self._archive_p)
@@ -789,13 +791,13 @@ cdef class ArchiveWrite(Archive):
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef int close(self):
+    cpdef int close(self) except? -30:
         cdef int ret = la.archive_write_close(self._archive_p)
         if ret < la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
         return ret
 
-    cpdef int fail(self):
+    cpdef int fail(self) except? -30:
         cdef int ret = la.archive_write_fail(self._archive_p)
         if ret < la.ARCHIVE_OK:
             raise ArchiveError(self.error_string(), self.get_errno(), ret, self)
@@ -854,6 +856,7 @@ cdef void pywrite_disk_lookup_cleanup(void *ud) with gil:
 @cython.final
 cdef class ArchiveWriteDisk(ArchiveWrite):
     def __cinit__(self, bint is_disk = True):
+        # print(f"in ArchiveWriteDisk.__cinit__ {is_disk}")
         assert self._archive_p is not NULL
 
     def set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
@@ -871,7 +874,7 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
     cpdef inline int set_standard_lookup(self):
         return la.archive_write_disk_set_standard_lookup(self._archive_p )
 
-    cpdef inline int set_group_lookup(self, object lookup, object cleanup):
+    cpdef inline int set_group_lookup(self, object lookup, object cleanup) except? -30:
         """
         
         :param lookup: Callable[[bytes, int], int] lookup_gid callback
@@ -888,7 +891,7 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
                                                       pywrite_disk_lookup_cb,
                                                       pywrite_disk_lookup_cleanup)
 
-    cpdef inline int set_user_lookup(self, object lookup, object cleanup):
+    cpdef inline int set_user_lookup(self, object lookup, object cleanup) except? -30:
         """
         
         :param lookup: Callable[[bytes, int], int] lookup_gid callback
@@ -981,7 +984,7 @@ cdef class ArchiveReadDisk(ArchiveRead):
     cpdef inline int set_standard_lookup(self):
         return la.archive_read_disk_set_standard_lookup(self._archive_p)
 
-    cpdef inline int set_gname_lookup(self, object lookup, object cleanup):
+    cpdef inline int set_gname_lookup(self, object lookup, object cleanup) except? -30:
         """
 
         :param lookup: Callable[[bytes, int], int] lookup_gid callback
@@ -998,7 +1001,7 @@ cdef class ArchiveReadDisk(ArchiveRead):
                                                      pyread_disk_lookup_cb,
                                                      pyread_disk_lookup_cleanup)
 
-    cpdef inline int set_uname_lookup(self, object lookup, object cleanup):
+    cpdef inline int set_uname_lookup(self, object lookup, object cleanup) except? -30:
         """
 
         :param lookup: Callable[[bytes, int], int] lookup_gid callback
