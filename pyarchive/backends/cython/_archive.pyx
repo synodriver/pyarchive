@@ -183,11 +183,12 @@ cdef class ArchiveRead(Archive):
     cdef ArchiveReadOpenState openstate
     # cdef:
     #     dict callbackref # 使对callback的引用变成强引用
-    def __cinit__(self, bint is_disk = False):
-        if is_disk:
-            self._archive_p = la.archive_read_disk_new()
-        else:
-            self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
+    def __init__(self):
+        self._archive_p = la.archive_read_new()
+        # if is_disk:
+        #     self._archive_p = la.archive_read_disk_new()
+        # else:
+        #     self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
         if self._archive_p == NULL:
             raise MemoryError
         self.openstate = Empty
@@ -557,13 +558,14 @@ cdef class ArchiveRead(Archive):
 @cython.no_gc
 cdef class ArchiveWrite(Archive):
 
-    def __cinit__(self, bint is_disk = False):
-        if is_disk:
-            # print("archive_write_disk_new()")
-            self._archive_p = la.archive_write_disk_new()
-        else:
-            # print("aarchive_write_new()")
-            self._archive_p = la.archive_write_new()
+    def __init__(self):
+        self._archive_p = la.archive_write_new()
+        # if is_disk:
+        #     # print("archive_write_disk_new()")
+        #     self._archive_p = la.archive_write_disk_new()
+        # else:
+        #     # print("aarchive_write_new()")
+        #     self._archive_p = la.archive_write_new()
         if self._archive_p == NULL:
             raise MemoryError
 
@@ -855,9 +857,12 @@ cdef void pywrite_disk_lookup_cleanup(void *ud) with gil:
 
 @cython.final
 cdef class ArchiveWriteDisk(ArchiveWrite):
-    def __cinit__(self, bint is_disk = True):
+    def __init__(self):
+        self._archive_p = la.archive_write_disk_new()
+        if self._archive_p == NULL:
+            raise MemoryError
         # print(f"in ArchiveWriteDisk.__cinit__ {is_disk}")
-        assert self._archive_p is not NULL
+
 
     def set_skip_file(self, la.la_int64_t dev, la.la_int64_t ino):
         return la.archive_write_disk_set_skip_file(self._archive_p, dev, ino)
@@ -938,8 +943,10 @@ cdef int pymetadata_filter_func(la.archive *a, void* ud, la.archive_entry *entry
 
 @cython.final
 cdef class ArchiveReadDisk(ArchiveRead):
-    def __cinit__(self, bint is_disk = True):
-        assert self._archive_p is not NULL
+    def __init__(self):
+        self._archive_p = la.archive_read_disk_new()
+        if self._archive_p == NULL:
+            raise MemoryError
 
     cpdef inline int set_symlink_logical(self):
         return la.archive_read_disk_set_symlink_logical(self._archive_p)
