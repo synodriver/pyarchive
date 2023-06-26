@@ -1,12 +1,14 @@
 # cython: language_level=3
 # cython: cdivision=True
-cimport cython
-from libc.stdint cimport uint8_t
-from libc.stddef cimport wchar_t
-from libc.time cimport time_t
-from cpython.mem cimport PyMem_Malloc
-from cpython.bytes cimport PyBytes_FromStringAndSize, PyBytes_FromString
 from posix.types cimport dev_t
+
+cimport cython
+from cpython.bytes cimport PyBytes_FromString, PyBytes_FromStringAndSize
+from cpython.mem cimport PyMem_Malloc
+from libc.stddef cimport wchar_t
+from libc.stdint cimport uint8_t
+from libc.time cimport time_t
+
 
 cdef object os
 import os
@@ -1966,3 +1968,22 @@ cdef class ArchiveEntryLinkresolver:
         with nogil:
             ret = la.archive_entry_partial_links(self._resolver, &links)
         return  ArchiveEntry.from_ptr(ret, 0), links
+
+cpdef inline int copy_data_to_disk(ArchiveRead ar, ArchiveWriteDisk aw) except? -30:
+    cdef:
+        const void* buff
+        size_t size
+        la.la_int64_t offset
+        int ret
+    with nogil:
+        ret = la.archive_read_data_block(ar._archive_p, &buff, &size, &offset)
+        if ret == la.ARCHIVE_EOF:
+            return la.ARCHIVE_OK
+        if ret < la.ARCHIVE_OK:
+            with gil:
+                raise ArchiveError(ar.error_string(), ar.get_errno(), ret, ar)
+        ret = la.archive_write_data_block(aw._archive_p, buff, size, offset)
+        if ret < la.ARCHIVE_OK:
+            with gil:
+                raise ArchiveError(aw.error_string(), aw.get_errno(), ret, aw)
+

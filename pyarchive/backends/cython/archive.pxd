@@ -1,10 +1,12 @@
 # cython: language_level=3
 # cython: cdivision=True
-from libc.stdio cimport FILE
-from libc.stdint cimport int64_t
-from libc.stddef cimport wchar_t
-from libc.time cimport time_t
 from posix.types cimport dev_t
+
+from libc.stddef cimport wchar_t
+from libc.stdint cimport int64_t
+from libc.stdio cimport FILE
+from libc.time cimport time_t
+
 
 cdef extern from * nogil:
     cdef struct stat:
