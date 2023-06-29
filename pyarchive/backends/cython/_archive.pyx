@@ -1982,7 +1982,7 @@ cpdef inline int copy_data_to_disk(ArchiveRead ar, ArchiveWriteDisk aw) except? 
         if ret < la.ARCHIVE_OK:
             with gil:
                 raise ArchiveError(ar.error_string(), ar.get_errno(), ret, ar)
-        ret = la.archive_write_data_block(aw._archive_p, buff, size, offset)
+        ret = <int>la.archive_write_data_block(aw._archive_p, buff, size, offset)
         if ret < la.ARCHIVE_OK:
             with gil:
                 raise ArchiveError(aw.error_string(), aw.get_errno(), ret, aw)
