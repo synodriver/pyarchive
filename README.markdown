@@ -13,4 +13,14 @@ Python's file-like object.
 Build pyarchive with all features available is not very easy, especially
 on Windows, you'll have to link against the right libarchive. The recommend
 way is to use a conda environment. Use ```conda install -c conda-forge libarchive```
-to install a pre-build libarchive with header-files available.
+to install a pre-build libarchive with header-files available, and build use
+the following script
+
+```bash
+python setup.py build_ext -i --use-cython --lib-path "D:\conda\envs\py310\Library\lib\archive.lib" --include-path "D:\conda\envs\py310\Library\include"
+```
+On linux, this may be
+
+```bash
+python setup.py build_ext -i --use-cython --lib-path "/root/conda/envs/py310/Library/lib/libarchive.so" --include-path "/root/miniconda/envs/py310/Library/include"
+```

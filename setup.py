@@ -34,14 +34,27 @@ class build_ext_compiler_check(build_ext):
         super().build_extensions()
 
 
-c_sources = ["pyarchive/backends/cython/_archive.pyx"] # + glob.glob("./cbitset/src/*.c")
+def get_option(name):
+    for i, arg in enumerate(sys.argv[1:-1], 1):
+        if arg == name:
+            sys.argv.pop(i)
+            return sys.argv.pop(i)
+    return ""
+
+
+c_sources = ["pyarchive/backends/cython/_archive.pyx"]
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
+
+libarchive_lib = get_option("--lib-path")
+libarchive_include = get_option("--include-path")
+
+
 extensions = [
     Extension(
         "pyarchive.backends.cython._archive",
         c_sources,
-        include_dirs=["D:\conda\envs\py310\Library\include"],  # ["./dep/libarchive"],
-        extra_objects=[r"D:\conda\envs\py310\Library\lib\archive.lib"],
+        include_dirs=[libarchive_include],  # ["./dep/libarchive"],
+        extra_objects=[libarchive_lib],
     ),
 ]
 cffi_modules = ["pyarchive/backends/cffi/build.py:ffibuilder"]
