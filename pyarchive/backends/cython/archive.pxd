@@ -65,7 +65,7 @@ cdef extern from "archive.h" nogil:
 
     ctypedef int    archive_free_callback(archive *, void *_client_data)  except -30
     ctypedef int archive_switch_callback(archive *, void *_client_data1, void *_client_data2)  except -30
-    ctypedef const char *archive_passphrase_callback(archive *, void *_client_data)
+    ctypedef const char *archive_passphrase_callback(archive *, void *_client_data) except NULL
     int ARCHIVE_FILTER_NONE
     int ARCHIVE_FILTER_GZIP
     int ARCHIVE_FILTER_BZIP2
