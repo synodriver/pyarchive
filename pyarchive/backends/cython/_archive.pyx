@@ -1469,13 +1469,13 @@ cdef class ArchiveEntry:
     def strmode(self):
         cdef const char * ret = la.archive_entry_strmode(self._entry_p)
         if ret != NULL:
-            return ret
+            return <bytes>ret
 
     @property
     def symlink(self):
         cdef const char * ret = la.archive_entry_symlink(self._entry_p)
         if ret != NULL:
-            return ret
+            return <bytes>ret
 
     @property
     def symlink_utf8(self):

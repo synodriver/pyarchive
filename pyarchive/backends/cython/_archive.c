@@ -47262,7 +47262,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
  *     def strmode(self):
  *         cdef const char * ret = la.archive_entry_strmode(self._entry_p)             # <<<<<<<<<<<<<<
  *         if ret != NULL:
- *             return ret
+ *             return <bytes>ret
  */
   __pyx_v_ret = archive_entry_strmode(__pyx_v_self->_entry_p);
 
@@ -47270,7 +47270,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
  *     def strmode(self):
  *         cdef const char * ret = la.archive_entry_strmode(self._entry_p)
  *         if ret != NULL:             # <<<<<<<<<<<<<<
- *             return ret
+ *             return <bytes>ret
  * 
  */
   __pyx_t_1 = ((__pyx_v_ret != NULL) != 0);
@@ -47279,22 +47279,23 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
     /* "pyarchive/backends/cython/_archive.pyx":1472
  *         cdef const char * ret = la.archive_entry_strmode(self._entry_p)
  *         if ret != NULL:
- *             return ret             # <<<<<<<<<<<<<<
+ *             return <bytes>ret             # <<<<<<<<<<<<<<
  * 
  *     @property
  */
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_2 = __Pyx_PyBytes_FromString(__pyx_v_ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1472, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(((PyObject*)__pyx_t_2));
     __pyx_r = __pyx_t_2;
-    __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     goto __pyx_L0;
 
     /* "pyarchive/backends/cython/_archive.pyx":1471
  *     def strmode(self):
  *         cdef const char * ret = la.archive_entry_strmode(self._entry_p)
  *         if ret != NULL:             # <<<<<<<<<<<<<<
- *             return ret
+ *             return <bytes>ret
  * 
  */
   }
@@ -47357,7 +47358,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
  *     def symlink(self):
  *         cdef const char * ret = la.archive_entry_symlink(self._entry_p)             # <<<<<<<<<<<<<<
  *         if ret != NULL:
- *             return ret
+ *             return <bytes>ret
  */
   __pyx_v_ret = archive_entry_symlink(__pyx_v_self->_entry_p);
 
@@ -47365,7 +47366,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
  *     def symlink(self):
  *         cdef const char * ret = la.archive_entry_symlink(self._entry_p)
  *         if ret != NULL:             # <<<<<<<<<<<<<<
- *             return ret
+ *             return <bytes>ret
  * 
  */
   __pyx_t_1 = ((__pyx_v_ret != NULL) != 0);
@@ -47374,22 +47375,23 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_12ArchiveEntry_
     /* "pyarchive/backends/cython/_archive.pyx":1478
  *         cdef const char * ret = la.archive_entry_symlink(self._entry_p)
  *         if ret != NULL:
- *             return ret             # <<<<<<<<<<<<<<
+ *             return <bytes>ret             # <<<<<<<<<<<<<<
  * 
  *     @property
  */
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_2 = __Pyx_PyBytes_FromString(__pyx_v_ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1478, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(((PyObject*)__pyx_t_2));
     __pyx_r = __pyx_t_2;
-    __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     goto __pyx_L0;
 
     /* "pyarchive/backends/cython/_archive.pyx":1477
  *     def symlink(self):
  *         cdef const char * ret = la.archive_entry_symlink(self._entry_p)
  *         if ret != NULL:             # <<<<<<<<<<<<<<
- *             return ret
+ *             return <bytes>ret
  * 
  */
   }

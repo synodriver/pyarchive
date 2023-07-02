@@ -17,10 +17,21 @@ to install a pre-build libarchive with header-files available, and build use
 the following script
 
 ```bash
-python setup.py build_ext -i --use-cython --lib-path "D:\conda\envs\py310\Library\lib\archive.lib" --include-path "D:\conda\envs\py310\Library\include"
+python -m pip install -r requirements.txt
+python setup.py sdist bdist_wheel --use-cython --lib-path "D:\conda\envs\py310\Library\lib\archive.lib" --include-path "D:\conda\envs\py310\Library\include"
 ```
 On linux, this may be
 
 ```bash
-python setup.py build_ext -i --use-cython --lib-path "/root/conda/envs/py310/Library/lib/libarchive.so" --include-path "/root/miniconda/envs/py310/Library/include"
+python -m pip install -r requirements.txt
+python setup.py sdist bdist_wheel --use-cython --lib-path "/root/conda/envs/py310/Library/lib/libarchive.so" --include-path "/root/conda/envs/py310/Library/include"
 ```
+The path should depend on where you install conda
+
+# Develop
+Use 
+```
+python -m pip install -r requirements.txt
+python setup.py build_ext -i --use-cython --lib-path "D:\conda\envs\py310\Library\lib\archive.lib" --include-path "D:\conda\envs\py310\Library\include"
+```
+and so on
