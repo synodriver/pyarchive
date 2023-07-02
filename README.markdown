@@ -1,11 +1,23 @@
 # pyarchive
-# WIP
 
-The goal is to provide a fast and feature-rich binding for latest version 
-of libarchive, with almost every function bind in python, and
-a clear bridge from Python's ```BytesIO``` to libarchive's
-stream, which means it's able to extra files in memory and direct use
-Python's file-like object.
+Pyarchive provide a bridge between file-like objects and libarchive, making it easy to
+use and extend libarchive itself. For instance, libarchive [doesn't support bzip3](https://github.com/libarchive/libarchive/issues/1904) at
+this moment, however, pyarchive can do that with the help of other libraries.
+```python
+import bz3
+from pyarchive import ArchiveRead
+
+with bz3.open("test.tar.bz3", 'rb') as f:
+    a = ArchiveRead()
+    a.support_filter_all()
+    a.support_format_all()
+    a.open(f, 1000)
+    for entry in a.iter_entries():
+        print(entry.pathname_w)
+        a.skip()
+```
+Besides, it's also possible to read a file in memory using ```open_memory``` method,
+and read a fd using ```open_fd```
 
 
 # Build
