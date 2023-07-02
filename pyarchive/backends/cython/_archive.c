@@ -8639,7 +8639,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_7Archive_14clea
  * 
  *     cpdef set_error(self, int _err, str msg):             # <<<<<<<<<<<<<<
  *         # cdef bytes msg_ = msg.encode()
- *         la.archive_set_error(self._archive_p, _err, <const char *>msg)
+ *         la.archive_set_error(self._archive_p, _err, PyUnicode_AsUTF8(msg))
  */
 
 static PyObject *__pyx_pw_9pyarchive_8backends_6cython_8_archive_7Archive_17set_error(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
@@ -8742,19 +8742,19 @@ static PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_7Archive_set_err
   /* "pyarchive/backends/cython/_archive.pyx":130
  *     cpdef set_error(self, int _err, str msg):
  *         # cdef bytes msg_ = msg.encode()
- *         la.archive_set_error(self._archive_p, _err, <const char *>msg)             # <<<<<<<<<<<<<<
+ *         la.archive_set_error(self._archive_p, _err, PyUnicode_AsUTF8(msg))             # <<<<<<<<<<<<<<
  * 
  *     cpdef copy_error(self, Archive other):
  */
-  __pyx_t_8 = __Pyx_PyObject_AsString(__pyx_v_msg); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) __PYX_ERR(2, 130, __pyx_L1_error)
-  archive_set_error(__pyx_v_self->_archive_p, __pyx_v__err, ((char const *)__pyx_t_8));
+  __pyx_t_8 = PyUnicode_AsUTF8(__pyx_v_msg); if (unlikely(__pyx_t_8 == ((char const *)NULL))) __PYX_ERR(2, 130, __pyx_L1_error)
+  archive_set_error(__pyx_v_self->_archive_p, __pyx_v__err, __pyx_t_8);
 
   /* "pyarchive/backends/cython/_archive.pyx":128
  *         la.archive_clear_error(self._archive_p)
  * 
  *     cpdef set_error(self, int _err, str msg):             # <<<<<<<<<<<<<<
  *         # cdef bytes msg_ = msg.encode()
- *         la.archive_set_error(self._archive_p, _err, <const char *>msg)
+ *         la.archive_set_error(self._archive_p, _err, PyUnicode_AsUTF8(msg))
  */
 
   /* function exit code */
@@ -8872,7 +8872,7 @@ static PyObject *__pyx_pf_9pyarchive_8backends_6cython_8_archive_7Archive_16set_
 }
 
 /* "pyarchive/backends/cython/_archive.pyx":132
- *         la.archive_set_error(self._archive_p, _err, <const char *>msg)
+ *         la.archive_set_error(self._archive_p, _err, PyUnicode_AsUTF8(msg))
  * 
  *     cpdef copy_error(self, Archive other):             # <<<<<<<<<<<<<<
  *         la.archive_copy_error(self._archive_p, other._archive_p)
@@ -8948,7 +8948,7 @@ static PyObject *__pyx_f_9pyarchive_8backends_6cython_8_archive_7Archive_copy_er
   archive_copy_error(__pyx_v_self->_archive_p, __pyx_v_other->_archive_p);
 
   /* "pyarchive/backends/cython/_archive.pyx":132
- *         la.archive_set_error(self._archive_p, _err, <const char *>msg)
+ *         la.archive_set_error(self._archive_p, _err, PyUnicode_AsUTF8(msg))
  * 
  *     cpdef copy_error(self, Archive other):             # <<<<<<<<<<<<<<
  *         la.archive_copy_error(self._archive_p, other._archive_p)

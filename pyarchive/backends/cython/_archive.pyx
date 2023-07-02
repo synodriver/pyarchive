@@ -127,7 +127,7 @@ cdef class Archive:
 
     cpdef set_error(self, int _err, str msg):
         # cdef bytes msg_ = msg.encode()
-        la.archive_set_error(self._archive_p, _err, <const char *>msg)
+        la.archive_set_error(self._archive_p, _err, PyUnicode_AsUTF8(msg))
 
     cpdef copy_error(self, Archive other):
         la.archive_copy_error(self._archive_p, other._archive_p)
