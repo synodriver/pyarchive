@@ -1129,7 +1129,7 @@ enum __pyx_t_9pyarchive_8backends_6cython_8_archive_ArchiveReadOpenState {
   __pyx_e_9pyarchive_8backends_6cython_8_archive_FdOpened
 };
 
-/* "pyarchive/backends/cython/pystream.pxi":10
+/* "pyarchive/backends/cython/pystream.pxi":13
  * 
  * 
  * cdef struct PyStreamData:             # <<<<<<<<<<<<<<
@@ -4660,7 +4660,7 @@ static PyObject *__pyx_codeobj__44;
 static PyObject *__pyx_codeobj__51;
 /* Late includes */
 
-/* "pyarchive/backends/cython/pystream.pxi":17
+/* "pyarchive/backends/cython/pystream.pxi":20
  *     int close # close callback
  * 
  * cdef int pystream_open_callback(la.archive *a, void *_client_data) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -4680,18 +4680,18 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_open_callback
   #endif
   __Pyx_RefNannySetupContext("pystream_open_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":18
+  /* "pyarchive/backends/cython/pystream.pxi":21
  * 
  * cdef int pystream_open_callback(la.archive *a, void *_client_data) except -30 with gil:
  *     print("pystream_open_callback")             # <<<<<<<<<<<<<<
  *     return la.ARCHIVE_OK
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":19
+  /* "pyarchive/backends/cython/pystream.pxi":22
  * cdef int pystream_open_callback(la.archive *a, void *_client_data) except -30 with gil:
  *     print("pystream_open_callback")
  *     return la.ARCHIVE_OK             # <<<<<<<<<<<<<<
@@ -4701,7 +4701,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_open_callback
   __pyx_r = ARCHIVE_OK;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":17
+  /* "pyarchive/backends/cython/pystream.pxi":20
  *     int close # close callback
  * 
  * cdef int pystream_open_callback(la.archive *a, void *_client_data) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -4722,7 +4722,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_open_callback
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/pystream.pxi":21
+/* "pyarchive/backends/cython/pystream.pxi":24
  *     return la.ARCHIVE_OK
  * 
  * cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, const void ** _buffer) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -4754,18 +4754,18 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   #endif
   __Pyx_RefNannySetupContext("pystream_read_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":22
+  /* "pyarchive/backends/cython/pystream.pxi":25
  * 
  * cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, const void ** _buffer) except -30 with gil:
  *     print("pystream_read_callback")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":23
+  /* "pyarchive/backends/cython/pystream.pxi":26
  * cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, const void ** _buffer) except -30 with gil:
  *     print("pystream_read_callback")
  *     cdef PyStreamData* data = <PyStreamData*> _client_data             # <<<<<<<<<<<<<<
@@ -4774,7 +4774,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_PyStreamData *)__pyx_v__client_data);
 
-  /* "pyarchive/backends/cython/pystream.pxi":24
+  /* "pyarchive/backends/cython/pystream.pxi":27
  *     print("pystream_read_callback")
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file             # <<<<<<<<<<<<<<
@@ -4786,7 +4786,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   __pyx_v_file = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":25
+  /* "pyarchive/backends/cython/pystream.pxi":28
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  *     cdef size_t block_size = data.block_size             # <<<<<<<<<<<<<<
@@ -4796,16 +4796,16 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   __pyx_t_2 = __pyx_v_data->block_size;
   __pyx_v_block_size = __pyx_t_2;
 
-  /* "pyarchive/backends/cython/pystream.pxi":26
+  /* "pyarchive/backends/cython/pystream.pxi":29
  *     cdef object file = <object>data.file
  *     cdef size_t block_size = data.block_size
  *     cdef bytes block = file.read(block_size)             # <<<<<<<<<<<<<<
  *     cdef la.la_ssize_t outlen = <la.la_ssize_t>PyBytes_GET_SIZE(block)
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_read); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_FromSize_t(__pyx_v_block_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_FromSize_t(__pyx_v_block_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -4820,14 +4820,14 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||((void)PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 29, __pyx_L1_error)
   __pyx_v_block = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":27
+  /* "pyarchive/backends/cython/pystream.pxi":30
  *     cdef size_t block_size = data.block_size
  *     cdef bytes block = file.read(block_size)
  *     cdef la.la_ssize_t outlen = <la.la_ssize_t>PyBytes_GET_SIZE(block)             # <<<<<<<<<<<<<<
@@ -4836,7 +4836,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
   __pyx_v_outlen = ((la_ssize_t)PyBytes_GET_SIZE(__pyx_v_block));
 
-  /* "pyarchive/backends/cython/pystream.pxi":29
+  /* "pyarchive/backends/cython/pystream.pxi":32
  *     cdef la.la_ssize_t outlen = <la.la_ssize_t>PyBytes_GET_SIZE(block)
  * 
  *     cdef void* temp = NULL             # <<<<<<<<<<<<<<
@@ -4845,7 +4845,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
   __pyx_v_temp = NULL;
 
-  /* "pyarchive/backends/cython/pystream.pxi":30
+  /* "pyarchive/backends/cython/pystream.pxi":33
  * 
  *     cdef void* temp = NULL
  *     if outlen > data.length: #             # <<<<<<<<<<<<<<
@@ -4855,7 +4855,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   __pyx_t_6 = ((__pyx_v_outlen > __pyx_v_data->length) != 0);
   if (__pyx_t_6) {
 
-    /* "pyarchive/backends/cython/pystream.pxi":31
+    /* "pyarchive/backends/cython/pystream.pxi":34
  *     cdef void* temp = NULL
  *     if outlen > data.length: #
  *         temp = PyMem_Realloc(data.buffer, <size_t >outlen)             # <<<<<<<<<<<<<<
@@ -4864,7 +4864,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
     __pyx_v_temp = PyMem_Realloc(__pyx_v_data->buffer, ((size_t)__pyx_v_outlen));
 
-    /* "pyarchive/backends/cython/pystream.pxi":32
+    /* "pyarchive/backends/cython/pystream.pxi":35
  *     if outlen > data.length: #
  *         temp = PyMem_Realloc(data.buffer, <size_t >outlen)
  *         if temp == NULL:             # <<<<<<<<<<<<<<
@@ -4874,16 +4874,16 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
     __pyx_t_6 = ((__pyx_v_temp == NULL) != 0);
     if (unlikely(__pyx_t_6)) {
 
-      /* "pyarchive/backends/cython/pystream.pxi":33
+      /* "pyarchive/backends/cython/pystream.pxi":36
  *         temp = PyMem_Realloc(data.buffer, <size_t >outlen)
  *         if temp == NULL:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         data.buffer = temp
  *         data.length = outlen
  */
-      PyErr_NoMemory(); __PYX_ERR(0, 33, __pyx_L1_error)
+      PyErr_NoMemory(); __PYX_ERR(0, 36, __pyx_L1_error)
 
-      /* "pyarchive/backends/cython/pystream.pxi":32
+      /* "pyarchive/backends/cython/pystream.pxi":35
  *     if outlen > data.length: #
  *         temp = PyMem_Realloc(data.buffer, <size_t >outlen)
  *         if temp == NULL:             # <<<<<<<<<<<<<<
@@ -4892,7 +4892,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
     }
 
-    /* "pyarchive/backends/cython/pystream.pxi":34
+    /* "pyarchive/backends/cython/pystream.pxi":37
  *         if temp == NULL:
  *             raise MemoryError
  *         data.buffer = temp             # <<<<<<<<<<<<<<
@@ -4901,7 +4901,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
     __pyx_v_data->buffer = __pyx_v_temp;
 
-    /* "pyarchive/backends/cython/pystream.pxi":35
+    /* "pyarchive/backends/cython/pystream.pxi":38
  *             raise MemoryError
  *         data.buffer = temp
  *         data.length = outlen             # <<<<<<<<<<<<<<
@@ -4910,7 +4910,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
     __pyx_v_data->length = __pyx_v_outlen;
 
-    /* "pyarchive/backends/cython/pystream.pxi":30
+    /* "pyarchive/backends/cython/pystream.pxi":33
  * 
  *     cdef void* temp = NULL
  *     if outlen > data.length: #             # <<<<<<<<<<<<<<
@@ -4919,7 +4919,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
   }
 
-  /* "pyarchive/backends/cython/pystream.pxi":36
+  /* "pyarchive/backends/cython/pystream.pxi":39
  *         data.buffer = temp
  *         data.length = outlen
  *     memcpy(data.buffer, PyBytes_AS_STRING(block), <size_t> outlen)             # <<<<<<<<<<<<<<
@@ -4928,7 +4928,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
  */
   (void)(memcpy(__pyx_v_data->buffer, PyBytes_AS_STRING(__pyx_v_block), ((size_t)__pyx_v_outlen)));
 
-  /* "pyarchive/backends/cython/pystream.pxi":37
+  /* "pyarchive/backends/cython/pystream.pxi":40
  *         data.length = outlen
  *     memcpy(data.buffer, PyBytes_AS_STRING(block), <size_t> outlen)
  *     _buffer[0] = data.buffer             # <<<<<<<<<<<<<<
@@ -4938,7 +4938,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   __pyx_t_7 = __pyx_v_data->buffer;
   (__pyx_v__buffer[0]) = __pyx_t_7;
 
-  /* "pyarchive/backends/cython/pystream.pxi":38
+  /* "pyarchive/backends/cython/pystream.pxi":41
  *     memcpy(data.buffer, PyBytes_AS_STRING(block), <size_t> outlen)
  *     _buffer[0] = data.buffer
  *     return outlen             # <<<<<<<<<<<<<<
@@ -4948,7 +4948,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   __pyx_r = __pyx_v_outlen;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":21
+  /* "pyarchive/backends/cython/pystream.pxi":24
  *     return la.ARCHIVE_OK
  * 
  * cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, const void ** _buffer) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -4974,7 +4974,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_read_c
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/pystream.pxi":41
+/* "pyarchive/backends/cython/pystream.pxi":44
  * 
  * 
  * cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5006,27 +5006,27 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   #endif
   __Pyx_RefNannySetupContext("pystream_skip_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":42
+  /* "pyarchive/backends/cython/pystream.pxi":45
  * 
  * cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request) except -30 with gil:
  *     print(f"pystream_skip_callback request: {request}")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_request); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_request); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_t_1, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyUnicode_Concat(__pyx_kp_u_pystream_skip_callback_request, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyUnicode_Concat(__pyx_kp_u_pystream_skip_callback_request, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":43
+  /* "pyarchive/backends/cython/pystream.pxi":46
  * cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request) except -30 with gil:
  *     print(f"pystream_skip_callback request: {request}")
  *     cdef PyStreamData* data = <PyStreamData*> _client_data             # <<<<<<<<<<<<<<
@@ -5035,7 +5035,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_PyStreamData *)__pyx_v__client_data);
 
-  /* "pyarchive/backends/cython/pystream.pxi":44
+  /* "pyarchive/backends/cython/pystream.pxi":47
  *     print(f"pystream_skip_callback request: {request}")
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file             # <<<<<<<<<<<<<<
@@ -5047,14 +5047,14 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   __pyx_v_file = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":45
+  /* "pyarchive/backends/cython/pystream.pxi":48
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  *     if not file.seekable():             # <<<<<<<<<<<<<<
  *         return 0
  *     cdef la.la_int64_t  oldpos = <la.la_int64_t >file.tell()
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seekable); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seekable); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -5068,15 +5068,15 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   }
   __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_5 = ((!__pyx_t_4) != 0);
   if (__pyx_t_5) {
 
-    /* "pyarchive/backends/cython/pystream.pxi":46
+    /* "pyarchive/backends/cython/pystream.pxi":49
  *     cdef object file = <object>data.file
  *     if not file.seekable():
  *         return 0             # <<<<<<<<<<<<<<
@@ -5086,7 +5086,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "pyarchive/backends/cython/pystream.pxi":45
+    /* "pyarchive/backends/cython/pystream.pxi":48
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  *     if not file.seekable():             # <<<<<<<<<<<<<<
@@ -5095,14 +5095,14 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
  */
   }
 
-  /* "pyarchive/backends/cython/pystream.pxi":47
+  /* "pyarchive/backends/cython/pystream.pxi":50
  *     if not file.seekable():
  *         return 0
  *     cdef la.la_int64_t  oldpos = <la.la_int64_t >file.tell()             # <<<<<<<<<<<<<<
  *     cdef la.la_int64_t  newpos = <la.la_int64_t >file.seek(request, 1)
  *     return newpos - oldpos
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_tell); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_tell); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -5116,23 +5116,23 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   }
   __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyInt_As_int64_t(__pyx_t_2); if (unlikely((__pyx_t_6 == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_As_int64_t(__pyx_t_2); if (unlikely((__pyx_t_6 == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_oldpos = ((la_int64_t)__pyx_t_6);
 
-  /* "pyarchive/backends/cython/pystream.pxi":48
+  /* "pyarchive/backends/cython/pystream.pxi":51
  *         return 0
  *     cdef la.la_int64_t  oldpos = <la.la_int64_t >file.tell()
  *     cdef la.la_int64_t  newpos = <la.la_int64_t >file.seek(request, 1)             # <<<<<<<<<<<<<<
  *     return newpos - oldpos
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seek); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seek); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_request); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_request); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_7 = NULL;
   __pyx_t_8 = 0;
@@ -5149,7 +5149,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_3, __pyx_int_1};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -5158,14 +5158,14 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_3, __pyx_int_1};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -5176,16 +5176,16 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
     __Pyx_GIVEREF(__pyx_int_1);
     PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_8, __pyx_int_1);
     __pyx_t_3 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyInt_As_int64_t(__pyx_t_2); if (unlikely((__pyx_t_6 == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_As_int64_t(__pyx_t_2); if (unlikely((__pyx_t_6 == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_newpos = ((la_int64_t)__pyx_t_6);
 
-  /* "pyarchive/backends/cython/pystream.pxi":49
+  /* "pyarchive/backends/cython/pystream.pxi":52
  *     cdef la.la_int64_t  oldpos = <la.la_int64_t >file.tell()
  *     cdef la.la_int64_t  newpos = <la.la_int64_t >file.seek(request, 1)
  *     return newpos - oldpos             # <<<<<<<<<<<<<<
@@ -5195,7 +5195,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   __pyx_r = (__pyx_v_newpos - __pyx_v_oldpos);
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":41
+  /* "pyarchive/backends/cython/pystream.pxi":44
  * 
  * 
  * cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5221,7 +5221,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/pystream.pxi":51
+/* "pyarchive/backends/cython/pystream.pxi":54
  *     return newpos - oldpos
  * 
  * cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la.la_int64_t offset, int whence) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5229,7 +5229,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_skip_c
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  */
 
-static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_callback(CYTHON_UNUSED struct archive *__pyx_v_a, void *__pyx_v__client_data, la_int64_t __pyx_v_offset, int __pyx_v_whence) {
+static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_callback(struct archive *__pyx_v_a, void *__pyx_v__client_data, la_int64_t __pyx_v_offset, int __pyx_v_whence) {
   struct __pyx_t_9pyarchive_8backends_6cython_8_archive_PyStreamData *__pyx_v_data;
   PyObject *__pyx_v_file = 0;
   la_int64_t __pyx_v_newpos;
@@ -5255,14 +5255,14 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   #endif
   __Pyx_RefNannySetupContext("pystream_seek_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":52
+  /* "pyarchive/backends/cython/pystream.pxi":55
  * 
  * cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la.la_int64_t offset, int whence) except -30 with gil:
  *     print(f"pystream_seek_callback offset: {offset} whence: {whence}")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = 0;
   __pyx_t_3 = 127;
@@ -5270,9 +5270,9 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   __pyx_t_2 += 31;
   __Pyx_GIVEREF(__pyx_kp_u_pystream_seek_callback_offset);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_pystream_seek_callback_offset);
-  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_offset); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_offset); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
@@ -5284,21 +5284,21 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   __pyx_t_2 += 9;
   __Pyx_GIVEREF(__pyx_kp_u_whence);
   PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_whence);
-  __pyx_t_5 = __Pyx_PyUnicode_From_int(__pyx_v_whence, 0, ' ', 'd'); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyUnicode_From_int(__pyx_v_whence, 0, ' ', 'd'); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_2 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_1, 4, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_1, 4, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":53
+  /* "pyarchive/backends/cython/pystream.pxi":56
  * cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la.la_int64_t offset, int whence) except -30 with gil:
  *     print(f"pystream_seek_callback offset: {offset} whence: {whence}")
  *     cdef PyStreamData* data = <PyStreamData*> _client_data             # <<<<<<<<<<<<<<
@@ -5307,26 +5307,26 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_PyStreamData *)__pyx_v__client_data);
 
-  /* "pyarchive/backends/cython/pystream.pxi":54
+  /* "pyarchive/backends/cython/pystream.pxi":57
  *     print(f"pystream_seek_callback offset: {offset} whence: {whence}")
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file             # <<<<<<<<<<<<<<
  *     if not file.seekable():
- *         return la.ARCHIVE_FATAL
+ *         la.archive_set_error(a, errno,  "File is not seekable")
  */
   __pyx_t_1 = ((PyObject *)__pyx_v_data->file);
   __Pyx_INCREF(__pyx_t_1);
   __pyx_v_file = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":55
+  /* "pyarchive/backends/cython/pystream.pxi":58
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  *     if not file.seekable():             # <<<<<<<<<<<<<<
+ *         la.archive_set_error(a, errno,  "File is not seekable")
  *         return la.ARCHIVE_FATAL
- *     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seekable); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seekable); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -5340,17 +5340,26 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   }
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_7 = ((!__pyx_t_6) != 0);
   if (__pyx_t_7) {
 
-    /* "pyarchive/backends/cython/pystream.pxi":56
+    /* "pyarchive/backends/cython/pystream.pxi":59
  *     cdef object file = <object>data.file
  *     if not file.seekable():
+ *         la.archive_set_error(a, errno,  "File is not seekable")             # <<<<<<<<<<<<<<
+ *         return la.ARCHIVE_FATAL
+ *     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
+ */
+    archive_set_error(__pyx_v_a, errno, ((char const *)"File is not seekable"));
+
+    /* "pyarchive/backends/cython/pystream.pxi":60
+ *     if not file.seekable():
+ *         la.archive_set_error(a, errno,  "File is not seekable")
  *         return la.ARCHIVE_FATAL             # <<<<<<<<<<<<<<
  *     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
  *     return newpos
@@ -5358,27 +5367,27 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
     __pyx_r = ARCHIVE_FATAL;
     goto __pyx_L0;
 
-    /* "pyarchive/backends/cython/pystream.pxi":55
+    /* "pyarchive/backends/cython/pystream.pxi":58
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  *     if not file.seekable():             # <<<<<<<<<<<<<<
+ *         la.archive_set_error(a, errno,  "File is not seekable")
  *         return la.ARCHIVE_FATAL
- *     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
  */
   }
 
-  /* "pyarchive/backends/cython/pystream.pxi":57
- *     if not file.seekable():
+  /* "pyarchive/backends/cython/pystream.pxi":61
+ *         la.archive_set_error(a, errno,  "File is not seekable")
  *         return la.ARCHIVE_FATAL
  *     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)             # <<<<<<<<<<<<<<
  *     return newpos
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seek); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_seek); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_offset); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_offset); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_whence); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_whence); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_9 = NULL;
   __pyx_t_10 = 0;
@@ -5395,7 +5404,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_4, __pyx_t_8};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -5405,7 +5414,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_4, __pyx_t_8};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -5413,7 +5422,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   } else
   #endif
   {
-    __pyx_t_11 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 57, __pyx_L1_error)
+    __pyx_t_11 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     if (__pyx_t_9) {
       __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -5424,16 +5433,16 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
     PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_10, __pyx_t_8);
     __pyx_t_4 = 0;
     __pyx_t_8 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_12 = __Pyx_PyInt_As_int64_t(__pyx_t_1); if (unlikely((__pyx_t_12 == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_As_int64_t(__pyx_t_1); if (unlikely((__pyx_t_12 == ((la_int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_newpos = ((la_int64_t)__pyx_t_12);
 
-  /* "pyarchive/backends/cython/pystream.pxi":58
+  /* "pyarchive/backends/cython/pystream.pxi":62
  *         return la.ARCHIVE_FATAL
  *     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
  *     return newpos             # <<<<<<<<<<<<<<
@@ -5443,7 +5452,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   __pyx_r = __pyx_v_newpos;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":51
+  /* "pyarchive/backends/cython/pystream.pxi":54
  *     return newpos - oldpos
  * 
  * cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la.la_int64_t offset, int whence) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5470,7 +5479,7 @@ static la_int64_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_seek_c
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/pystream.pxi":60
+/* "pyarchive/backends/cython/pystream.pxi":64
  *     return newpos
  * 
  * cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5491,38 +5500,38 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_switch_callba
   #endif
   __Pyx_RefNannySetupContext("pystream_switch_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":61
+  /* "pyarchive/backends/cython/pystream.pxi":65
  * 
  * cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) except -30 with gil:
  *     print("pystream_switch_callback")             # <<<<<<<<<<<<<<
  *     pystream_close_callback(a, _client_data1)
  *     return pystream_open_callback(a, _client_data2)
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":62
+  /* "pyarchive/backends/cython/pystream.pxi":66
  * cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) except -30 with gil:
  *     print("pystream_switch_callback")
  *     pystream_close_callback(a, _client_data1)             # <<<<<<<<<<<<<<
  *     return pystream_open_callback(a, _client_data2)
  * 
  */
-  __pyx_t_2 = __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callback(__pyx_v_a, __pyx_v__client_data1); if (unlikely(__pyx_t_2 == ((int)-30))) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callback(__pyx_v_a, __pyx_v__client_data1); if (unlikely(__pyx_t_2 == ((int)-30))) __PYX_ERR(0, 66, __pyx_L1_error)
 
-  /* "pyarchive/backends/cython/pystream.pxi":63
+  /* "pyarchive/backends/cython/pystream.pxi":67
  *     print("pystream_switch_callback")
  *     pystream_close_callback(a, _client_data1)
  *     return pystream_open_callback(a, _client_data2)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_open_callback(__pyx_v_a, __pyx_v__client_data2); if (unlikely(__pyx_t_2 == ((int)-30))) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_open_callback(__pyx_v_a, __pyx_v__client_data2); if (unlikely(__pyx_t_2 == ((int)-30))) __PYX_ERR(0, 67, __pyx_L1_error)
   __pyx_r = __pyx_t_2;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":60
+  /* "pyarchive/backends/cython/pystream.pxi":64
  *     return newpos
  * 
  * cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5543,7 +5552,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_switch_callba
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/pystream.pxi":66
+/* "pyarchive/backends/cython/pystream.pxi":70
  * 
  * 
  * cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5568,18 +5577,18 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
   #endif
   __Pyx_RefNannySetupContext("pystream_close_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":67
+  /* "pyarchive/backends/cython/pystream.pxi":71
  * 
  * cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 with gil:
  *     print("pystream_close_callback")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":68
+  /* "pyarchive/backends/cython/pystream.pxi":72
  * cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 with gil:
  *     print("pystream_close_callback")
  *     cdef PyStreamData * data = <PyStreamData *> _client_data             # <<<<<<<<<<<<<<
@@ -5588,7 +5597,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_PyStreamData *)__pyx_v__client_data);
 
-  /* "pyarchive/backends/cython/pystream.pxi":69
+  /* "pyarchive/backends/cython/pystream.pxi":73
  *     print("pystream_close_callback")
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file             # <<<<<<<<<<<<<<
@@ -5600,7 +5609,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
   __pyx_v_file = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":70
+  /* "pyarchive/backends/cython/pystream.pxi":74
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file
  *     PyMem_Free(data.buffer)             # <<<<<<<<<<<<<<
@@ -5609,7 +5618,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
  */
   PyMem_Free(__pyx_v_data->buffer);
 
-  /* "pyarchive/backends/cython/pystream.pxi":71
+  /* "pyarchive/backends/cython/pystream.pxi":75
  *     cdef object file = <object> data.file
  *     PyMem_Free(data.buffer)
  *     PyMem_Free(data)             # <<<<<<<<<<<<<<
@@ -5618,7 +5627,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
  */
   PyMem_Free(__pyx_v_data);
 
-  /* "pyarchive/backends/cython/pystream.pxi":72
+  /* "pyarchive/backends/cython/pystream.pxi":76
  *     PyMem_Free(data.buffer)
  *     PyMem_Free(data)
  *     if data.close:             # <<<<<<<<<<<<<<
@@ -5628,14 +5637,14 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
   __pyx_t_2 = (__pyx_v_data->close != 0);
   if (__pyx_t_2) {
 
-    /* "pyarchive/backends/cython/pystream.pxi":73
+    /* "pyarchive/backends/cython/pystream.pxi":77
  *     PyMem_Free(data)
  *     if data.close:
  *         file.close()             # <<<<<<<<<<<<<<
  *     return la.ARCHIVE_OK
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_4 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5649,12 +5658,12 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
     }
     __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pyarchive/backends/cython/pystream.pxi":72
+    /* "pyarchive/backends/cython/pystream.pxi":76
  *     PyMem_Free(data.buffer)
  *     PyMem_Free(data)
  *     if data.close:             # <<<<<<<<<<<<<<
@@ -5663,7 +5672,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
  */
   }
 
-  /* "pyarchive/backends/cython/pystream.pxi":74
+  /* "pyarchive/backends/cython/pystream.pxi":78
  *     if data.close:
  *         file.close()
  *     return la.ARCHIVE_OK             # <<<<<<<<<<<<<<
@@ -5673,7 +5682,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
   __pyx_r = ARCHIVE_OK;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":66
+  /* "pyarchive/backends/cython/pystream.pxi":70
  * 
  * 
  * cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5697,7 +5706,7 @@ static int __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_close_callbac
   return __pyx_r;
 }
 
-/* "pyarchive/backends/cython/pystream.pxi":76
+/* "pyarchive/backends/cython/pystream.pxi":80
  *     return la.ARCHIVE_OK
  * 
  * cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -5723,18 +5732,18 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_write_
   #endif
   __Pyx_RefNannySetupContext("pystream_write_callback", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":77
+  /* "pyarchive/backends/cython/pystream.pxi":81
  * 
  * cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:
  *     print("pystream_write_callback")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":78
+  /* "pyarchive/backends/cython/pystream.pxi":82
  * cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:
  *     print("pystream_write_callback")
  *     cdef PyStreamData * data = <PyStreamData *> _client_data             # <<<<<<<<<<<<<<
@@ -5743,7 +5752,7 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_write_
  */
   __pyx_v_data = ((struct __pyx_t_9pyarchive_8backends_6cython_8_archive_PyStreamData *)__pyx_v__client_data);
 
-  /* "pyarchive/backends/cython/pystream.pxi":79
+  /* "pyarchive/backends/cython/pystream.pxi":83
  *     print("pystream_write_callback")
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file             # <<<<<<<<<<<<<<
@@ -5755,23 +5764,23 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_write_
   __pyx_v_file = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":80
+  /* "pyarchive/backends/cython/pystream.pxi":84
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file
  *     cdef bytes writedata = PyBytes_FromStringAndSize(<char *>_buffer, <Py_ssize_t>_length)             # <<<<<<<<<<<<<<
  *     return file.write(writedata)
  */
-  __pyx_t_1 = PyBytes_FromStringAndSize(((char *)__pyx_v__buffer), ((Py_ssize_t)__pyx_v__length)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_1 = PyBytes_FromStringAndSize(((char *)__pyx_v__buffer), ((Py_ssize_t)__pyx_v__length)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_writedata = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":81
+  /* "pyarchive/backends/cython/pystream.pxi":85
  *     cdef object file = <object> data.file
  *     cdef bytes writedata = PyBytes_FromStringAndSize(<char *>_buffer, <Py_ssize_t>_length)
  *     return file.write(writedata)             # <<<<<<<<<<<<<<
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_write); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_write); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5785,15 +5794,15 @@ static la_ssize_t __pyx_f_9pyarchive_8backends_6cython_8_archive_pystream_write_
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_writedata) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_writedata);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = PyInt_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_4 == ((la_ssize_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_4 = PyInt_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_4 == ((la_ssize_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_4;
   goto __pyx_L0;
 
-  /* "pyarchive/backends/cython/pystream.pxi":76
+  /* "pyarchive/backends/cython/pystream.pxi":80
  *     return la.ARCHIVE_OK
  * 
  * cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:             # <<<<<<<<<<<<<<
@@ -72129,8 +72138,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 18, __pyx_L1_error)
-  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(0, 36, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 134, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
@@ -72147,58 +72156,58 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "pyarchive/backends/cython/pystream.pxi":18
+  /* "pyarchive/backends/cython/pystream.pxi":21
  * 
  * cdef int pystream_open_callback(la.archive *a, void *_client_data) except -30 with gil:
  *     print("pystream_open_callback")             # <<<<<<<<<<<<<<
  *     return la.ARCHIVE_OK
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_u_pystream_open_callback); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_u_pystream_open_callback); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "pyarchive/backends/cython/pystream.pxi":22
+  /* "pyarchive/backends/cython/pystream.pxi":25
  * 
  * cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, const void ** _buffer) except -30 with gil:
  *     print("pystream_read_callback")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData* data = <PyStreamData*> _client_data
  *     cdef object file = <object>data.file
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_n_u_pystream_read_callback); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_n_u_pystream_read_callback); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "pyarchive/backends/cython/pystream.pxi":61
+  /* "pyarchive/backends/cython/pystream.pxi":65
  * 
  * cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) except -30 with gil:
  *     print("pystream_switch_callback")             # <<<<<<<<<<<<<<
  *     pystream_close_callback(a, _client_data1)
  *     return pystream_open_callback(a, _client_data2)
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_n_u_pystream_switch_callback); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_n_u_pystream_switch_callback); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "pyarchive/backends/cython/pystream.pxi":67
+  /* "pyarchive/backends/cython/pystream.pxi":71
  * 
  * cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 with gil:
  *     print("pystream_close_callback")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_n_u_pystream_close_callback); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_n_u_pystream_close_callback); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "pyarchive/backends/cython/pystream.pxi":77
+  /* "pyarchive/backends/cython/pystream.pxi":81
  * 
  * cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:
  *     print("pystream_write_callback")             # <<<<<<<<<<<<<<
  *     cdef PyStreamData * data = <PyStreamData *> _client_data
  *     cdef object file = <object> data.file
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_u_pystream_write_callback); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_u_pystream_write_callback); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 

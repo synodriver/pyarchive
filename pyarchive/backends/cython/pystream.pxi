@@ -4,6 +4,9 @@ from cpython.mem cimport PyMem_Realloc, PyMem_Free
 
 from libc.string cimport memcpy
 
+cdef extern from * nogil:
+    int errno
+
 from pyarchive.backends.cython cimport archive as la
 
 
@@ -53,6 +56,7 @@ cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la
     cdef PyStreamData* data = <PyStreamData*> _client_data
     cdef object file = <object>data.file
     if not file.seekable():
+        la.archive_set_error(a, errno,  "File is not seekable")
         return la.ARCHIVE_FATAL
     cdef la.la_int64_t  newpos = <la.la_int64_t>file.seek(offset, whence)
     return newpos
