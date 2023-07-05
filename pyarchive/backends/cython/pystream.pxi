@@ -71,10 +71,11 @@ cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 w
     print("pystream_close_callback")
     cdef PyStreamData * data = <PyStreamData *> _client_data
     cdef object file = <object> data.file
-    PyMem_Free(data.buffer)
-    PyMem_Free(data)
     if data.close:
         file.close()
+    PyMem_Free(data.buffer)
+    PyMem_Free(data)
+    print("close fine")
     return la.ARCHIVE_OK
 
 cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:

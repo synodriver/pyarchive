@@ -5,9 +5,11 @@ from posix.types cimport dev_t
 cimport cython
 from cpython.bytes cimport PyBytes_FromString, PyBytes_FromStringAndSize
 from cpython.mem cimport PyMem_Malloc
+from cpython.pycapsule cimport PyCapsule_New
 from libc.stddef cimport wchar_t
 from libc.stdint cimport uint8_t
 from libc.time cimport time_t
+from libc.stdio cimport printf
 
 
 cdef object os
@@ -91,6 +93,8 @@ cdef class Archive:
         la.archive * _archive_p
         # readonly bint own # 对指针的所有权 是True的那个负责析构 显然，多个PyObject可以引用一个指针，但有且仅有一个是own
         # 这种借用的引用必须在主人之前释放，其生命周期必须在主人之内
+    def get_pointer(self):
+        return PyCapsule_New(self._archive_p, NULL, NULL)
 
     cpdef int filter_count(self) except? -30:
         return la.archive_filter_count(self._archive_p)
@@ -193,12 +197,15 @@ cdef class ArchiveRead(Archive):
         #     self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
         if self._archive_p == NULL:
             raise MemoryError
+        printf("ArchiveRead __cinit__ %p, %p\n", self._archive_p, <void *> self)
         self.openstate = Empty
 
     def __dealloc__(self):
         if self._archive_p:
+            printf("ArchiveRead __dealloc__ %p, %p\n", self._archive_p, <void *> self) # fixme: why do this panic?
             la.archive_read_free(self._archive_p)
         self._archive_p = NULL
+        printf("ArchiveRead __dealloc__ done\n")
 
     cpdef int close(self) except? -30:
         cdef int ret = la.archive_read_close(self._archive_p)
@@ -1233,15 +1240,20 @@ cdef class ArchiveEntry:
                 self._entry_p = la.archive_entry_new2(archive._archive_p)
             if self._entry_p == NULL:
                 raise MemoryError
+            printf("ArchiveEntry __cinit__ %p, %p\n", self._entry_p, <void *> self)
         else:
             self._entry_p = NULL
         self.own = _own
 
     def __dealloc__(self):
         if self.own:
+            printf("ArchiveEntry __dealloc__ %p, %p\n", self._entry_p, <void*>self)
             if self._entry_p:
                 la.archive_entry_free(self._entry_p)
             self._entry_p = NULL
+
+    def get_pointer(self):
+        return PyCapsule_New(self._entry_p, NULL, NULL)
 
     cpdef clear(self):
         la.archive_entry_clear(self._entry_p)
