@@ -2,9 +2,9 @@
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
 import os
-from typing import List
+from typing import List, Union
 from builtins import open as _builtin_open
-# import tarfile
+import tarfile
 # import zipfile
 # import bz3
 from pyarchive.backends import ArchiveRead, ArchiveWrite
@@ -151,7 +151,7 @@ class ArchiveFile:
         self.pwd = pwd
         self.closed = False
         self.block_size = block_size
-        self.members = [] # type: List["ArchiveEntry"]
+        self.members = []  # type: List["ArchiveEntry"]
         if self.mode == "r":
             self._archive = ArchiveRead()
             self._archive.support_filter_all()
@@ -159,7 +159,7 @@ class ArchiveFile:
             self._archive.open(self.fileobj, self.block_size)
             self._loaded = False
         else:
-            self._archive = ArchiveWrite()
+            # self._archive = ArchiveWrite()
             pass  # todo set write format
 
     def _check(self, mode=None):
@@ -172,19 +172,32 @@ class ArchiveFile:
             raise OSError("bad operation for mode %r" % self.mode)
 
     def __del__(self):
-        print("ArchiveFile del") # todo del
-    def _load(self):
+        self._archive.close()  # would panic without this
+
+    def _rewind(self):
+        self.fileobj.seek(0, 0)
+        if isinstance(self._archive, ArchiveRead):
+            self._archive = ArchiveRead()
+            self._archive.support_filter_all()
+            self._archive.support_format_all()
+            self._archive.open(self.fileobj, self.block_size)
+
+    def _load(self) -> None:
         for entry in self._archive.iter_entries():
             self.members.append(entry)
         self._loaded = True
+        self._rewind()
 
-    def getnames(self):
-        return [archiveinfo.pathname_w for archiveinfo in self.getmembers()]
+    def getnames(self) -> List[str]:
+        return [archiveinfo.pathname_utf8 for archiveinfo in self.getmembers()]
 
-    def getmember(self, name):
-        ...
+    def getmember(self, name: str):
+        members = self.getmembers()
+        for member in members:
+            if member.pathname_utf8 == name:
+                return member
 
-    def getmembers(self):
+    def getmembers(self) -> List["ArchiveEntry"]:
         self._check()
         if not self._loaded:  # if we want to obtain a list of
             self._load()  # all members, we first have to
@@ -194,16 +207,45 @@ class ArchiveFile:
     def list(self):
         ...
 
-    def extractall(self, path='.', members=None, *, numeric_owner=False, filter=None):
-        ...
+    def extractall(self, path='.', members: List[Union[str, "ArchiveEntry"]] = None) -> None:
+        self._check("r")
+        buff = bytearray(self.block_size)
+        if members is None:
+            members = self.getmembers()
+        else:
+            temp = []
+            for each in members:
+                if isinstance(members, str):
+                    newitem = self.getmember(each)
+                else:
+                    newitem = each
+                temp.append(newitem)
+            members = temp
+        for entry in self._archive.iter_entries():
+            if entry in members:
+                with open(os.path.join(path, entry.pathname_utf8), "wb") as outputfile:
+                    while read_size := self._archive.readinto(buff):
+                        outputfile.write(buff[:read_size])
+        self._rewind()
 
-    def extract(self, member, path='', set_attrs=True, *, numeric_owner=False, filter=None):
-        ...
+    def extract(self, member: Union[str, "ArchiveEntry"], path='') -> None:
+        self._check("r")
+        buff = bytearray(self.block_size)
+        if isinstance(member, str):
+            entry = self.getmember(member)
+        else:
+            entry = member
+        for entry_ in self._archive.iter_entries():
+            if entry_ == entry:
+                with open(os.path.join(path, entry_.pathname_utf8), "wb") as outputfile:
+                    while read_size := self._archive.readinto(buff):
+                        outputfile.write(buff[:read_size])
+        self._rewind()
 
     def add(self, name, arcname=None, recursive=True, *, filter=None):
         ...
 
-    def addfile(self, tarinfo, fileobj=None):
+    def addfile(self, entry, fileobj=None):
         ...
 
     def gettarinfo(self, name=None, arcname=None, fileobj=None):

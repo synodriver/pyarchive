@@ -1252,6 +1252,9 @@ cdef class ArchiveEntry:
                 la.archive_entry_free(self._entry_p)
             self._entry_p = NULL
 
+    def __eq__(self, ArchiveEntry other):
+        return self.pathname_utf8 == other.pathname_utf8
+
     def get_pointer(self):
         return PyCapsule_New(self._entry_p, NULL, NULL)
 
