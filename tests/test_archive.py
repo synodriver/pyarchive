@@ -36,6 +36,7 @@ class TestArchive(TestCase):
         for entry in archive.iter_entries():
             print(entry.pathname_w)
 
+
 if __name__ == "__main__":
     import unittest
 

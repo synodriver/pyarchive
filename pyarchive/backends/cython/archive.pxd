@@ -849,3 +849,13 @@ cdef extern from "archive_entry.h" nogil:
     void archive_entry_linkresolver_free(archive_entry_linkresolver *)
     void archive_entry_linkify(archive_entry_linkresolver *, archive_entry **, archive_entry **)
     archive_entry *archive_entry_partial_links(archive_entry_linkresolver *res, unsigned int *links)
+
+cdef extern from "<stdio.h>" nogil:
+    """
+#ifdef MEMDEBUG
+    #define MEMLOG(...) fprintf(stderr, __VA_ARGS__)
+#else
+    #define MEMLOG(...)
+#endif
+    """
+    void MEMLOG(const char* fmt, ...)

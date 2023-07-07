@@ -26,6 +26,7 @@ class TestArchiveEntry(TestCase):
         c.pathname_utf8 = "/1"
         self.assertIn(c, [a, b], "entry __eq__ wrong")
 
+
 if __name__ == "__main__":
     import unittest
 

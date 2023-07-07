@@ -9,7 +9,6 @@ from cpython.pycapsule cimport PyCapsule_New
 from libc.stddef cimport wchar_t
 from libc.stdint cimport uint8_t
 from libc.time cimport time_t
-from libc.stdio cimport printf
 
 
 cdef object os
@@ -197,15 +196,17 @@ cdef class ArchiveRead(Archive):
         #     self._archive_p = la.archive_read_new()  # C结构体成员的读取，比super快多了
         if self._archive_p == NULL:
             raise MemoryError
-        printf("ArchiveRead __cinit__ %p, %p\n", self._archive_p, <void *> self)
+        la.MEMLOG("archive_read_new %p\n", self._archive_p)
         self.openstate = Empty
+        la.MEMLOG("ArchiveRead __cinit__ %p\n", <void *> self)
 
     def __dealloc__(self):
         if self._archive_p:
-            printf("ArchiveRead __dealloc__ %p, %p\n", self._archive_p, <void *> self) # fixme: why do this panic?
+            la.MEMLOG("archive_read_free prepare %p\n", self._archive_p)
             la.archive_read_free(self._archive_p)
+            la.MEMLOG("archive_read_free %p\n", self._archive_p)
         self._archive_p = NULL
-        printf("ArchiveRead __dealloc__ done\n")
+        la.MEMLOG("ArchiveRead __dealloc__ %p\n", <void *> self)
 
     cpdef int close(self) except? -30:
         cdef int ret = la.archive_read_close(self._archive_p)
@@ -330,6 +331,7 @@ cdef class ArchiveRead(Archive):
         cdef PyStreamData * data = <PyStreamData *>PyMem_Malloc(sizeof(PyStreamData))
         if not data:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", data)
         data.file = <PyObject*>file
         data.block_size = block_size
         data.buffer = NULL
@@ -577,11 +579,15 @@ cdef class ArchiveWrite(Archive):
         #     self._archive_p = la.archive_write_new()
         if self._archive_p == NULL:
             raise MemoryError
+        la.MEMLOG("archive_write_new %p\n", self._archive_p)
+        la.MEMLOG("ArchiveWrite __cinit__ %p\n", <void*>self)
 
     def __dealloc__(self):
         if self._archive_p:
             la.archive_write_free(self._archive_p)
+            la.MEMLOG("archive_write_free %p\n", self._archive_p)
         self._archive_p = NULL
+        la.MEMLOG("ArchiveWrite __dealloc__ %p\n", <void *> self)
 
     @property
     def bytes_per_block(self):
@@ -732,6 +738,7 @@ cdef class ArchiveWrite(Archive):
         cdef PyStreamData * data = <PyStreamData *> PyMem_Malloc(sizeof(PyStreamData))
         if not data:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", data)
         data.file = <PyObject *> file
         data.block_size = block_size
         data.buffer = NULL
@@ -863,6 +870,7 @@ cdef void pywrite_disk_lookup_cleanup(void *ud) with gil:
     cdef object func = <object>data.cleanup
     func()
     PyMem_Free(data)
+    la.MEMLOG("PyMem_Free %p\n", data)
 
 @cython.final
 cdef class ArchiveWriteDisk(ArchiveWrite):
@@ -870,6 +878,7 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
         self._archive_p = la.archive_write_disk_new()
         if self._archive_p == NULL:
             raise MemoryError
+        la.MEMLOG("archive_write_disk_new %p\n", self._archive_p)
         # print(f"in ArchiveWriteDisk.__cinit__ {is_disk}")
 
 
@@ -898,6 +907,7 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
         cdef LookupData * data = <LookupData *>PyMem_Malloc(sizeof(LookupData))
         if not data:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", data)
         data.lookup = <PyObject*>lookup
         data.cleanup = <PyObject *> cleanup
         return la.archive_write_disk_set_group_lookup(self._archive_p,
@@ -915,6 +925,7 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
         cdef LookupData * data = <LookupData *>PyMem_Malloc(sizeof(LookupData))
         if not data:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", data)
         data.lookup = <PyObject*>lookup
         data.cleanup = <PyObject *> cleanup
         return la.archive_write_disk_set_user_lookup(self._archive_p,
@@ -938,6 +949,7 @@ cdef void pyread_disk_lookup_cleanup(void *ud) with gil:
     cdef object func = <object> data.cleanup
     func()
     PyMem_Free(data)
+    la.MEMLOG("PyMem_Free %p\n", data)
 
 cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
     cdef object func = <object> ud
@@ -956,6 +968,8 @@ cdef class ArchiveReadDisk(ArchiveRead):
         self._archive_p = la.archive_read_disk_new()
         if self._archive_p == NULL:
             raise MemoryError
+        la.MEMLOG("archive_read_disk_new %p\n", self._archive_p)
+
 
     cpdef inline int set_symlink_logical(self) except? -30:
         return la.archive_read_disk_set_symlink_logical(self._archive_p)
@@ -1010,6 +1024,7 @@ cdef class ArchiveReadDisk(ArchiveRead):
         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
         if not data:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", data)
         data.lookup = <PyObject *> lookup
         data.cleanup = <PyObject *> cleanup
         return la.archive_read_disk_set_gname_lookup(self._archive_p,
@@ -1027,6 +1042,7 @@ cdef class ArchiveReadDisk(ArchiveRead):
         cdef LookupData * data = <LookupData *> PyMem_Malloc(sizeof(LookupData))
         if not data:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", data)
         data.lookup = <PyObject *> lookup
         data.cleanup = <PyObject *> cleanup
         return la.archive_read_disk_set_uname_lookup(self._archive_p,
@@ -1081,11 +1097,15 @@ cdef class ArchiveMatch(Archive):
         self._archive_p = la.archive_match_new()
         if self._archive_p == NULL:
             raise MemoryError
+        la.MEMLOG("archive_match_new %p\n", self._archive_p)
+        la.MEMLOG("ArchiveMatch __cinit__ %p\n", <void *> self)
 
     def __dealloc__(self):
         if self._archive_p:
             la.archive_match_free(self._archive_p)
+            la.MEMLOG("archive_match_free %p\n", self._archive_p)
         self._archive_p = NULL
+        la.MEMLOG("ArchiveMatch __dealloc__ %p\n", <void *> self)
 
     cpdef inline int excluded(self, ArchiveEntry entry) except? -30:
         cdef int ret
@@ -1240,20 +1260,24 @@ cdef class ArchiveEntry:
                 self._entry_p = la.archive_entry_new2(archive._archive_p)
             if self._entry_p == NULL:
                 raise MemoryError
-            printf("ArchiveEntry __cinit__ %p, %p\n", self._entry_p, <void *> self)
+            la.MEMLOG("archive_entry_new2 %p\n", self._entry_p)
         else:
             self._entry_p = NULL
         self.own = _own
+        la.MEMLOG("ArchiveEntry __cinit__ %p\n", <void*>self)
 
     def __dealloc__(self):
-        if self.own:
-            printf("ArchiveEntry __dealloc__ %p, %p\n", self._entry_p, <void*>self)
-            if self._entry_p:
-                la.archive_entry_free(self._entry_p)
+        if self.own and self._entry_p:
+            la.archive_entry_free(self._entry_p)
+            la.MEMLOG("archive_entry_free %p\n", self._entry_p)
             self._entry_p = NULL
+        la.MEMLOG("ArchiveEntry __dealloc__ %p\n", <void *> self)
 
     def __eq__(self, ArchiveEntry other):
         return self.pathname_utf8 == other.pathname_utf8
+
+    def __str__(self):
+        return f"ArchiveEntry {self.pathname_utf8}, size: {self.size}"
 
     def get_pointer(self):
         return PyCapsule_New(self._entry_p, NULL, NULL)
@@ -1814,17 +1838,17 @@ cdef class ArchiveEntry:
     @stat.setter
     def stat(self, object stat):
         cdef la.stat st
-        st.st_dev = stat.st_dev
-        st.st_ino = stat.st_ino
-        st.st_mode = stat.st_mode
-        st.st_nlink = stat.st_nlink
-        st.st_uid = stat.st_uid
-        st.st_gid = stat.st_gid
-        # st.st_rdev = stat.st_rdev
-        st.st_size = stat.st_size
-        st.st_atime = stat.st_atime
-        st.st_mtime = stat.st_mtime
-        st.st_ctime = stat.st_ctime
+        st.st_dev = <dev_t>stat.st_dev
+        st.st_ino = <unsigned short >stat.st_ino
+        st.st_mode = <unsigned short >stat.st_mode
+        st.st_nlink = <short>stat.st_nlink
+        st.st_uid = <short>stat.st_uid
+        st.st_gid = <short>stat.st_gid
+        st.st_rdev = < dev_t>stat.st_rdev # todo: some file don't have this
+        st.st_size = <long>stat.st_size
+        st.st_atime = <time_t>stat.st_atime
+        st.st_mtime = <time_t>stat.st_mtime
+        st.st_ctime = <time_t>stat.st_ctime
         la.archive_entry_copy_stat(self._entry_p, &st)
     # cpdef long long offset1(self):
     #     return <long long><void*>self

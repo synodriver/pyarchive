@@ -1,8 +1,15 @@
 """
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
-from pyarchive import version_details, zlib_version, liblzma_version, bzlib_version, liblz4_version, libzstd_version, \
-    ArchiveError
+from pyarchive import (
+    ArchiveError,
+    bzlib_version,
+    liblz4_version,
+    liblzma_version,
+    libzstd_version,
+    version_details,
+    zlib_version,
+)
 
 
 def main():

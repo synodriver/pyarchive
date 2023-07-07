@@ -34,6 +34,13 @@ class build_ext_compiler_check(build_ext):
         super().build_extensions()
 
 
+def has_option(name: str) -> bool:
+    if name in sys.argv[1:]:
+        sys.argv.remove(name)
+        return True
+    return False
+
+
 def get_option(name):
     for i, arg in enumerate(sys.argv[1:-1], 1):
         if arg == name:
@@ -47,7 +54,9 @@ c_sources = list(filter(lambda x: "main" not in x, c_sources))
 
 libarchive_lib = get_option("--lib-path")
 libarchive_include = get_option("--include-path")
-
+define_macros = []
+if has_option("--debug"):
+    define_macros.append(("MEMDEBUG", None))
 
 extensions = [
     Extension(
@@ -55,6 +64,7 @@ extensions = [
         c_sources,
         include_dirs=[libarchive_include],  # ["./dep/libarchive"],
         extra_objects=[libarchive_lib],
+        define_macros=define_macros,
     ),
 ]
 cffi_modules = ["pyarchive/backends/cffi/build.py:ffibuilder"]
@@ -76,13 +86,6 @@ def get_version() -> str:
 
 
 packages = find_packages(exclude=("test", "tests.*", "test*"))
-
-
-def has_option(name: str) -> bool:
-    if name in sys.argv[1:]:
-        sys.argv.remove(name)
-        return True
-    return False
 
 
 setup_requires = []

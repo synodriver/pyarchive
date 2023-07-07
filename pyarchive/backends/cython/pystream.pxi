@@ -34,6 +34,7 @@ cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, co
         temp = PyMem_Realloc(data.buffer, <size_t >outlen)
         if temp == NULL:
             raise MemoryError
+        la.MEMLOG("PyMem_Malloc %p\n", temp)
         data.buffer = temp
         data.length = outlen
     memcpy(data.buffer, PyBytes_AS_STRING(block), <size_t> outlen)
@@ -74,7 +75,9 @@ cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 w
     if data.close:
         file.close()
     PyMem_Free(data.buffer)
+    la.MEMLOG("PyMem_Free %p\n", data.buffer)
     PyMem_Free(data)
+    la.MEMLOG("PyMem_Free %p\n", data)
     print("close fine")
     return la.ARCHIVE_OK
 

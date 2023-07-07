@@ -2,13 +2,24 @@
 Copyright (c) 2008-2023 synodriver <diguohuangjiajinweijun@gmail.com>
 """
 import os
-from typing import List, Union
-from builtins import open as _builtin_open
+import stat
 import tarfile
+from builtins import open as _builtin_open
+from typing import List, Union
+
+from pyarchive.backends import (
+    AE_IFBLK,
+    AE_IFCHR,
+    AE_IFDIR,
+    AE_IFIFO,
+    AE_IFLNK,
+    AE_IFREG,
+    AE_SYMLINK_TYPE_FILE,
+)
+
 # import zipfile
 # import bz3
-from pyarchive.backends import ArchiveRead, ArchiveWrite
-
+from pyarchive.backends import ArchiveEntry, ArchiveRead, ArchiveWrite
 
 # class ArchiveInfo(object):
 #     """Informational class which holds the details about an
@@ -120,8 +131,17 @@ from pyarchive.backends import ArchiveRead, ArchiveWrite
 
 
 class ArchiveFile:
-    def __init__(self, name: str = None, mode: str = "r", fileobj=None, format: str = None, pwd: bytes = None,
-                 block_size: int = 1000000):
+    dereference = False
+
+    def __init__(
+        self,
+        name: str = None,
+        mode: str = "r",
+        fileobj=None,
+        format: str = None,
+        pwd: bytes = None,
+        block_size: int = 1000000,
+    ):
         modes = {"r": "rb", "a": "r+b", "w": "wb", "x": "xb"}
         if mode not in modes:
             raise ValueError("mode must be 'r', 'a', 'w' or 'x'")
@@ -136,8 +156,11 @@ class ArchiveFile:
             fileobj = _builtin_open(name, self._mode)
             self._extfileobj = False
         else:
-            if (name is None and hasattr(fileobj, "name") and
-                    isinstance(fileobj.name, (str, bytes))):
+            if (
+                name is None
+                and hasattr(fileobj, "name")
+                and isinstance(fileobj.name, (str, bytes))
+            ):
                 name = fileobj.name
             if hasattr(fileobj, "mode"):
                 self._mode = fileobj.mode
@@ -164,15 +187,15 @@ class ArchiveFile:
 
     def _check(self, mode=None):
         """Check if ArchiveFile is still open, and if the operation's mode
-           corresponds to ArchiveFile's mode.
+        corresponds to ArchiveFile's mode.
         """
         if self.closed:
             raise OSError("%s is closed" % self.__class__.__name__)
         if mode is not None and self.mode not in mode:
             raise OSError("bad operation for mode %r" % self.mode)
 
-    def __del__(self):
-        self._archive.close()  # would panic without this
+    # def __del__(self):
+    #     self._archive.close()  # would panic without this
 
     def _rewind(self):
         self.fileobj.seek(0, 0)
@@ -207,7 +230,9 @@ class ArchiveFile:
     def list(self):
         ...
 
-    def extractall(self, path='.', members: List[Union[str, "ArchiveEntry"]] = None) -> None:
+    def extractall(
+        self, path=".", members: List[Union[str, "ArchiveEntry"]] = None
+    ) -> None:
         self._check("r")
         buff = bytearray(self.block_size)
         if members is None:
@@ -228,7 +253,7 @@ class ArchiveFile:
                         outputfile.write(buff[:read_size])
         self._rewind()
 
-    def extract(self, member: Union[str, "ArchiveEntry"], path='') -> None:
+    def extract(self, member: Union[str, "ArchiveEntry"], path="") -> None:
         self._check("r")
         buff = bytearray(self.block_size)
         if isinstance(member, str):
@@ -242,8 +267,76 @@ class ArchiveFile:
                         outputfile.write(buff[:read_size])
         self._rewind()
 
+    def get_archive_entry(self, name=None, arcname=None, fileobj=None):
+        self._check("awx")
+        if fileobj is not None:
+            name = fileobj.name
+        if arcname is None:
+            arcname = name
+        drv, arcname = os.path.splitdrive(arcname)
+        arcname = arcname.replace(os.sep, "/")
+        arcname = arcname.lstrip("/")
+
+        if fileobj is None:
+            if not self.dereference:
+                statres = os.lstat(name)
+            else:
+                statres = os.stat(name)
+        else:
+            statres = os.fstat(fileobj.fileno())
+        linkname = ""
+
+        stmd = statres.st_mode
+        if stat.S_ISREG(stmd):
+            inode = (statres.st_ino, statres.st_dev)
+            if not self.dereference and statres.st_nlink > 1:
+                # Is it a hardlink to an already
+                # archived file?
+                type = AE_IFLNK
+                linkname = self.inodes[inode]
+            else:
+                # The inode is added only if its valid.
+                # For win32 it is always 0.
+                type = AE_IFREG
+        elif stat.S_ISDIR(stmd):
+            type = AE_IFDIR
+        elif stat.S_ISFIFO(stmd):
+            type = AE_IFIFO
+        elif stat.S_ISLNK(stmd):
+            type = AE_SYMLINK_TYPE_FILE
+            linkname = os.readlink(name)
+        elif stat.S_ISCHR(stmd):
+            type = AE_IFCHR
+        elif stat.S_ISBLK(stmd):
+            type = AE_IFBLK
+        else:
+            return None
+
+        entry = ArchiveEntry()
+        entry.pathname_utf8 = arcname
+        # entry.size = statres.st_size
+        # entry.mode = statres.st_mode
+        # entry.mtime = (statres.st_mtime, statres.st_mtime_ns)
+        # entry.set_ctime(statres.st_ctime, statres.st_ctime_ns)
+        # entry.set_atime(statres.st_atime, statres.st_atime_ns)
+        entry.stat = statres
+        entry.filetype = type
+        entry.perm = 644
+        if linkname:
+            entry.hardlink_utf8 = linkname
+        if type in (AE_IFCHR, AE_IFBLK):
+            if hasattr(os, "major") and hasattr(os, "minor"):
+                entry.devmajor = os.major(statres.st_rdev)
+                entry.devminor = os.minor(statres.st_rdev)
+        return entry
+
     def add(self, name, arcname=None, recursive=True, *, filter=None):
-        ...
+        self._check("awx")
+
+        if arcname is None:
+            arcname = name
+
+        entry = self.get_archive_entry(name, arcname)
 
     def addfile(self, entry, fileobj=None):
         ...
