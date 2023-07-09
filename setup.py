@@ -87,7 +87,6 @@ def get_version() -> str:
 
 packages = find_packages(exclude=("test", "tests.*", "test*"))
 
-
 setup_requires = []
 install_requires = []
 setup_kw = {}

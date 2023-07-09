@@ -202,7 +202,6 @@ cdef class ArchiveRead(Archive):
 
     def __dealloc__(self):
         if self._archive_p:
-            la.MEMLOG("archive_read_free prepare %p\n", self._archive_p)
             la.archive_read_free(self._archive_p)
             la.MEMLOG("archive_read_free %p\n", self._archive_p)
         self._archive_p = NULL
@@ -434,7 +433,7 @@ cdef class ArchiveRead(Archive):
             la.la_int64_t  offset
             int ret
         with nogil:
-            ret = la.archive_read_data_block(self._archive_p, &buf,  &size, &offset)
+            ret = la.archive_read_data_block(self._archive_p, <const void**>&buf,  &size, &offset)
         if ret == la.ARCHIVE_EOF:
             return None
         elif ret != la.ARCHIVE_OK:
@@ -2025,4 +2024,3 @@ cpdef inline int copy_data_to_disk(ArchiveRead ar, ArchiveWriteDisk aw) except? 
         if ret < la.ARCHIVE_OK:
             with gil:
                 raise ArchiveError(aw.error_string(), aw.get_errno(), ret, aw)
-

@@ -194,8 +194,8 @@ class ArchiveFile:
         if mode is not None and self.mode not in mode:
             raise OSError("bad operation for mode %r" % self.mode)
 
-    # def __del__(self):
-    #     self._archive.close()  # would panic without this
+    def __del__(self):
+        self._archive.close()  # would panic without this
 
     def _rewind(self):
         self.fileobj.seek(0, 0)

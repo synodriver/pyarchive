@@ -18,11 +18,11 @@ cdef struct PyStreamData:
     int close # 是否在close callback的时候关闭
 
 cdef int pystream_open_callback(la.archive *a, void *_client_data) except -30 with gil:
-    print("pystream_open_callback")
+    la.MEMLOG("pystream_open_callback\n")
     return la.ARCHIVE_OK
 
 cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, const void ** _buffer) except -30 with gil:
-    print("pystream_read_callback")
+    la.MEMLOG("pystream_read_callback\n")
     cdef PyStreamData* data = <PyStreamData*> _client_data
     cdef object file = <object>data.file
     cdef size_t block_size = data.block_size
@@ -43,7 +43,7 @@ cdef la.la_ssize_t  pystream_read_callback(la.archive *a, void *_client_data, co
 
 
 cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la.la_int64_t request) except -30 with gil:
-    print(f"pystream_skip_callback request: {request}")
+    la.MEMLOG("pystream_skip_callback request: %ld\n", request)
     cdef PyStreamData* data = <PyStreamData*> _client_data
     cdef object file = <object>data.file
     if not file.seekable():
@@ -53,7 +53,7 @@ cdef la.la_int64_t  pystream_skip_callback(la.archive *a, void *_client_data, la
     return newpos - oldpos
 
 cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la.la_int64_t offset, int whence) except -30 with gil:
-    print(f"pystream_seek_callback offset: {offset} whence: {whence}")
+    la.MEMLOG("pystream_seek_callback offset: %ld whence: %ld\n", offset, whence)
     cdef PyStreamData* data = <PyStreamData*> _client_data
     cdef object file = <object>data.file
     if not file.seekable():
@@ -63,13 +63,13 @@ cdef la.la_int64_t  pystream_seek_callback(la.archive *a, void *_client_data, la
     return newpos
 
 cdef int pystream_switch_callback(la.archive *a, void *_client_data1,  void *_client_data2) except -30 with gil:
-    print("pystream_switch_callback")
+    la.MEMLOG("pystream_switch_callback\n")
     pystream_close_callback(a, _client_data1)
     return pystream_open_callback(a, _client_data2)
 
 
 cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 with gil:
-    print("pystream_close_callback")
+    la.MEMLOG("pystream_close_callback\n")
     cdef PyStreamData * data = <PyStreamData *> _client_data
     cdef object file = <object> data.file
     if data.close:
@@ -78,11 +78,10 @@ cdef int pystream_close_callback(la.archive *a, void *_client_data) except -30 w
     la.MEMLOG("PyMem_Free %p\n", data.buffer)
     PyMem_Free(data)
     la.MEMLOG("PyMem_Free %p\n", data)
-    print("close fine")
     return la.ARCHIVE_OK
 
 cdef la.la_ssize_t pystream_write_callback(la.archive *a, void *_client_data, const void *_buffer, size_t _length) except -30 with gil:
-    print("pystream_write_callback")
+    la.MEMLOG("pystream_write_callback\n")
     cdef PyStreamData * data = <PyStreamData *> _client_data
     cdef object file = <object> data.file
     cdef bytes writedata = PyBytes_FromStringAndSize(<char *>_buffer, <Py_ssize_t>_length)
