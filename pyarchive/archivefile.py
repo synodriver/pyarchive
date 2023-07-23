@@ -181,16 +181,13 @@ class ArchiveFile:
             self._archive.support_format_all()
             self._archive.open(self.fileobj, self.block_size)
             self._loaded = False
-        else:
-            # self._archive = ArchiveWrite()
-            pass  # todo set write format
 
     def _check(self, mode=None):
         """Check if ArchiveFile is still open, and if the operation's mode
         corresponds to ArchiveFile's mode.
         """
         if self.closed:
-            raise OSError("%s is closed" % self.__class__.__name__)
+            raise OSError(f"{self.__class__.__name__} is closed")
         if mode is not None and self.mode not in mode:
             raise OSError("bad operation for mode %r" % self.mode)
 
@@ -240,10 +237,7 @@ class ArchiveFile:
         else:
             temp = []
             for each in members:
-                if isinstance(members, str):
-                    newitem = self.getmember(each)
-                else:
-                    newitem = each
+                newitem = self.getmember(each) if isinstance(members, str) else each
                 temp.append(newitem)
             members = temp
         for entry in self._archive.iter_entries():
@@ -256,10 +250,7 @@ class ArchiveFile:
     def extract(self, member: Union[str, "ArchiveEntry"], path="") -> None:
         self._check("r")
         buff = bytearray(self.block_size)
-        if isinstance(member, str):
-            entry = self.getmember(member)
-        else:
-            entry = member
+        entry = self.getmember(member) if isinstance(member, str) else member
         for entry_ in self._archive.iter_entries():
             if entry_ == entry:
                 with open(os.path.join(path, entry_.pathname_utf8), "wb") as outputfile:
@@ -278,21 +269,18 @@ class ArchiveFile:
         arcname = arcname.lstrip("/")
 
         if fileobj is None:
-            if not self.dereference:
-                statres = os.lstat(name)
-            else:
-                statres = os.stat(name)
+            statres = os.lstat(name) if not self.dereference else os.stat(name)
         else:
             statres = os.fstat(fileobj.fileno())
         linkname = ""
 
         stmd = statres.st_mode
         if stat.S_ISREG(stmd):
-            inode = (statres.st_ino, statres.st_dev)
             if not self.dereference and statres.st_nlink > 1:
                 # Is it a hardlink to an already
                 # archived file?
                 type = AE_IFLNK
+                inode = (statres.st_ino, statres.st_dev)
                 linkname = self.inodes[inode]
             else:
                 # The inode is added only if its valid.
