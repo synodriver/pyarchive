@@ -1,10 +1,12 @@
 # cython: language_level=3
 # cython: cdivision=True
-from libc.stdio cimport FILE
-from libc.stdint cimport int64_t
-from libc.stddef cimport wchar_t
-from libc.time cimport time_t
 from posix.types cimport dev_t
+
+from libc.stddef cimport wchar_t
+from libc.stdint cimport int64_t
+from libc.stdio cimport FILE
+from libc.time cimport time_t
+
 
 cdef extern from * nogil:
     cdef struct stat:
@@ -63,7 +65,7 @@ cdef extern from "archive.h" nogil:
 
     ctypedef int    archive_free_callback(archive *, void *_client_data)  except -30
     ctypedef int archive_switch_callback(archive *, void *_client_data1, void *_client_data2)  except -30
-    ctypedef const char *archive_passphrase_callback(archive *, void *_client_data)
+    ctypedef const char *archive_passphrase_callback(archive *, void *_client_data) except NULL
     int ARCHIVE_FILTER_NONE
     int ARCHIVE_FILTER_GZIP
     int ARCHIVE_FILTER_BZIP2
@@ -847,3 +849,13 @@ cdef extern from "archive_entry.h" nogil:
     void archive_entry_linkresolver_free(archive_entry_linkresolver *)
     void archive_entry_linkify(archive_entry_linkresolver *, archive_entry **, archive_entry **)
     archive_entry *archive_entry_partial_links(archive_entry_linkresolver *res, unsigned int *links)
+
+cdef extern from "<stdio.h>" nogil:
+    """
+#ifdef MEMDEBUG
+    #define MEMLOG(...) fprintf(stderr, __VA_ARGS__)
+#else
+    #define MEMLOG(...)
+#endif
+    """
+    void MEMLOG(const char* fmt, ...)

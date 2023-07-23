@@ -34,14 +34,37 @@ class build_ext_compiler_check(build_ext):
         super().build_extensions()
 
 
-c_sources = ["pyarchive/backends/cython/_archive.pyx"] # + glob.glob("./cbitset/src/*.c")
+def has_option(name: str) -> bool:
+    if name in sys.argv[1:]:
+        sys.argv.remove(name)
+        return True
+    return False
+
+
+def get_option(name):
+    for i, arg in enumerate(sys.argv[1:-1], 1):
+        if arg == name:
+            sys.argv.pop(i)
+            return sys.argv.pop(i)
+    return ""
+
+
+c_sources = ["pyarchive/backends/cython/_archive.pyx"]
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
+
+libarchive_lib = get_option("--lib-path")
+libarchive_include = get_option("--include-path")
+define_macros = []
+if has_option("--debug"):
+    define_macros.append(("MEMDEBUG", None))
+
 extensions = [
     Extension(
         "pyarchive.backends.cython._archive",
         c_sources,
-        include_dirs=["D:\conda\envs\py310\Library\include"],  # ["./dep/libarchive"],
-        extra_objects=[r"D:\conda\envs\py310\Library\lib\archive.lib"],
+        include_dirs=[libarchive_include],  # ["./dep/libarchive"],
+        extra_objects=[libarchive_lib],
+        define_macros=define_macros,
     ),
 ]
 cffi_modules = ["pyarchive/backends/cffi/build.py:ffibuilder"]
@@ -63,14 +86,6 @@ def get_version() -> str:
 
 
 packages = find_packages(exclude=("test", "tests.*", "test*"))
-
-
-def has_option(name: str) -> bool:
-    if name in sys.argv[1:]:
-        sys.argv.remove(name)
-        return True
-    return False
-
 
 setup_requires = []
 install_requires = []
@@ -114,7 +129,9 @@ def main():
         install_requires=install_requires,
         license="BSD",
         classifiers=[
-            "Development Status :: 3 - Alpha",
+            "Development Status :: 4 - Beta",
+            "Topic :: System :: Archiving",
+            "Topic :: System :: Archiving :: Compression",
             "Operating System :: OS Independent",
             "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
             "Programming Language :: C",
