@@ -15,7 +15,6 @@ cdef object os
 import os
 
 include "./consts.pxi"
-include "./config.pxi"
 include "./pystream.pxi"
 
 cdef extern from "Python.h":
@@ -174,9 +173,11 @@ cdef const char* pyarchive_passphrase_callback(la.archive * a, void *_client_dat
     cdef object func = <object>_client_data
     return func()
 
-cdef void _pyprogress_func(void* ud) with gil:
-    cdef object func = <object> ud
-    func()
+cdef void _pyprogress_func(void* ud) noexcept nogil:
+    #cdef object func
+    with gil:
+        func = <object> ud
+        func()
 
 cdef enum ArchiveReadOpenState:
     Empty
@@ -859,17 +860,21 @@ cdef struct LookupData:
     PyObject *lookup
     PyObject *cleanup
 
-cdef la.la_int64_t pywrite_disk_lookup_cb(void *ud, const char *gname, la.la_int64_t gid) with gil:
+cdef la.la_int64_t pywrite_disk_lookup_cb(void *ud, const char *gname, la.la_int64_t gid) noexcept nogil:
     cdef LookupData* data = <LookupData*>ud
-    cdef object func = <object>data.lookup
-    return func(gname, gid)
+    # cdef object func
+    with gil:
+        func = <object>data.lookup
+        return func(gname, gid)
 
-cdef void pywrite_disk_lookup_cleanup(void *ud) with gil:
+cdef void pywrite_disk_lookup_cleanup(void *ud) noexcept nogil:
     cdef LookupData * data = <LookupData *> ud
-    cdef object func = <object>data.cleanup
-    func()
-    PyMem_Free(data)
-    la.MEMLOG("PyMem_Free %p\n", data)
+    # cdef object func
+    with gil:
+        func = <object>data.cleanup
+        func()
+        PyMem_Free(data)
+        la.MEMLOG("PyMem_Free %p\n", data)
 
 @cython.final
 cdef class ArchiveWriteDisk(ArchiveWrite):
@@ -938,27 +943,37 @@ cdef class ArchiveWriteDisk(ArchiveWrite):
     cpdef la.la_int64_t uid(self, object name, la.la_int64_t uid) except? -30:
         return la.archive_write_disk_uid(self._archive_p, <const char *> name, uid)
 
-cdef const char * pyread_disk_lookup_cb(void *ud, la.la_int64_t gid) with gil:
+cdef const char * pyread_disk_lookup_cb(void *ud, la.la_int64_t gid) noexcept nogil:
     cdef LookupData * data = <LookupData *> ud
-    cdef object func = <object> data.lookup
-    return func(gid)
+    # cdef object func
+    with gil:
+        func = <object> data.lookup
+        return func(gid)
 
-cdef void pyread_disk_lookup_cleanup(void *ud) with gil:
+cdef void pyread_disk_lookup_cleanup(void *ud) noexcept nogil:
     cdef LookupData * data = <LookupData *> ud
-    cdef object func = <object> data.cleanup
-    func()
-    PyMem_Free(data)
-    la.MEMLOG("PyMem_Free %p\n", data)
+    # cdef object func
+    with gil:
+        func = <object> data.cleanup
+        func()
+        PyMem_Free(data)
+        la.MEMLOG("PyMem_Free %p\n", data)
 
-cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) with gil:
-    cdef object func = <object> ud
-    cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_, 0)
-    func(entry)
+cdef void pyexcluded_func(la.archive *a, void *ud, la.archive_entry *entry_) noexcept nogil:
+    # cdef object func
+    # cdef ArchiveEntry entry
+    with gil:
+        func = <object> ud
+        entry = ArchiveEntry.from_ptr(entry_, 0)
+        func(entry)
     # entry._entry_p = NULL deref
-cdef int pymetadata_filter_func(la.archive *a, void* ud, la.archive_entry *entry_) with gil:
-    cdef object func = <object> ud
-    cdef ArchiveEntry entry = ArchiveEntry.from_ptr(entry_, 0)
-    return func(entry)
+cdef int pymetadata_filter_func(la.archive *a, void* ud, la.archive_entry *entry_) noexcept nogil:
+    # cdef object func
+    # cdef ArchiveEntry entry
+    with gil:
+        func = <object> ud
+        entry = ArchiveEntry.from_ptr(entry_, 0)
+        return func(entry)
 
 
 @cython.final
