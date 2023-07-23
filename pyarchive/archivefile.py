@@ -337,9 +337,20 @@ class ArchiveFile:
             arcname = name
 
         entry = self.get_archive_entry(name, arcname)
+        self.addfile(entry)
 
-    def addfile(self, entry, fileobj=None):
-        ...
+    def addfile(self, entry, fileobj=None, chunksize: int = 1000000):
+        should_close = False
+        if fileobj is None:
+            fileobj = open(entry.pathname_utf8, "rb")
+            should_close = True
+        try:
+            self._archive.write_header(entry)
+            while chunk := fileobj.read(chunksize):
+                self._archive.write(chunk)
+        finally:
+            if should_close:
+                fileobj.close()
 
     def gettarinfo(self, name=None, arcname=None, fileobj=None):
         ...
