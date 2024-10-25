@@ -42,8 +42,8 @@ The path should depend on where you install conda
 
 # Develop
 Use 
-```
+```bash
 python -m pip install -r requirements.txt
-python setup.py build_ext -i --use-cython --lib-path "D:\conda\envs\py310\Library\lib\archive.lib" --include-path "D:\conda\envs\py310\Library\include"
+python setup.py build_ext -i --use-cython --debug --lib-path "D:\conda\envs\py310\Library\lib\archive.lib" --include-path "D:\conda\envs\py310\Library\include"
 ```
 and so on
