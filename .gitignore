@@ -19,3 +19,5 @@ bzip3.egg-info/
 *.bz3
 *.tar
 *.gz
+*.rar
+*.img

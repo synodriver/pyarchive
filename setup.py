@@ -9,6 +9,8 @@ from collections import defaultdict
 
 try:
     from Cython.Build import cythonize
+    from Cython.Compiler.Version import version as cython_version
+    from packaging.version import Version
 except ImportError:
     Cython = None
 from setuptools import Extension, find_packages, setup
@@ -34,14 +36,46 @@ class build_ext_compiler_check(build_ext):
         super().build_extensions()
 
 
-c_sources = ["pyarchive/backends/cython/_archive.pyx"] # + glob.glob("./cbitset/src/*.c")
+def has_option(name: str) -> bool:
+    if name in sys.argv[1:]:
+        sys.argv.remove(name)
+        return True
+    return False
+
+
+def get_option(name):
+    for i, arg in enumerate(sys.argv[1:-1], 1):
+        if arg == name:
+            sys.argv.pop(i)
+            return sys.argv.pop(i)
+    return ""
+
+
+c_sources = ["pyarchive/backends/cython/_archive.pyx"]
 c_sources = list(filter(lambda x: "main" not in x, c_sources))
+
+libarchive_lib = get_option("--lib-path")
+libarchive_include = get_option("--include-path")
+define_macros = []
+if has_option("--debug"):
+    define_macros.append(("MEMDEBUG", None))
+if (
+    sys.version_info > (3, 13, 0)
+    and hasattr(sys, "_is_gil_enabled")
+    and not sys._is_gil_enabled()
+):
+    print("build nogil")
+    define_macros.append(
+        ("Py_GIL_DISABLED", "1"),
+    )  # ("CYTHON_METH_FASTCALL", "1"), ("CYTHON_VECTORCALL",  1)]
+
 extensions = [
     Extension(
         "pyarchive.backends.cython._archive",
         c_sources,
-        include_dirs=["D:\conda\envs\py310\Library\include"],  # ["./dep/libarchive"],
-        extra_objects=[r"D:\conda\envs\py310\Library\lib\archive.lib"],
+        include_dirs=[libarchive_include],  # ["./dep/libarchive"],
+        extra_objects=[libarchive_lib],
+        define_macros=define_macros,
     ),
 ]
 cffi_modules = ["pyarchive/backends/cffi/build.py:ffibuilder"]
@@ -64,13 +98,16 @@ def get_version() -> str:
 
 packages = find_packages(exclude=("test", "tests.*", "test*"))
 
+compiler_directives = {
+    "cdivision": True,
+    "embedsignature": True,
+    "boundscheck": False,
+    "wraparound": False,
+}
 
-def has_option(name: str) -> bool:
-    if name in sys.argv[1:]:
-        sys.argv.remove(name)
-        return True
-    return False
 
+if Version(cython_version) >= Version("3.1.0a0"):
+    compiler_directives["freethreading_compatible"] = True
 
 setup_requires = []
 install_requires = []
@@ -80,12 +117,7 @@ if has_option("--use-cython"):
     setup_requires.append("cython")
     setup_kw["ext_modules"] = cythonize(
         extensions,
-        compiler_directives={
-            "cdivision": True,
-            "embedsignature": True,
-            "boundscheck": False,
-            "wraparound": False,
-        },
+        compiler_directives=compiler_directives,
     )
 if has_option("--use-cffi"):
     print("building cffi")
@@ -114,17 +146,20 @@ def main():
         install_requires=install_requires,
         license="BSD",
         classifiers=[
-            "Development Status :: 3 - Alpha",
+            "Development Status :: 4 - Beta",
+            "Topic :: System :: Archiving",
+            "Topic :: System :: Archiving :: Compression",
             "Operating System :: OS Independent",
             "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
             "Programming Language :: C",
             "Programming Language :: Cython",
             "Programming Language :: Python",
-            "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
             "Programming Language :: Python :: Implementation :: CPython",
             "Programming Language :: Python :: Implementation :: PyPy",
         ],
