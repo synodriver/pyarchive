@@ -18,14 +18,13 @@ class TestArchive(TestCase):
         self.assertTrue(fileobj.closed)
 
     def test_notclose_file(self):
-        fileobj = open(os.path.join(os.path.dirname(__file__), "./ZJYX.rar"), "rb")
-        archive = ArchiveRead()
-        archive.support_format_all()
-        archive.support_filter_all()
-        archive.open(fileobj, 1000000)
-        del archive
-        self.assertFalse(fileobj.closed)
-        fileobj.close()
+        with open(os.path.join(os.path.dirname(__file__), "./ZJYX.rar"), "rb") as fileobj:
+            archive = ArchiveRead()
+            archive.support_format_all()
+            archive.support_filter_all()
+            archive.open(fileobj, 1000000)
+            del archive
+            self.assertFalse(fileobj.closed)
 
     def test_list_content(self):
         fileobj = open(os.path.join(os.path.dirname(__file__), "./ZJYX.rar"), "rb")
